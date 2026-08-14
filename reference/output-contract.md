@@ -14,8 +14,25 @@ parties on two separate lines** — there is no separate "matter summary" sectio
 Everything is single-sourced from one `review-state` object so the chat, the
 `.docx`, and the console never disagree.
 
-Tone: senior-associate to a partner. Concise, skimmable, specific. No filler, no
-restating the whole document, no invented matter numbers.
+**Brevity is the contract, not a preference.** The lawyer is scanning, not
+reading. Match the Acme reference run: high-level, terse, high-value only.
+
+- **Hard caps** — Legal issues: **the 3–6 highest-value only**, most-serious
+  first. Deal terms: **≤ 5**. Recommendations: **≤ 5**. Key terms (console): the
+  material terms only, **≤ 12**. If something is minor, drop it — do not pad to
+  look thorough.
+- **One line per field.** Each issue's Issue/Risk/Fix is a single clause, not a
+  paragraph. Each recommendation is one sentence plus a short fallback. No
+  multi-sentence explanations, no sub-bullets, no restating the clause verbatim.
+- **No process narration and no preamble** — never "I read the document…",
+  "Here is the review…", status lines, methodology, confidence, or precedent
+  talk. Open on the parties; close on the pointers.
+- **No opinions in the matter block** — parties and document type only (see §1).
+- **No filler, no invented matter numbers.** Cut every word that is not load-
+  bearing.
+
+Tone: senior-associate to a partner — the kind who says the least that fully
+does the job.
 
 ---
 
@@ -32,46 +49,41 @@ counterparty.
 
 Open with the matter narration. Render in this order.
 
-### 1. Matter narration (top of the output)
-A short narration — **not** a labelled "matter summary" block:
-- **The two parties on two separate lines**, each by real name with its role
-  (line 1 e.g. "Acme Advisors LLC — sell-side financial advisor
-  (provider/counterparty)"; line 2 e.g. "PortfolioCo — client (OLF acts for)").
-- **Document type / sub-type** — family + sub-type from the brain (§2), and the
-  Simple/Complex call in a few words.
-- One line on how the paper reads overall (e.g. "advisor-friendly with a broad
-  indemnity and a 24-month tail").
+### 1. Matter block (top of the output) — facts only, no opinion
+Three lines, then move straight to the issues. **No characterisation of how the
+paper reads, no "advisor-friendly", no assessment — that is what the issues are
+for.**
+- **Party line 1** — counterparty by real name + role (e.g. "Acme Advisors LLC —
+  sell-side financial advisor").
+- **Party line 2** — client by real name + role (e.g. "PortfolioCo — client").
+- **Document type** — family + sub-type + Simple/Complex, in a few words (e.g.
+  "Engagement letter · M&A advisor · Complex").
+
+That is the entire matter block. Then go directly to §2.
 
 ### 2. Legal issues
-The RED FLAG and material WATCH items (the *legal* side of the split). For each,
-one tight entry:
-- **Issue** — clause + what it says.
-- **Risk** — why it matters to the client.
-- **Recommendation** — the proposed fix (matches the change marked in the `.docx`).
-Ordered most-serious first. This is the lawyer's worklist.
+The **3–6 highest-value** red flags only, most-serious first. Skip minor/market
+points. For each, one tight entry — **each field a single clause, not a
+paragraph**:
+- **Issue** — clause ref + what it does (terse).
+- **Risk** — why it bites the client (one clause).
+- **Fix** — the proposed change (matches the `.docx`; one clause).
 
 ### 3. Commercial deal terms for the client's confirmation
-The BUSINESS items — the client's calls. Present, don't opine. For each:
+The business calls — **≤ 5**, present don't opine. One line each:
 - **Term** — what the document proposes (with the number).
 - **Confirm** — the specific decision the client must make.
 Fees, success-fee %/base, term length, exclusivity, caps/insurance *amounts*,
-publicity. These also seed the escalation email.
+publicity.
 
 ### 4. Recommendations
-Not an administrative checklist — the lawyer's **judgment** on how to play each
-material point. For each recommendation:
+The lawyer's **judgment** on the top points — **≤ 5**, highest-leverage first.
+Not a checklist. One line of recommendation plus a short fallback; no essays.
 - **Point** — the issue/term at stake (with its clause ref).
-- **Stance** — one of **Push back** (hold firm; off-market or unacceptable),
-  **Negotiate** (seek improvement, with a landing zone), **Acceptable** (fine as
-  drafted / market — can concede), or **Walk-away** (deal-breaker if not fixed).
-- **Recommendation** — what to do and *why*, in the client's interest (e.g. "Hold
-  firm on carving advisor fault out of the indemnity — this is market and the
-  exposure is otherwise open-ended").
-- **Fallback** — what we could live with if the counterparty resists (e.g. "If
-  resisted, at minimum carve out fraud and willful misconduct").
-Order by leverage/importance. Ground each in the brain (§4 classification, §10
-redline discipline, §8 business/legal split); state trade-offs, don't just list
-tasks. Draft-only — never auto-send.
+- **Stance** — **Push back** / **Negotiate** / **Acceptable** / **Walk-away**.
+- **Recommendation** — one sentence: what to do and why, in the client's interest.
+- **Fallback** — one clause: what we could live with if resisted (or "—").
+Order by leverage. Draft-only — never auto-send.
 
 Close the chat message with a one-line pointer to the downloadable `.docx`
 redline and to the console (which holds the full packet including **key terms**
@@ -82,10 +94,10 @@ and the **draft client escalation email**).
 ## In the HTML console (the full on-screen packet)
 
 A single self-contained HTML artifact (Ontra-branded, theme-aware, sectioned with
-a jump nav). Its **header carries the matter narration** — title, the two parties
-one per line, document type, a note that the tracked-changes redline is a separate
-`.docx` download, and the one-line read. There is **no separate matter-summary
-section**. Below the header:
+a jump nav). Its **header carries the matter block** — title, the two parties one
+per line, document type, and a note that the tracked-changes redline is a separate
+`.docx` download. **No overall-read / opinion line.** There is **no separate
+matter-summary section**. Below the header:
 
 - **1. Legal issues** — the red-flag/watch worklist (clause · says · risk · fix).
 - **2. Commercial deal terms** — the client's business calls (term · confirm).
@@ -113,9 +125,9 @@ Draft-only, with a copy affordance. It never sends.
 
 **Console data.** The template reads one JSON block (`<script id="review-data">`)
 that is a display projection of the review-state — keys: `matter{title,
-party_lines[], doc_type, overall_read}` (the header narration; `party_lines` is
-one string per party, rendered on its own line — falls back to splitting `roles`
-on ";"), `legal_issues[]` (`clause, severity, says, risk,
+party_lines[], doc_type}` (the header block; `party_lines` is one string per
+party, rendered on its own line; **no `overall_read`/opinion**), `legal_issues[]`
+(`clause, severity, says, risk,
 recommendation`), `business_terms[]` (`term, confirm`), `recommendations[]`
 (`point, stance, recommendation, fallback`), `key_terms[]` (`term, provision,
 ref, href`), and `client_email{subject, body_markdown}`. No `redline` key — the
@@ -138,10 +150,9 @@ One JSON object drives all three outputs. Written to the working dir as
     "complexity": "complex",
     "parties": { "client": "PortfolioCo", "counterparty": "Acme Advisors LLC" },
     "party_lines": [
-      "Acme Advisors LLC — sell-side financial advisor (provider/counterparty)",
-      "PortfolioCo — client (OLF acts for)"
-    ],
-    "overall_read": "advisor-friendly; broad indemnity and a 24-month tail"
+      "Acme Advisors LLC — sell-side financial advisor",
+      "PortfolioCo — client"
+    ]
   },
   "source": { "path": "uploads/letter.docx", "href": null },
   "key_terms": [

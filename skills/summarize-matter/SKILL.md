@@ -21,11 +21,11 @@ method, §5/§6 clause families) and the `review-state` shape in
    Note every incorporated-by-reference document (schedules, SLAs, DPAs, order
    forms, URL "standard terms").
 2. **Classify.** Family (engagement letter / commercial contract), sub-type, and
-   Simple vs Complex. Capture the **matter narration**: the two parties by real
-   name with their roles as `matter.party_lines` (one string per party, rendered
-   on its own line), plus document type/sub-type and a one-line read of how the
-   paper leans. No invented matter numbers, and no separate "matter summary"
-   block beyond this narration.
+   Simple vs Complex. Capture the **matter block — facts only**: the two parties
+   by real name with their roles as `matter.party_lines` (one string per party,
+   rendered on its own line) and the document type. **No `overall_read`, no
+   "advisor-friendly" or any characterisation of the paper — that belongs in the
+   issues, not here.** No invented matter numbers.
 3. **Extract key terms by hand.** Walk the clause families and pull every
    operative term into `key_terms[]`. **Check every number and its measurement
    point separately** — a fee % *and* its base, a cap *and* its multiplier, a
@@ -42,7 +42,8 @@ method, §5/§6 clause families) and the `review-state` shape in
 
 ## Output
 
-Fill `matter{}` (incl. `party_lines[]`) and `key_terms[]` in the review-state.
-When run standalone, present: the matter narration (two party lines, type/sub-type,
-one-line read) then a scannable two-column key-terms table. Keep it factual and
-neutral — description, not judgment. Offer to proceed to issue-spotting.
+Fill `matter{}` (incl. `party_lines[]`, no `overall_read`) and `key_terms[]` in
+the review-state. When run standalone, present: the matter block (two party lines
++ document type — no opinion) then a scannable two-column key-terms table (material
+terms only, ≤ 12). Keep it factual and neutral — description, not judgment. Offer
+to proceed to issue-spotting.

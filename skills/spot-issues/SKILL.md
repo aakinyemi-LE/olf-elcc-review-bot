@@ -43,8 +43,15 @@ split, §9 playbook/precedent. Use the `review-state` shape from
 
 Fill `issues[]` (with `class`, `audience`, `clause`, `says`, `risk`,
 `recommendation`), `business_terms[]`, and `recommendations[]` (`point`, `stance`,
-`recommendation`, `fallback`). When standalone, present: legal issues
-(most-serious first), commercial terms for confirmation, then the recommendations
-with their stances. **Present business terms, never opine** on price or deal
-merits; where a stance turns on commercial appetite, say it is subject to the
-deal team's call. Offer to proceed to the redline and client email.
+`recommendation`, `fallback`).
+
+**Keep it high-value and terse** (per output-contract "Brevity"). Surface only
+the **3–6 highest-value** legal issues, **≤ 5** business terms, **≤ 5**
+recommendations — drop minor/market points rather than padding. Each field is a
+single clause, not a paragraph; no restating the clause verbatim, no essays.
+
+When standalone, present: legal issues (most-serious first), commercial terms for
+confirmation, then the recommendations with their stances. **Present business
+terms, never opine** on price or deal merits; where a stance turns on commercial
+appetite, say it is subject to the deal team's call. Offer to proceed to the
+redline and client email.

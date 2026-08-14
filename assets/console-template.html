@@ -1,8 +1,9 @@
 <title>Review Console</title>
 <!--
-  OLF EL & CC Review — console. The header narration names the two parties (one
-  per line); there is no separate matter-summary section. The tracked-changes
-  redline is NOT shown here — it is delivered only as the downloadable .docx.
+  OLF EL & CC Review — console. The header names the two parties (one per line)
+  and the document type — facts only, no opinion; there is no separate matter-
+  summary section. The tracked-changes redline is NOT shown here — it is delivered
+  only as the downloadable .docx.
   Sections:
     1 Legal issues · 2 Commercial deal terms · 3 Recommendations
     4 Key terms · 5 Draft client escalation email
@@ -15,11 +16,10 @@
   "matter": {
     "title": "Engagement Letter (M&A advisor) — Acme Advisors ↔ PortfolioCo",
     "party_lines": [
-      "Acme Advisors LLC — sell-side financial advisor (provider / counterparty)",
-      "PortfolioCo — client (OLF acts for)"
+      "Acme Advisors LLC — sell-side financial advisor",
+      "PortfolioCo — client"
     ],
-    "doc_type": "Engagement letter · M&A advisor · Complex",
-    "overall_read": "Advisor-friendly paper: broad client indemnity, an asymmetric liability cap, and a long 24-month tail."
+    "doc_type": "Engagement letter · M&A advisor · Complex"
   },
   "legal_issues": [
     { "clause": "§9 Indemnification", "severity": "red_flag",
@@ -140,9 +140,6 @@
                   display: inline-flex; align-items: center; gap: 6px; }
   .redline-note .pill { font-size: 10px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
                         color: var(--accent-ink); background: var(--accent-soft); border-radius: 999px; padding: 2px 8px; }
-  .read { margin-top: 10px; font-size: 13.5px; color: var(--ink); background: var(--accent-soft);
-          border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 9px 12px; }
-
   section.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
                   box-shadow: var(--shadow); overflow: hidden; margin-bottom: 18px; scroll-margin-top: 18px; }
   .panel-head { display: flex; align-items: center; gap: 10px; padding: 13px 16px;
@@ -262,7 +259,6 @@
       <div class="parties" id="m-parties"></div>
       <div class="doctype" id="m-doctype"></div>
       <div class="redline-note"><span class="pill">Redline</span> Tracked-changes markup delivered as a separate <strong>.docx</strong> download.</div>
-      <div class="read" id="m-read" style="display:none"></div>
     </header>
 
     <section class="panel" id="s1"><div class="panel-head"><span class="num">1</span><h2>Legal issues</h2><span class="count" id="c-issues"></span></div><div class="panel-body flush" id="issues"></div></section>
@@ -304,9 +300,8 @@
 
     set("m-title", m.title || "Matter review");
     set("m-doctype", m.doc_type || "");
-    if (m.overall_read) { var r = document.getElementById("m-read"); r.textContent = m.overall_read; r.style.display = "block"; }
 
-    // Header narration: the two parties, each on its own line.
+    // Header block: the two parties, each on its own line. Facts only — no opinion.
     var pls = (m.party_lines && m.party_lines.length) ? m.party_lines
               : (m.roles ? String(m.roles).split(/;\s*/) : []);
     var P = document.getElementById("m-parties");

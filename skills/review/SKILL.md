@@ -64,19 +64,26 @@ all three outputs.
 
 ## Deliver
 
+**Be brief — this is the contract, not a preference** (see output-contract
+"Brevity"). Match the Acme reference run: high-level, terse, high-value only. No
+preamble, no process narration, no restating the document. Hard caps: legal
+issues **3–6**, deal terms **≤ 5**, recommendations **≤ 5**, console key terms
+**≤ 12**; each field one clause, not a paragraph.
+
 The **redline lives only in the downloadable `.docx`** — no redline box in chat,
-no redline panel in the console. Both surfaces open with a short matter narration
-that names **the two parties on two separate lines** — no separate matter-summary
-section.
+no redline panel in the console. Both surfaces open with the matter block (parties
++ doc type) — **no opinion, no "overall read"** — then go straight to the issues.
 
 ### Chat (the succinct first glance), in this order
-1. **Matter narration** — the two parties on two separate lines (real name +
-   role), then document type/sub-type and the one-line read.
-2. **Legal issues** — the red-flag/watch worklist.
-3. **Commercial deal terms for the client's confirmation** — business terms,
-   presented not opined.
-4. **Recommendations** — the judgment calls (push back / negotiate / acceptable),
-   each with a reason and a fallback. Not an administrative list.
+1. **Matter block** — three lines only: counterparty (name + role), client (name
+   + role), document type/sub-type + Simple/Complex. **No assessment of how the
+   paper reads.**
+2. **Legal issues** — the 3–6 highest-value red flags, most-serious first; each
+   Issue/Risk/Fix a single clause.
+3. **Commercial deal terms for the client's confirmation** (≤ 5) — business terms,
+   presented not opined, one line each.
+4. **Recommendations** (≤ 5) — push back / negotiate / acceptable, one sentence +
+   short fallback. Not an administrative list.
 
 Close with one line pointing to the downloadable `.docx` redline and to the
 console (which holds the full packet including **key terms** and the **draft
@@ -84,17 +91,18 @@ client escalation email**).
 
 ### Console (the full on-screen packet)
 The chat is the succinct view; the console is the complete reference. Its
-**header carries the matter narration** (title, the two parties one per line,
-document type, redline-is-a-`.docx` note, one-line read); below it: legal issues
-→ deal terms → recommendations → key terms → draft email. No separate
+**header carries the matter block** (title, the two parties one per line,
+document type, redline-is-a-`.docx` note) — **no opinion line**; below it: legal
+issues → deal terms → recommendations → key terms → draft email. No separate
 matter-summary section.
 - Populate `${CLAUDE_PLUGIN_ROOT}/assets/console-template.html` — replace the JSON
   inside its `<script id="review-data">` block with the matter's data
-  (`matter{title, party_lines[], doc_type, overall_read}`, `legal_issues[]`,
+  (`matter{title, party_lines[], doc_type}`, `legal_issues[]`,
   `business_terms[]`, `recommendations[]`, `key_terms[]`, `client_email`; **no
-  `redline` key**; see the template header and the output contract's "Console
-  data" note). `matter.party_lines` is one string per party (rendered on its own
-  line); `key_terms[]` is two columns — `term` and `provision` with a `ref` (and
+  `redline` key, no `overall_read`**; see the template header and the output
+  contract's "Console data" note). `matter.party_lines` is one string per party
+  (rendered on its own line); `key_terms[]` is two columns — `term` and
+  `provision` with a `ref` (and
   optional `href` to hyperlink the clause). It is a straight projection of the
   review-state — introduce nothing the chat/redline don't already carry. Write
   the filled file to the working dir, then publish it with the **Artifact** tool

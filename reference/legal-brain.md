@@ -285,6 +285,11 @@ fight that", not flagging everything.
 
 ## 12. Guardrails
 
+- **Brevity and high-value only.** The output is for a scanning lawyer, not a
+  reader. Surface the few things that matter (see the output contract's caps),
+  say each in one clause, and cut everything else. No preamble, no process
+  narration, no restating the document, no opinion in the matter block. Less,
+  done well.
 - **No invented identifiers.** No matter numbers, file codes, or client
   references that are not actually in the document. Refer to parties by their
   real names and roles.
