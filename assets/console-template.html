@@ -1,0 +1,387 @@
+<title>Review Console</title>
+<!--
+  OLF EL & CC Review — console. The header narration names the two parties (one
+  per line); there is no separate matter-summary section. The tracked-changes
+  redline is NOT shown here — it is delivered only as the downloadable .docx.
+  Sections:
+    1 Legal issues · 2 Commercial deal terms · 3 Recommendations
+    4 Key terms · 5 Draft client escalation email
+
+  TO POPULATE: replace the JSON inside <script id="review-data"> with the
+  matter's data. Every section renders from it. The sample below is illustrative.
+-->
+<script id="review-data" type="application/json">
+{
+  "matter": {
+    "title": "Engagement Letter (M&A advisor) — Acme Advisors ↔ PortfolioCo",
+    "party_lines": [
+      "Acme Advisors LLC — sell-side financial advisor (provider / counterparty)",
+      "PortfolioCo — client (OLF acts for)"
+    ],
+    "doc_type": "Engagement letter · M&A advisor · Complex",
+    "overall_read": "Advisor-friendly paper: broad client indemnity, an asymmetric liability cap, and a long 24-month tail."
+  },
+  "legal_issues": [
+    { "clause": "§9 Indemnification", "severity": "red_flag",
+      "says": "Client indemnifies the advisor for all losses, including the advisor's own negligence.",
+      "risk": "Open-ended; no carve-out for advisor gross negligence, willful misconduct or fraud.",
+      "recommendation": "Carve out advisor GN / WM / bad faith / fraud (marked in the .docx)." },
+    { "clause": "§7 Tail", "severity": "red_flag",
+      "says": "Advisor earns its fee on ANY transaction for 24 months after termination.",
+      "risk": "Fee triggered by deals the advisor had no hand in; no named-party limit.",
+      "recommendation": "Limit to introduced parties; shorten to 12 months (marked in the .docx)." },
+    { "clause": "§10 Limitation of liability", "severity": "watch",
+      "says": "Advisor's liability capped at fees paid; client exposure uncapped.",
+      "risk": "Asymmetric. Cap also swallows fraud/willful misconduct.",
+      "recommendation": "Add fraud/WM carve-out; note asymmetry to client." },
+    { "clause": "Standard terms (referenced, §12)", "severity": "watch",
+      "says": "Letter incorporates the advisor's 'standard terms' by reference.",
+      "risk": "Not provided — unreviewed obligations could bind the client.",
+      "recommendation": "Request the standard terms before signing." }
+  ],
+  "business_terms": [
+    { "term": "Success fee — 1.75% of enterprise value (§3(a))", "confirm": "Is the rate and the enterprise-value base approved?" },
+    { "term": "Retainer — $50,000, non-refundable, credited against success fee (§3(b))", "confirm": "Approved?" },
+    { "term": "Tail length — 24 months (§7)", "confirm": "Comfortable with the length (we propose 12)?" },
+    { "term": "Exclusivity / term — 12 months (§6)", "confirm": "Approved?" }
+  ],
+  "recommendations": [
+    { "point": "Client indemnity (§9)", "stance": "push_back",
+      "recommendation": "Hold firm on carving the advisor's own gross negligence, willful misconduct, bad faith and fraud out of the indemnity — this is market, and the client's exposure is otherwise open-ended.",
+      "fallback": "If Acme resists, at minimum carve out fraud and willful misconduct — do not sign without at least that." },
+    { "point": "Tail — 24 months, 'any transaction' (§7)", "stance": "negotiate",
+      "recommendation": "Limit the tail to parties the advisor actually introduced and shorten to 12 months; as drafted Acme could earn a fee on a deal it had no hand in.",
+      "fallback": "Accept up to 18 months if firmly limited to named/introduced parties." },
+    { "point": "Advisor liability cap at fees paid (§10)", "stance": "negotiate",
+      "recommendation": "Add a fraud/willful-misconduct carve-out and flag the asymmetry (client exposure is uncapped) to the deal team.",
+      "fallback": "A fees-paid cap is fine once the carve-outs are in; never one that swallows fraud." },
+    { "point": "Retainer — $50,000 non-refundable (§3(b))", "stance": "acceptable",
+      "recommendation": "Market for a mandate of this type. A commercial call for the deal team, but no legal objection.",
+      "fallback": "—" },
+    { "point": "Unseen 'standard terms' (§12)", "stance": "push_back",
+      "recommendation": "Do not sign until the incorporated standard terms are produced and reviewed — they can carry material obligations the client would be bound by unseen.",
+      "fallback": "If they cannot be produced, strike the incorporation-by-reference." }
+  ],
+  "key_terms": [
+    { "term": "Success fee", "provision": "1.75% of enterprise value", "ref": "§3(a)", "href": null },
+    { "term": "Retainer", "provision": "$50,000, non-refundable, credited against the success fee", "ref": "§3(b)", "href": null },
+    { "term": "Tail period", "provision": "Fee on any transaction for 24 months after termination", "ref": "§7", "href": null },
+    { "term": "Client indemnity", "provision": "Client indemnifies the advisor; no carve-out for advisor fault", "ref": "§9", "href": null },
+    { "term": "Advisor liability cap", "provision": "Advisor's liability capped at fees paid; client exposure uncapped", "ref": "§10", "href": null },
+    { "term": "Term / termination", "provision": "12 months; 30 days' notice; fees survive termination", "ref": "§6", "href": null },
+    { "term": "Governing law", "provision": "New York", "ref": "§14", "href": null }
+  ],
+  "client_email": {
+    "subject": "PortfolioCo — Acme engagement letter: decisions needed",
+    "body_markdown": "Hi team,\n\nWe've done a first-pass review of the Acme Advisors engagement letter and drafted a markup. Before we send anything back, we need your call on a few **commercial** points — these are business decisions, not legal ones:\n\n1. **Success fee — 1.75% of enterprise value (§3(a)).** Is the rate and the enterprise-value base approved?\n2. **Retainer — $50,000, non-refundable, credited against the success fee (§3(b)).** Approved?\n3. **Tail — 24 months post-termination (§7).** Comfortable with the length?\n4. **Exclusivity / term — 12 months (§6).** Approved?\n\nOn the **legal** side, we're handling these in the markup: narrowing the client indemnity to carve out the advisor's own gross negligence, willful misconduct and fraud (§9); flagging the asymmetric liability cap (§10); and tightening the tail trigger to named parties (§7).\n\nOne open item: the letter references standard terms we haven't seen — we've asked for them.\n\nOnce you confirm the four points above, the tracked-changes redline is ready to go to Acme.\n\nBest,\n[Name / title]"
+  }
+}
+</script>
+
+<style>
+  :root {
+    --paper: #f5f6f7; --surface: #ffffff; --surface-2: #f0f1f2;
+    --ink: #0e0f11; --muted: #585d64; --faint: #8a9098;
+    --line: #e6e7ea; --line-strong: #d3d5d9;
+    --accent: #00D9E3; --accent-ink: #0a7b82; --accent-soft: #d8f5f7;
+    --legal: #c2560f;  --legal-soft: #ffe6d4;
+    --business: #0a7b82; --business-soft: #d8f5f7;
+    --hybrid: #8a6200; --hybrid-soft: #fbeeca;
+    --del: #c2560f; --ins: #0a7b82; --ins-bg: #d8f5f7;
+    --radius: 12px; --shadow: 0 1px 2px rgba(16,18,20,.06);
+    --font-ui: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  :root:not([data-theme="light"]) { @media (prefers-color-scheme: dark) {
+    --paper: #0d0e10; --surface: #16181b; --surface-2: #1d2024;
+    --ink: #f3f4f6; --muted: #a6acb4; --faint: #767c85;
+    --line: #2a2d32; --line-strong: #3a3e44;
+    --accent: #00D9E3; --accent-ink: #4fe6ee; --accent-soft: #0c3a3d;
+    --legal: #ff8a4c; --legal-soft: #3a2312;
+    --business: #4fe6ee; --business-soft: #0c3a3d;
+    --hybrid: #e0b23c; --hybrid-soft: #322813;
+    --del: #ff8a4c; --ins: #4fe6ee; --ins-bg: #0c3a3d;
+  } }
+  :root[data-theme="dark"] {
+    --paper: #0d0e10; --surface: #16181b; --surface-2: #1d2024;
+    --ink: #f3f4f6; --muted: #a6acb4; --faint: #767c85;
+    --line: #2a2d32; --line-strong: #3a3e44;
+    --accent: #00D9E3; --accent-ink: #4fe6ee; --accent-soft: #0c3a3d;
+    --legal: #ff8a4c; --legal-soft: #3a2312;
+    --business: #4fe6ee; --business-soft: #0c3a3d;
+    --hybrid: #e0b23c; --hybrid-soft: #322813;
+    --del: #ff8a4c; --ins: #4fe6ee; --ins-bg: #0c3a3d;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-ui);
+         line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  .layout { max-width: 1240px; margin: 0 auto; padding: 24px 20px 64px;
+            display: grid; grid-template-columns: 190px 1fr; gap: 28px; align-items: start; }
+  @media (max-width: 860px) { .layout { grid-template-columns: 1fr; gap: 18px; } nav.toc { position: static; } }
+
+  nav.toc { position: sticky; top: 18px; font-size: 13px; }
+  nav.toc .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+                     color: var(--accent-ink); margin-bottom: 10px; display: flex; align-items: center; gap: 7px; }
+  nav.toc .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  nav.toc a { display: flex; gap: 9px; padding: 6px 8px; border-radius: 7px; color: var(--muted);
+              text-decoration: none; margin: 1px 0; }
+  nav.toc a:hover { background: var(--surface-2); color: var(--ink); }
+  nav.toc a .n { color: var(--faint); font-variant-numeric: tabular-nums; min-width: 12px; }
+  @media (max-width: 860px) { nav.toc { display: none; } }
+
+  header.matter { margin-bottom: 20px; }
+  h1.title { font-size: 21px; margin: 4px 0 5px; font-weight: 650; letter-spacing: -.01em; }
+  .parties { margin: 2px 0 1px; }
+  .parties .pline { color: var(--muted); font-size: 13.5px; line-height: 1.45; }
+  .parties .pline b { color: var(--ink); font-weight: 600; }
+  .doctype { color: var(--faint); font-size: 12.5px; margin-top: 2px; }
+  .redline-note { font-size: 12px; color: var(--faint); margin-top: 5px;
+                  display: inline-flex; align-items: center; gap: 6px; }
+  .redline-note .pill { font-size: 10px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
+                        color: var(--accent-ink); background: var(--accent-soft); border-radius: 999px; padding: 2px 8px; }
+  .read { margin-top: 10px; font-size: 13.5px; color: var(--ink); background: var(--accent-soft);
+          border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 9px 12px; }
+
+  section.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+                  box-shadow: var(--shadow); overflow: hidden; margin-bottom: 18px; scroll-margin-top: 18px; }
+  .panel-head { display: flex; align-items: center; gap: 10px; padding: 13px 16px;
+                border-bottom: 1px solid var(--line); background: var(--surface-2); }
+  .panel-head .num { font-size: 11px; font-weight: 700; color: var(--accent-ink); background: var(--accent-soft);
+                     border-radius: 999px; padding: 2px 9px; min-width: 22px; text-align: center; }
+  .panel-head h2 { font-size: 14px; margin: 0; font-weight: 650; letter-spacing: -.005em; }
+  .panel-head .count { margin-left: auto; font-size: 11.5px; color: var(--faint); }
+  .panel-body { padding: 14px 16px; }
+  .panel-body.flush { padding: 0; }
+
+  /* Redline */
+  .edit { padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .edit:last-child { border-bottom: none; }
+  .edit-top { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; }
+  .edit-sec { font-weight: 600; font-size: 13px; }
+  .tag { font-size: 10px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
+         padding: 2px 7px; border-radius: 999px; }
+  .tag.card { color: var(--legal); background: var(--legal-soft); }
+  .tag.silent { color: var(--muted); background: var(--surface-2); border: 1px solid var(--line); }
+  .diff { font-size: 13px; line-height: 1.6; }
+  .diff del { color: var(--del); text-decoration: line-through; text-decoration-thickness: 1px; }
+  .diff ins { color: var(--ins); background: var(--ins-bg); text-decoration: none;
+              border-radius: 3px; padding: 0 2px; }
+  .why { margin-top: 6px; font-size: 12.5px; color: var(--muted); font-style: italic; }
+
+  /* Issue list */
+  .issue { padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .issue:last-child { border-bottom: none; }
+  .issue-top { display: flex; align-items: center; gap: 9px; margin-bottom: 5px; }
+  .issue-clause { font-weight: 600; font-size: 13px; }
+  .sev { font-size: 10px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
+         padding: 2px 7px; border-radius: 999px; }
+  .sev.red_flag { color: var(--legal); background: var(--legal-soft); }
+  .sev.watch { color: var(--hybrid); background: var(--hybrid-soft); }
+  .issue .kv { font-size: 12.8px; margin: 2px 0; }
+  .issue .kv b { color: var(--faint); font-weight: 600; }
+
+  /* Recommendations */
+  .rec { padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .rec:last-child { border-bottom: none; }
+  .rec-top { display: flex; align-items: center; gap: 9px; margin-bottom: 5px; flex-wrap: wrap; }
+  .rec-point { font-weight: 600; font-size: 13px; }
+  .stance { font-size: 10px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
+            padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .stance.push_back { color: var(--legal); background: var(--legal-soft); }
+  .stance.walk_away { color: #fff; background: var(--legal); }
+  .stance.negotiate { color: var(--hybrid); background: var(--hybrid-soft); }
+  .stance.acceptable { color: var(--business); background: var(--business-soft); }
+  .rec-body { font-size: 13px; }
+  .rec-fallback { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+  .rec-fallback b { color: var(--faint); font-weight: 600; }
+
+  /* Key terms — provision reference */
+  td.prov { color: var(--ink); }
+  a.ref, span.ref { font-variant-numeric: tabular-nums; color: var(--accent-ink); font-weight: 600; white-space: nowrap; }
+  a.ref { text-decoration: underline; text-underline-offset: 2px; }
+
+  /* Business terms */
+  .bt { padding: 11px 16px; border-bottom: 1px solid var(--line); }
+  .bt:last-child { border-bottom: none; }
+  .bt-term { font-weight: 600; font-size: 13px; }
+  .bt-confirm { font-size: 12.8px; color: var(--muted); margin-top: 2px; }
+  .bt-confirm b { color: var(--business); font-weight: 600; }
+
+  /* Next steps */
+  ol.steps { margin: 0; padding: 4px 16px 4px 34px; }
+  ol.steps li { padding: 5px 0; font-size: 13.5px; }
+
+  /* Key terms table */
+  .twrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.8px; }
+  th { text-align: left; font-weight: 600; color: var(--muted); font-size: 11px; text-transform: uppercase;
+       letter-spacing: .03em; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.term { font-weight: 600; white-space: nowrap; }
+  td.where { color: var(--faint); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.note { color: var(--muted); }
+  .badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase;
+           padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .badge.legal { color: var(--legal); background: var(--legal-soft); }
+  .badge.business { color: var(--business); background: var(--business-soft); }
+  .badge.hybrid { color: var(--hybrid); background: var(--hybrid-soft); }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; padding: 12px 14px; font-size: 11.5px; color: var(--muted);
+            border-top: 1px solid var(--line); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+  /* Email */
+  .email-sub-label { font-size: 11px; text-transform: uppercase; letter-spacing: .03em; color: var(--faint); }
+  .email-sub { font-weight: 650; font-size: 14px; margin: 1px 0 10px; }
+  .email-body { font-size: 13.5px; white-space: pre-wrap; word-wrap: break-word; }
+  .email-body strong { font-weight: 650; }
+  .btnrow { display: flex; gap: 8px; margin-top: 14px; }
+  button.copy { font-family: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer;
+                border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+                border-radius: 8px; padding: 8px 14px; }
+  button.copy:hover { background: var(--surface-2); }
+  button.copy.primary { background: var(--accent); color: #06282a; border-color: var(--accent); }
+  .draftflag { font-size: 11.5px; color: var(--faint); margin-top: 12px; }
+</style>
+
+<div class="layout">
+  <nav class="toc">
+    <div class="eyebrow"><span class="dot"></span> Review Console</div>
+    <a href="#s1"><span class="n">1</span> Legal issues</a>
+    <a href="#s2"><span class="n">2</span> Deal terms</a>
+    <a href="#s3"><span class="n">3</span> Recommendations</a>
+    <a href="#s4"><span class="n">4</span> Key terms</a>
+    <a href="#s5"><span class="n">5</span> Client email</a>
+  </nav>
+
+  <main>
+    <header class="matter">
+      <h1 class="title" id="m-title">—</h1>
+      <div class="parties" id="m-parties"></div>
+      <div class="doctype" id="m-doctype"></div>
+      <div class="redline-note"><span class="pill">Redline</span> Tracked-changes markup delivered as a separate <strong>.docx</strong> download.</div>
+      <div class="read" id="m-read" style="display:none"></div>
+    </header>
+
+    <section class="panel" id="s1"><div class="panel-head"><span class="num">1</span><h2>Legal issues</h2><span class="count" id="c-issues"></span></div><div class="panel-body flush" id="issues"></div></section>
+
+    <section class="panel" id="s2"><div class="panel-head"><span class="num">2</span><h2>Commercial deal terms — client to confirm</h2><span class="count" id="c-bt"></span></div><div class="panel-body flush" id="bterms"></div></section>
+
+    <section class="panel" id="s3"><div class="panel-head"><span class="num">3</span><h2>Recommendations</h2><span class="count" id="c-recs"></span></div><div class="panel-body flush" id="recs"></div></section>
+
+    <section class="panel" id="s4"><div class="panel-head"><span class="num">4</span><h2>Key terms</h2><span class="count" id="c-kt"></span></div><div class="panel-body flush">
+      <div class="twrap"><table><thead><tr><th style="width:32%">Term</th><th>Provision</th></tr></thead><tbody id="kt-body"></tbody></table></div>
+    </div></section>
+
+    <section class="panel" id="s5"><div class="panel-head"><span class="num">5</span><h2>Draft client escalation email</h2></div><div class="panel-body">
+      <div class="email-sub-label">Subject</div>
+      <p class="email-sub" id="em-subject"></p>
+      <div class="email-body" id="em-body"></div>
+      <div class="btnrow">
+        <button class="copy primary" id="copy-all">Copy email</button>
+        <button class="copy" id="copy-body">Copy body only</button>
+      </div>
+      <div class="draftflag">Draft only — review and send from your own mail client. Nothing is sent from here.</div>
+    </div></section>
+  </main>
+</div>
+
+<script>
+  (function () {
+    var data = {};
+    try { data = JSON.parse(document.getElementById("review-data").textContent); } catch (e) {}
+    var m = data.matter || {}, li = data.legal_issues || [],
+        bt = data.business_terms || [], rc = data.recommendations || [], kt = data.key_terms || [],
+        em = data.client_email || {};
+
+    function esc(s) { return String(s == null ? "" : s).replace(/[&<>]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
+    function mdBold(s) { return esc(s).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>"); }
+    function set(id, txt) { var e = document.getElementById(id); if (e) e.textContent = txt; }
+    function count(id, n, noun) { set(id, n + " " + noun + (n === 1 ? "" : "s")); }
+
+    set("m-title", m.title || "Matter review");
+    set("m-doctype", m.doc_type || "");
+    if (m.overall_read) { var r = document.getElementById("m-read"); r.textContent = m.overall_read; r.style.display = "block"; }
+
+    // Header narration: the two parties, each on its own line.
+    var pls = (m.party_lines && m.party_lines.length) ? m.party_lines
+              : (m.roles ? String(m.roles).split(/;\s*/) : []);
+    var P = document.getElementById("m-parties");
+    pls.forEach(function (line) {
+      line = String(line).trim(); if (!line) return;
+      var d = document.createElement("div"); d.className = "pline";
+      // Bold the party name before an em/en dash separator, if present.
+      var mm = line.match(/^(.*?)(\s[—–-]\s.*)$/);
+      d.innerHTML = mm ? "<b>" + esc(mm[1]) + "</b>" + esc(mm[2]) : esc(line);
+      P.appendChild(d);
+    });
+
+    // 1 Legal issues
+    var I = document.getElementById("issues");
+    li.forEach(function (x) {
+      var sev = (x.severity || "watch").toLowerCase();
+      var el = document.createElement("div"); el.className = "issue";
+      el.innerHTML =
+        '<div class="issue-top"><span class="issue-clause">' + esc(x.clause || "") + "</span>" +
+        '<span class="sev ' + sev + '">' + esc(sev.replace("_", " ")) + "</span></div>" +
+        (x.says ? '<div class="kv"><b>Says:</b> ' + esc(x.says) + "</div>" : "") +
+        (x.risk ? '<div class="kv"><b>Risk:</b> ' + esc(x.risk) + "</div>" : "") +
+        (x.recommendation ? '<div class="kv"><b>Fix:</b> ' + esc(x.recommendation) + "</div>" : "");
+      I.appendChild(el);
+    });
+    count("c-issues", li.length, "issue");
+
+    // 2 Business terms
+    var B = document.getElementById("bterms");
+    bt.forEach(function (x) {
+      var el = document.createElement("div"); el.className = "bt";
+      el.innerHTML = '<div class="bt-term">' + esc(x.term || "") + "</div>" +
+        (x.confirm ? '<div class="bt-confirm"><b>Confirm:</b> ' + esc(x.confirm) + "</div>" : "");
+      B.appendChild(el);
+    });
+    count("c-bt", bt.length, "term");
+
+    // 3 Recommendations — judgment: stance + recommendation + fallback
+    var RC = document.getElementById("recs");
+    var STANCE = { push_back: "Push back", negotiate: "Negotiate", acceptable: "Acceptable", walk_away: "Walk-away" };
+    rc.forEach(function (x) {
+      var st = (x.stance || "negotiate").toLowerCase();
+      var el = document.createElement("div"); el.className = "rec";
+      el.innerHTML =
+        '<div class="rec-top"><span class="rec-point">' + esc(x.point || "") + "</span>" +
+        '<span class="stance ' + st + '">' + esc(STANCE[st] || st) + "</span></div>" +
+        (x.recommendation ? '<div class="rec-body">' + esc(x.recommendation) + "</div>" : "") +
+        (x.fallback && x.fallback !== "—" ? '<div class="rec-fallback"><b>Fallback:</b> ' + esc(x.fallback) + "</div>" : "");
+      RC.appendChild(el);
+    });
+    count("c-recs", rc.length, "call");
+
+    // 4 Key terms — two columns: Term | Provision (with clause ref, hyperlinked if href)
+    var tb = document.getElementById("kt-body");
+    kt.forEach(function (r2) {
+      var ref = r2.ref ? (r2.href
+        ? ' <a class="ref" href="' + encodeURI(r2.href) + '" target="_blank" rel="noopener">' + esc(r2.ref) + "</a>"
+        : ' <span class="ref">' + esc(r2.ref) + "</span>") : "";
+      var tr = document.createElement("tr");
+      tr.innerHTML =
+        '<td class="term">' + esc(r2.term) + "</td>" +
+        '<td class="prov">' + esc(r2.provision) + ref + "</td>";
+      tb.appendChild(tr);
+    });
+    count("c-kt", kt.length, "term");
+
+    // 5 Email
+    set("em-subject", em.subject || "");
+    document.getElementById("em-body").innerHTML = mdBold(em.body_markdown || "");
+    function plain(s) { return String(s || "").replace(/\*\*/g, ""); }
+    var full = "Subject: " + (em.subject || "") + "\n\n" + plain(em.body_markdown);
+    function copy(t, btn) { navigator.clipboard.writeText(t).then(function () {
+      var o = btn.textContent; btn.textContent = "Copied ✓"; setTimeout(function () { btn.textContent = o; }, 1400);
+    }).catch(function () { btn.textContent = "Copy failed"; }); }
+    document.getElementById("copy-all").addEventListener("click", function () { copy(full, this); });
+    document.getElementById("copy-body").addEventListener("click", function () { copy(plain(em.body_markdown), this); });
+  })();
+</script>
