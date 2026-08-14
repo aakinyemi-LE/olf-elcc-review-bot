@@ -5,8 +5,8 @@
   summary section. The tracked-changes redline is NOT shown here — it is delivered
   only as the downloadable .docx.
   Sections:
-    1 Legal issues · 2 Commercial deal terms · 3 Recommendations
-    4 Key terms · 5 Draft client escalation email
+    1 Legal issues & recommendations (combined) · 2 Commercial deal terms
+    3 Key terms · 4 Draft client escalation email
 
   TO POPULATE: replace the JSON inside <script id="review-data"> with the
   matter's data. Every section renders from it. The sample below is illustrative.
@@ -22,45 +22,32 @@
     "doc_type": "Engagement letter · M&A advisor · Complex"
   },
   "legal_issues": [
-    { "clause": "§9 Indemnification", "severity": "red_flag",
+    { "clause": "§9 Indemnification", "stance": "push_back",
       "says": "Client indemnifies the advisor for all losses, including the advisor's own negligence.",
       "risk": "Open-ended; no carve-out for advisor gross negligence, willful misconduct or fraud.",
-      "recommendation": "Carve out advisor GN / WM / bad faith / fraud (marked in the .docx)." },
-    { "clause": "§7 Tail", "severity": "red_flag",
-      "says": "Advisor earns its fee on ANY transaction for 24 months after termination.",
+      "recommendation": "Carve out advisor GN / WM / bad faith / fraud — market standard (marked in the .docx).",
+      "fallback": "At minimum carve out fraud and willful misconduct; don't sign without it." },
+    { "clause": "§7 Tail", "stance": "negotiate",
+      "says": "Advisor earns its fee on any transaction for 24 months after termination.",
       "risk": "Fee triggered by deals the advisor had no hand in; no named-party limit.",
-      "recommendation": "Limit to introduced parties; shorten to 12 months (marked in the .docx)." },
-    { "clause": "§10 Limitation of liability", "severity": "watch",
+      "recommendation": "Limit to introduced parties and shorten to 12 months (marked in the .docx).",
+      "fallback": "Up to 18 months if firmly limited to a named covered-party list." },
+    { "clause": "§10 Limitation of liability", "stance": "negotiate",
       "says": "Advisor's liability capped at fees paid; client exposure uncapped.",
-      "risk": "Asymmetric. Cap also swallows fraud/willful misconduct.",
-      "recommendation": "Add fraud/WM carve-out; note asymmetry to client." },
-    { "clause": "Standard terms (referenced, §12)", "severity": "watch",
+      "risk": "Asymmetric; the cap also swallows fraud/willful misconduct.",
+      "recommendation": "Add a fraud/WM carve-out and flag the asymmetry to the client.",
+      "fallback": "A fees-paid cap is fine once the carve-outs are in — never one that swallows fraud." },
+    { "clause": "Standard terms (referenced, §12)", "stance": "push_back",
       "says": "Letter incorporates the advisor's 'standard terms' by reference.",
       "risk": "Not provided — unreviewed obligations could bind the client.",
-      "recommendation": "Request the standard terms before signing." }
+      "recommendation": "Don't sign until the standard terms are produced and reviewed.",
+      "fallback": "If they can't be produced, strike the incorporation-by-reference." }
   ],
   "business_terms": [
     { "term": "Success fee — 1.75% of enterprise value (§3(a))", "confirm": "Is the rate and the enterprise-value base approved?" },
     { "term": "Retainer — $50,000, non-refundable, credited against success fee (§3(b))", "confirm": "Approved?" },
     { "term": "Tail length — 24 months (§7)", "confirm": "Comfortable with the length (we propose 12)?" },
     { "term": "Exclusivity / term — 12 months (§6)", "confirm": "Approved?" }
-  ],
-  "recommendations": [
-    { "point": "Client indemnity (§9)", "stance": "push_back",
-      "recommendation": "Hold firm on carving the advisor's own gross negligence, willful misconduct, bad faith and fraud out of the indemnity — this is market, and the client's exposure is otherwise open-ended.",
-      "fallback": "If Acme resists, at minimum carve out fraud and willful misconduct — do not sign without at least that." },
-    { "point": "Tail — 24 months, 'any transaction' (§7)", "stance": "negotiate",
-      "recommendation": "Limit the tail to parties the advisor actually introduced and shorten to 12 months; as drafted Acme could earn a fee on a deal it had no hand in.",
-      "fallback": "Accept up to 18 months if firmly limited to named/introduced parties." },
-    { "point": "Advisor liability cap at fees paid (§10)", "stance": "negotiate",
-      "recommendation": "Add a fraud/willful-misconduct carve-out and flag the asymmetry (client exposure is uncapped) to the deal team.",
-      "fallback": "A fees-paid cap is fine once the carve-outs are in; never one that swallows fraud." },
-    { "point": "Retainer — $50,000 non-refundable (§3(b))", "stance": "acceptable",
-      "recommendation": "Market for a mandate of this type. A commercial call for the deal team, but no legal objection.",
-      "fallback": "—" },
-    { "point": "Unseen 'standard terms' (§12)", "stance": "push_back",
-      "recommendation": "Do not sign until the incorporated standard terms are produced and reviewed — they can carry material obligations the client would be bound by unseen.",
-      "fallback": "If they cannot be produced, strike the incorporation-by-reference." }
   ],
   "key_terms": [
     { "term": "Success fee", "provision": "1.75% of enterprise value", "ref": "§3(a)", "href": null },
@@ -246,11 +233,10 @@
 <div class="layout">
   <nav class="toc">
     <div class="eyebrow"><span class="dot"></span> Review Console</div>
-    <a href="#s1"><span class="n">1</span> Legal issues</a>
+    <a href="#s1"><span class="n">1</span> Issues &amp; recs</a>
     <a href="#s2"><span class="n">2</span> Deal terms</a>
-    <a href="#s3"><span class="n">3</span> Recommendations</a>
-    <a href="#s4"><span class="n">4</span> Key terms</a>
-    <a href="#s5"><span class="n">5</span> Client email</a>
+    <a href="#s3"><span class="n">3</span> Key terms</a>
+    <a href="#s4"><span class="n">4</span> Client email</a>
   </nav>
 
   <main>
@@ -261,17 +247,15 @@
       <div class="redline-note"><span class="pill">Redline</span> Tracked-changes markup delivered as a separate <strong>.docx</strong> download.</div>
     </header>
 
-    <section class="panel" id="s1"><div class="panel-head"><span class="num">1</span><h2>Legal issues</h2><span class="count" id="c-issues"></span></div><div class="panel-body flush" id="issues"></div></section>
+    <section class="panel" id="s1"><div class="panel-head"><span class="num">1</span><h2>Legal issues &amp; recommendations</h2><span class="count" id="c-issues"></span></div><div class="panel-body flush" id="issues"></div></section>
 
     <section class="panel" id="s2"><div class="panel-head"><span class="num">2</span><h2>Commercial deal terms — client to confirm</h2><span class="count" id="c-bt"></span></div><div class="panel-body flush" id="bterms"></div></section>
 
-    <section class="panel" id="s3"><div class="panel-head"><span class="num">3</span><h2>Recommendations</h2><span class="count" id="c-recs"></span></div><div class="panel-body flush" id="recs"></div></section>
-
-    <section class="panel" id="s4"><div class="panel-head"><span class="num">4</span><h2>Key terms</h2><span class="count" id="c-kt"></span></div><div class="panel-body flush">
+    <section class="panel" id="s3"><div class="panel-head"><span class="num">3</span><h2>Key terms</h2><span class="count" id="c-kt"></span></div><div class="panel-body flush">
       <div class="twrap"><table><thead><tr><th style="width:32%">Term</th><th>Provision</th></tr></thead><tbody id="kt-body"></tbody></table></div>
     </div></section>
 
-    <section class="panel" id="s5"><div class="panel-head"><span class="num">5</span><h2>Draft client escalation email</h2></div><div class="panel-body">
+    <section class="panel" id="s4"><div class="panel-head"><span class="num">4</span><h2>Draft client escalation email</h2></div><div class="panel-body">
       <div class="email-sub-label">Subject</div>
       <p class="email-sub" id="em-subject"></p>
       <div class="email-body" id="em-body"></div>
@@ -289,8 +273,9 @@
     var data = {};
     try { data = JSON.parse(document.getElementById("review-data").textContent); } catch (e) {}
     var m = data.matter || {}, li = data.legal_issues || [],
-        bt = data.business_terms || [], rc = data.recommendations || [], kt = data.key_terms || [],
+        bt = data.business_terms || [], kt = data.key_terms || [],
         em = data.client_email || {};
+    var STANCE = { push_back: "Push back", negotiate: "Negotiate", acceptable: "Acceptable", walk_away: "Walk-away" };
 
     function esc(s) { return String(s == null ? "" : s).replace(/[&<>]/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
@@ -314,17 +299,18 @@
       P.appendChild(d);
     });
 
-    // 1 Legal issues
+    // 1 Legal issues & recommendations (combined): clause + position + says/risk/rec/fallback
     var I = document.getElementById("issues");
     li.forEach(function (x) {
-      var sev = (x.severity || "watch").toLowerCase();
+      var st = (x.stance || "negotiate").toLowerCase();
       var el = document.createElement("div"); el.className = "issue";
       el.innerHTML =
         '<div class="issue-top"><span class="issue-clause">' + esc(x.clause || "") + "</span>" +
-        '<span class="sev ' + sev + '">' + esc(sev.replace("_", " ")) + "</span></div>" +
-        (x.says ? '<div class="kv"><b>Says:</b> ' + esc(x.says) + "</div>" : "") +
+        '<span class="stance ' + st + '">' + esc(STANCE[st] || st) + "</span></div>" +
+        (x.says ? '<div class="kv"><b>Issue:</b> ' + esc(x.says) + "</div>" : "") +
         (x.risk ? '<div class="kv"><b>Risk:</b> ' + esc(x.risk) + "</div>" : "") +
-        (x.recommendation ? '<div class="kv"><b>Fix:</b> ' + esc(x.recommendation) + "</div>" : "");
+        (x.recommendation ? '<div class="kv"><b>Recommendation:</b> ' + esc(x.recommendation) + "</div>" : "") +
+        (x.fallback && x.fallback !== "—" ? '<div class="kv"><b>Fallback:</b> ' + esc(x.fallback) + "</div>" : "");
       I.appendChild(el);
     });
     count("c-issues", li.length, "issue");
@@ -339,22 +325,7 @@
     });
     count("c-bt", bt.length, "term");
 
-    // 3 Recommendations — judgment: stance + recommendation + fallback
-    var RC = document.getElementById("recs");
-    var STANCE = { push_back: "Push back", negotiate: "Negotiate", acceptable: "Acceptable", walk_away: "Walk-away" };
-    rc.forEach(function (x) {
-      var st = (x.stance || "negotiate").toLowerCase();
-      var el = document.createElement("div"); el.className = "rec";
-      el.innerHTML =
-        '<div class="rec-top"><span class="rec-point">' + esc(x.point || "") + "</span>" +
-        '<span class="stance ' + st + '">' + esc(STANCE[st] || st) + "</span></div>" +
-        (x.recommendation ? '<div class="rec-body">' + esc(x.recommendation) + "</div>" : "") +
-        (x.fallback && x.fallback !== "—" ? '<div class="rec-fallback"><b>Fallback:</b> ' + esc(x.fallback) + "</div>" : "");
-      RC.appendChild(el);
-    });
-    count("c-recs", rc.length, "call");
-
-    // 4 Key terms — two columns: Term | Provision (with clause ref, hyperlinked if href)
+    // 3 Key terms — two columns: Term | Provision (with clause ref, hyperlinked if href)
     var tb = document.getElementById("kt-body");
     kt.forEach(function (r2) {
       var ref = r2.ref ? (r2.href
@@ -368,7 +339,7 @@
     });
     count("c-kt", kt.length, "term");
 
-    // 5 Email
+    // 4 Email
     set("em-subject", em.subject || "");
     document.getElementById("em-body").innerHTML = mdBold(em.body_markdown || "");
     function plain(s) { return String(s || "").replace(/\*\*/g, ""); }

@@ -18,17 +18,19 @@ and `reference/output-contract.md` exactly.
 
 **Be brief and high-level — match the Acme reference run.** No preamble, no
 process narration, no restating the document. Hard caps: legal issues **3–6**
-(highest-value only), deal terms **≤ 5**, recommendations **≤ 5**, console key
-terms **≤ 12**; each field one clause, not a paragraph.
+(highest-value only), deal terms **≤ 5**, console key terms **≤ 12**; each field
+one clause, not a paragraph.
 
 Deliver, in this order:
 
 1. **In chat (the succinct first glance)** — open with the **matter block: the
    two parties on two separate lines (real name + role) and the document type —
-   facts only, no opinion, no "overall read"**; then go straight to **Legal
-   issues** (3–6, most-serious first), then **Commercial deal terms** (≤ 5,
-   present don't opine), then **Recommendations** (≤ 5; push back / negotiate /
-   acceptable, one sentence + short fallback). **No redline box in chat.**
+   facts only, no opinion, no "overall read"**; then one combined **Legal issues
+   & recommendations** section (3–6, most-serious first; each: Issue, Risk,
+   **Position** = push back / negotiate / acceptable, Recommendation, Fallback —
+   one clause each); then **Commercial deal terms** (≤ 5, present don't opine).
+   Do **not** split issues and recommendations into two sections. **No redline
+   box in chat.**
 2. **Downloadable redline** — the actual document marked up inline as a native
    tracked-changes `.docx` (via `tools/redline_to_docx.py`); attach it.
 3. **HTML console** — populate `assets/console-template.html` (header narration +

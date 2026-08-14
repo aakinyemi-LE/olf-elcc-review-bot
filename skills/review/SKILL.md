@@ -1,6 +1,6 @@
 ---
 name: review
-description: First-pass OLF review of an engagement letter or corporate commercial contract, end to end. Trigger when the lawyer uploads or points to an engagement letter, advisor/investment-bank engagement, or a commercial/vendor/SaaS/MSA/consulting contract and wants it reviewed — e.g. "review this engagement letter", "first-pass this advisor letter", "review this vendor agreement", "redline this contract", "run the review". Produces the chat packet (matter narration, legal issues, commercial deal terms, recommendations), a downloadable tracked-changes .docx redline, and an HTML console (key terms + draft client email). Draft-only — nothing sends.
+description: First-pass OLF review of an engagement letter or corporate commercial contract, end to end. Trigger when the lawyer uploads or points to an engagement letter, advisor/investment-bank engagement, or a commercial/vendor/SaaS/MSA/consulting contract and wants it reviewed — e.g. "review this engagement letter", "first-pass this advisor letter", "review this vendor agreement", "redline this contract", "run the review". Produces the chat packet (matter block, combined legal issues & recommendations, commercial deal terms), a downloadable tracked-changes .docx redline, and an HTML console (key terms + draft client email). Draft-only — nothing sends.
 ---
 
 # Review an engagement letter or commercial contract (first pass)
@@ -42,9 +42,12 @@ heavy lifting, but the default is to run the whole pass here in one go.
 2. **Extract key terms** (skill `summarize-matter`, brain §3.2). Fill
    `key_terms[]` and the matter narration. Check every number and its measurement
    point separately.
-3. **Spot & classify issues** (skill `spot-issues`, brain §4–§8). Walk the clause
-   families, run the cross-cutting sweep, classify each issue, and split
-   business vs legal. Fill `issues[]` and `business_terms[]`.
+3. **Spot, classify & take a position on issues** (skill `spot-issues`, brain
+   §4–§8, §11). Walk the clause families, run the cross-cutting sweep, classify
+   each issue, split business vs legal, and — for each legal issue — set the
+   **position** (push back / negotiate / acceptable) and a **fallback**. Fill
+   `issues[]` (each carrying `stance`, `recommendation`, `fallback`) and
+   `business_terms[]`. Issue and recommendation are **one combined item**, not two.
 4. **Ground with playbook/precedent if accessible** (brain §9). If a relevant
    client playbook or precedent is reachable through connected systems, fold it
    in to sharpen positions. If not, note that in one line and proceed. Never
@@ -52,12 +55,9 @@ heavy lifting, but the default is to run the whole pass here in one go.
 5. **Author the redline** (skill `redline`, brain §10). Produce `redline.edits[]`
    against the actual document (minimum necessary intervention), then export the
    tracked-changes `.docx`.
-6. **Form recommendations** (brain §11). For each material point take a stance —
-   push back / negotiate / acceptable / walk-away — with a reason and a fallback.
-   Fill `recommendations[]`. Judgment, not a checklist.
-7. **Draft the client escalation email** (skill `client-email`). Fill
+6. **Draft the client escalation email** (skill `client-email`). Fill
    `client_email` from the business terms and a brief legal note.
-8. **Build the console** — render and publish the HTML artifact.
+7. **Build the console** — render and publish the HTML artifact.
 
 Persist everything to `<slug>.review-state.json` as you go — it single-sources
 all three outputs.
@@ -67,8 +67,8 @@ all three outputs.
 **Be brief — this is the contract, not a preference** (see output-contract
 "Brevity"). Match the Acme reference run: high-level, terse, high-value only. No
 preamble, no process narration, no restating the document. Hard caps: legal
-issues **3–6**, deal terms **≤ 5**, recommendations **≤ 5**, console key terms
-**≤ 12**; each field one clause, not a paragraph.
+issues **3–6**, deal terms **≤ 5**, console key terms **≤ 12**; each field one
+clause, not a paragraph.
 
 The **redline lives only in the downloadable `.docx`** — no redline box in chat,
 no redline panel in the console. Both surfaces open with the matter block (parties
@@ -78,12 +78,12 @@ no redline panel in the console. Both surfaces open with the matter block (parti
 1. **Matter block** — three lines only: counterparty (name + role), client (name
    + role), document type/sub-type + Simple/Complex. **No assessment of how the
    paper reads.**
-2. **Legal issues** — the 3–6 highest-value red flags, most-serious first; each
-   Issue/Risk/Fix a single clause.
+2. **Legal issues & recommendations** (combined) — the 3–6 highest-value points,
+   most-serious first. Each: Issue, Risk, **Position** (push back / negotiate /
+   acceptable), Recommendation, Fallback — each field a single clause. This is
+   **one section**, not a separate issues list and recommendations list.
 3. **Commercial deal terms for the client's confirmation** (≤ 5) — business terms,
    presented not opined, one line each.
-4. **Recommendations** (≤ 5) — push back / negotiate / acceptable, one sentence +
-   short fallback. Not an administrative list.
 
 Close with one line pointing to the downloadable `.docx` redline and to the
 console (which holds the full packet including **key terms** and the **draft
@@ -92,15 +92,16 @@ client escalation email**).
 ### Console (the full on-screen packet)
 The chat is the succinct view; the console is the complete reference. Its
 **header carries the matter block** (title, the two parties one per line,
-document type, redline-is-a-`.docx` note) — **no opinion line**; below it: legal
-issues → deal terms → recommendations → key terms → draft email. No separate
-matter-summary section.
+document type, redline-is-a-`.docx` note) — **no opinion line**; below it: the
+combined legal issues & recommendations → deal terms → key terms → draft email.
+No separate matter-summary section and no separate recommendations section.
 - Populate `${CLAUDE_PLUGIN_ROOT}/assets/console-template.html` — replace the JSON
   inside its `<script id="review-data">` block with the matter's data
-  (`matter{title, party_lines[], doc_type}`, `legal_issues[]`,
-  `business_terms[]`, `recommendations[]`, `key_terms[]`, `client_email`; **no
-  `redline` key, no `overall_read`**; see the template header and the output
-  contract's "Console data" note). `matter.party_lines` is one string per party
+  (`matter{title, party_lines[], doc_type}`, `legal_issues[]` — each carrying
+  `clause, stance, says, risk, recommendation, fallback`, `business_terms[]`,
+  `key_terms[]`, `client_email`; **no separate `recommendations[]`, no `redline`
+  key, no `overall_read`**; see the template header and the output contract's
+  "Console data" note). `matter.party_lines` is one string per party
   (rendered on its own line); `key_terms[]` is two columns — `term` and
   `provision` with a `ref` (and
   optional `href` to hyperlink the clause). It is a straight projection of the

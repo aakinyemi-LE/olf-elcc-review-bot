@@ -34,24 +34,26 @@ split, §9 playbook/precedent. Use the `review-state` shape from
    issues to the lawyer's worklist (and they drive the redline); route business
    terms to `business_terms[]` (they seed the client email). Split hybrids (e.g.
    success fee: % is business, fee-base definition is legal).
-6. **Form recommendations** (§11): for each material point take a **stance** —
-   `push_back` / `negotiate` / `acceptable` / `walk_away` — with a reason and a
-   `fallback` landing zone. This is judgment ("concede this, fight that"), not an
-   administrative checklist. Fill `recommendations[]`.
+6. **Take a position on each legal issue** (§11): the issue and its
+   recommendation are **one combined item**, not two. For each legal issue set a
+   **stance** — `push_back` / `negotiate` / `acceptable` / `walk_away` — a
+   one-sentence `recommendation` (the fix + why), and a `fallback` landing zone.
+   This is judgment ("concede this, fight that"), not an administrative checklist.
 
 ## Output
 
-Fill `issues[]` (with `class`, `audience`, `clause`, `says`, `risk`,
-`recommendation`), `business_terms[]`, and `recommendations[]` (`point`, `stance`,
-`recommendation`, `fallback`).
+Fill `issues[]` — each carrying `audience`, `clause`, `says`, `risk`, `stance`,
+`recommendation`, and `fallback` (the **combined** issue + recommendation) — and
+`business_terms[]`. **There is no separate `recommendations[]` array**; the
+position and fallback live on the issue.
 
 **Keep it high-value and terse** (per output-contract "Brevity"). Surface only
-the **3–6 highest-value** legal issues, **≤ 5** business terms, **≤ 5**
-recommendations — drop minor/market points rather than padding. Each field is a
-single clause, not a paragraph; no restating the clause verbatim, no essays.
+the **3–6 highest-value** legal issues and **≤ 5** business terms — drop
+minor/market points rather than padding. Each field is a single clause, not a
+paragraph; no restating the clause verbatim, no essays.
 
-When standalone, present: legal issues (most-serious first), commercial terms for
-confirmation, then the recommendations with their stances. **Present business
-terms, never opine** on price or deal merits; where a stance turns on commercial
-appetite, say it is subject to the deal team's call. Offer to proceed to the
-redline and client email.
+When standalone, present one **combined "Legal issues & recommendations"** list
+(most-serious first) — each with its position and fallback — then the commercial
+terms for confirmation. **Present business terms, never opine** on price or deal
+merits; where a stance turns on commercial appetite, say it is subject to the
+deal team's call. Offer to proceed to the redline and client email.

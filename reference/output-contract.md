@@ -61,13 +61,18 @@ for.**
 
 That is the entire matter block. Then go directly to §2.
 
-### 2. Legal issues
-The **3–6 highest-value** red flags only, most-serious first. Skip minor/market
-points. For each, one tight entry — **each field a single clause, not a
-paragraph**:
+### 2. Legal issues & recommendations
+The legal worklist and the call on each, **combined into one section** (they
+covered the same ground twice — now once). One entry per point, the **3–6
+highest-value only**, most-serious / highest-leverage first. Skip minor/market
+points. Each field a single clause, not a paragraph:
 - **Issue** — clause ref + what it does (terse).
 - **Risk** — why it bites the client (one clause).
-- **Fix** — the proposed change (matches the `.docx`; one clause).
+- **Position** — **Push back** / **Negotiate** / **Acceptable** (/ **Walk-away**).
+- **Recommendation** — one sentence: the fix and why, in the client's interest
+  (matches the change marked in the `.docx`).
+- **Fallback** — one clause: what we could live with if resisted (or "—").
+Draft-only — never auto-send.
 
 ### 3. Commercial deal terms for the client's confirmation
 The business calls — **≤ 5**, present don't opine. One line each:
@@ -75,15 +80,6 @@ The business calls — **≤ 5**, present don't opine. One line each:
 - **Confirm** — the specific decision the client must make.
 Fees, success-fee %/base, term length, exclusivity, caps/insurance *amounts*,
 publicity.
-
-### 4. Recommendations
-The lawyer's **judgment** on the top points — **≤ 5**, highest-leverage first.
-Not a checklist. One line of recommendation plus a short fallback; no essays.
-- **Point** — the issue/term at stake (with its clause ref).
-- **Stance** — **Push back** / **Negotiate** / **Acceptable** / **Walk-away**.
-- **Recommendation** — one sentence: what to do and why, in the client's interest.
-- **Fallback** — one clause: what we could live with if resisted (or "—").
-Order by leverage. Draft-only — never auto-send.
 
 Close the chat message with a one-line pointer to the downloadable `.docx`
 redline and to the console (which holds the full packet including **key terms**
@@ -99,14 +95,14 @@ per line, document type, and a note that the tracked-changes redline is a separa
 `.docx` download. **No overall-read / opinion line.** There is **no separate
 matter-summary section**. Below the header:
 
-- **1. Legal issues** — the red-flag/watch worklist (clause · says · risk · fix).
+- **1. Legal issues & recommendations** — the combined worklist: clause · what it
+  does · risk · position (push back / negotiate / acceptable) · recommendation ·
+  fallback.
 - **2. Commercial deal terms** — the client's business calls (term · confirm).
-- **3. Recommendations** — judgment calls: point · stance (push back / negotiate /
-  acceptable / walk-away) · recommendation · fallback.
 
 …plus the two items the chat does **not** show:
 
-### 4. Key terms
+### 3. Key terms
 The operative terms from the by-hand extraction, in exactly **two columns**:
 - **Term** — the term's name (e.g. "Success fee", "Tail period").
 - **Provision** — what the agreement provides for that term, **including its
@@ -127,12 +123,13 @@ Draft-only, with a copy affordance. It never sends.
 that is a display projection of the review-state — keys: `matter{title,
 party_lines[], doc_type}` (the header block; `party_lines` is one string per
 party, rendered on its own line; **no `overall_read`/opinion**), `legal_issues[]`
-(`clause, severity, says, risk,
-recommendation`), `business_terms[]` (`term, confirm`), `recommendations[]`
-(`point, stance, recommendation, fallback`), `key_terms[]` (`term, provision,
-ref, href`), and `client_email{subject, body_markdown}`. No `redline` key — the
-redline is the `.docx` only. Map straight from the review-state fields below; the
-console never introduces content the chat/redline don't already carry.
+(`clause, stance, says, risk, recommendation, fallback` — the **combined**
+issue+recommendation), `business_terms[]` (`term, confirm`), `key_terms[]`
+(`term, provision, ref, href`), and `client_email{subject, body_markdown}`. **No
+separate `recommendations[]`** (folded into `legal_issues[]`) and **no `redline`
+key** (the redline is the `.docx` only). Map straight from the review-state
+fields below; the console never introduces content the chat/redline don't
+already carry.
 
 ---
 
@@ -160,18 +157,15 @@ One JSON object drives all three outputs. Written to the working dir as
       "ref": "§3(a)", "href": null }
   ],
   "issues": [
-    { "id": "L1", "class": "red_flag", "audience": "legal", "clause": "Indemnification",
+    { "id": "L1", "audience": "legal", "clause": "Indemnification (§9)",
+      "stance": "push_back",
       "says": "Client indemnifies advisor incl. advisor's own negligence",
       "risk": "Open-ended; no carve-out for advisor GN/WM/fraud",
-      "recommendation": "Carve out advisor's gross negligence, willful misconduct, bad faith, fraud" }
+      "recommendation": "Carve out advisor's gross negligence, willful misconduct, bad faith, fraud — market standard.",
+      "fallback": "If resisted, at minimum carve out fraud and willful misconduct." }
   ],
   "business_terms": [
     { "term": "Success fee — 1.75% of EV", "confirm": "Is 1.75% and the EV base approved?" }
-  ],
-  "recommendations": [
-    { "point": "Client indemnity (§9)", "stance": "push_back",
-      "recommendation": "Hold firm on carving advisor fault out of the indemnity — market standard; exposure is otherwise open-ended.",
-      "fallback": "If resisted, at minimum carve out fraud and willful misconduct." }
   ],
   "redline": {
     "edits": [
@@ -189,11 +183,12 @@ One JSON object drives all three outputs. Written to the working dir as
 }
 ```
 
-- `issues[].class` ∈ `red_flag | watch | business | acceptable`;
-  `audience` ∈ `legal | business`.
-- `recommendations[].stance` ∈ `push_back | negotiate | acceptable | walk_away`.
-  Each recommendation is a judgment call with a `fallback` landing zone — not an
-  administrative step.
+- Each legal `issues[]` entry is the **combined** issue + recommendation:
+  `clause`, `says` (what it does), `risk`, `stance` ∈ `push_back | negotiate |
+  acceptable | walk_away`, `recommendation` (one-sentence fix + why), and
+  `fallback` (landing zone, or "—"). `audience` ∈ `legal | business`. There is
+  **no separate `recommendations[]` array** — the position and fallback live on
+  the issue.
 - `key_terms[]` renders as two columns (**Term** · **Provision**); `ref` is the
   clause reference and, when `href` is present, the console hyperlinks it to the
   source. A downloadable `.docx` has no addressable anchor, so `href` is set only

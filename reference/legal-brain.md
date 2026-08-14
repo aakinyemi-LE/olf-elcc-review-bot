@@ -260,10 +260,14 @@ machinery.
 
 ---
 
-## 11. Recommendations (the judgment call)
+## 11. Position on each issue (the judgment call)
 
-Recommendations are the lawyer's *judgment*, not an administrative checklist.
-For each material point, take a position and give a landing zone:
+The recommendation is **not a separate list** — it is the position carried on
+each legal issue. Every legal issue you surface already answers "so what do we do
+about it": a stance, a one-sentence recommendation, and a fallback. Issue and
+recommendation are one combined item, shown once.
+
+For each legal issue, take a position and give a landing zone:
 
 - **Stance** — one of:
   - **Push back** — off-market or unacceptable; hold firm (e.g. an uncapped client
