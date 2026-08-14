@@ -64,6 +64,13 @@ all three outputs.
 
 ## Deliver
 
+> **STRUCTURE (do not deviate):** the chat has exactly three sections —
+> **1) Matter block**, **2) Legal issues & recommendations** (ONE combined
+> section), **3) Commercial deal terms**. Do **NOT** output a separate
+> "Recommendations" section. Each legal point carries its own Position (push
+> back / negotiate / acceptable), Recommendation, and Fallback inline. Issue and
+> recommendation appear **together, once**.
+
 **Be brief — this is the contract, not a preference** (see output-contract
 "Brevity"). Match the Acme reference run: high-level, terse, high-value only. No
 preamble, no process narration, no restating the document. Hard caps: legal

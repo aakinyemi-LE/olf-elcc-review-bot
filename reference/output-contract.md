@@ -6,10 +6,13 @@ parties on two separate lines** — there is no separate "matter summary" sectio
 
 - **The redline lives only in the downloadable tracked-changes `.docx`.** It is
   never rendered on-screen — not in chat, not in the console.
-- **Chat** is the succinct first glance: the matter narration, then legal issues,
-  commercial deal terms, and recommendations.
-- **The HTML console** carries the narration in its header, then legal issues,
-  deal terms, recommendations, key terms, and the draft client escalation email.
+- **Chat** is the succinct first glance: the matter block, then **one combined
+  "Legal issues & recommendations" section**, then commercial deal terms. There
+  is **no separate recommendations section** — the position and fallback live on
+  each issue.
+- **The HTML console** carries the matter block in its header, then the same
+  combined "Legal issues & recommendations" section, deal terms, key terms, and
+  the draft client escalation email.
 
 Everything is single-sourced from one `review-state` object so the chat, the
 `.docx`, and the console never disagree.
@@ -17,13 +20,13 @@ Everything is single-sourced from one `review-state` object so the chat, the
 **Brevity is the contract, not a preference.** The lawyer is scanning, not
 reading. Match the Acme reference run: high-level, terse, high-value only.
 
-- **Hard caps** — Legal issues: **the 3–6 highest-value only**, most-serious
-  first. Deal terms: **≤ 5**. Recommendations: **≤ 5**. Key terms (console): the
-  material terms only, **≤ 12**. If something is minor, drop it — do not pad to
-  look thorough.
-- **One line per field.** Each issue's Issue/Risk/Fix is a single clause, not a
-  paragraph. Each recommendation is one sentence plus a short fallback. No
-  multi-sentence explanations, no sub-bullets, no restating the clause verbatim.
+- **Hard caps** — the combined Legal issues & recommendations: **the 3–6
+  highest-value only**, most-serious first. Deal terms: **≤ 5**. Key terms
+  (console): the material terms only, **≤ 12**. If something is minor, drop it —
+  do not pad to look thorough.
+- **One line per field.** Each entry's Issue / Risk / Recommendation / Fallback is
+  a single clause, not a paragraph. No multi-sentence explanations, no
+  sub-bullets, no restating the clause verbatim.
 - **No process narration and no preamble** — never "I read the document…",
   "Here is the review…", status lines, methodology, confidence, or precedent
   talk. Open on the parties; close on the pointers.
