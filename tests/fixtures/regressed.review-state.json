@@ -1,0 +1,33 @@
+{
+  "matter": {
+    "party_lines": [
+      "A \u2014 advisor",
+      "B \u2014 client"
+    ],
+    "doc_type": "EL",
+    "overall_read": "advisor-friendly paper"
+  },
+  "legal_issues": [
+    {
+      "clause": "\u00a76",
+      "stance": "push_back",
+      "says": "x",
+      "risk": "y",
+      "recommendation": "z"
+    }
+  ],
+  "recommendations": [
+    {
+      "point": "\u00a76",
+      "stance": "push_back",
+      "recommendation": "z",
+      "fallback": "w"
+    }
+  ],
+  "business_terms": [],
+  "key_terms": [],
+  "client_email": {
+    "subject": "s",
+    "body_markdown": "b"
+  }
+}

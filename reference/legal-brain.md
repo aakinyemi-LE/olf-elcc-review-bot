@@ -90,6 +90,13 @@ per §9. If not, proceed on the brain alone and say so — do not stall.
 
 ## 4. Issue classification
 
+This section is the **internal detection-and-routing** axis: it decides *whether*
+something is worth surfacing and *to whom* (legal → the lawyer's worklist;
+business → the client). It is distinct from the **position** you take on a legal
+issue — that is the `stance` in §11 (push back / negotiate / acceptable), and the
+stance is what the output actually shows. Detect and route here; take the position
+in §11.
+
 Every issue resolves to exactly one class. When torn, escalate up the list
 (RED FLAG over WATCH, WATCH over ACCEPTABLE) — under-flagging is the costly error.
 

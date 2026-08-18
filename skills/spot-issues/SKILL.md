@@ -42,7 +42,7 @@ split, §9 playbook/precedent. Use the `review-state` shape from
 
 ## Output
 
-Fill `issues[]` — each carrying `audience`, `clause`, `says`, `risk`, `stance`,
+Fill `legal_issues[]` — each carrying `audience`, `clause`, `says`, `risk`, `stance`,
 `recommendation`, and `fallback` (the **combined** issue + recommendation) — and
 `business_terms[]`. **There is no separate `recommendations[]` array**; the
 position and fallback live on the issue.

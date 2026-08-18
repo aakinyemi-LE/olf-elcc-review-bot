@@ -9,10 +9,10 @@ Package the review's business decisions and legal posture into one clear email
 the client can act on. It goes to the **client / deal team** who engaged OLF —
 not to the counterparty.
 
-**Read first:** the `client_email` and item-4/item-3 sections of
-`${CLAUDE_PLUGIN_ROOT}/reference/output-contract.md`. Single-source from the same
-`business_terms[]` and legal `issues[]` the review already produced — do not
-re-analyse or introduce anything new.
+**Read first:** the `client_email`, "Commercial deal terms", and "Legal issues &
+recommendations" sections of `${CLAUDE_PLUGIN_ROOT}/reference/output-contract.md`.
+Single-source from the same `business_terms[]` and `legal_issues[]` the review
+already produced — do not re-analyse or introduce anything new.
 
 ## Structure
 
@@ -23,7 +23,7 @@ re-analyse or introduce anything new.
   crisp question with the proposed number. Present, don't opine — no "this fee
   looks high." This is the heart of the email.
 - **Legal points we're handling** — a brief, non-alarming summary of the main
-  red flags and how the markup addresses them (from the legal `issues[]`). Enough
+  red flags and how the markup addresses them (from the `legal_issues[]`). Enough
   for the client to understand, not a legal memo.
 - **Any open questions / watch items** — unseen incorporated docs, ambiguities.
 - **Clear ask + next step** — what you need back and by when (leave the date for
@@ -34,5 +34,6 @@ re-analyse or introduce anything new.
 ## Output
 
 Fill `client_email{subject, body_markdown}` in the review-state. The email is a
-**draft** — it renders in the HTML console (item 7) with a copy affordance and is
-never sent. The lawyer edits and sends it from their own client.
+**draft** — it renders in the HTML console (the "Draft client escalation email"
+section) with a copy affordance and is never sent. The lawyer edits and sends it
+from their own client.

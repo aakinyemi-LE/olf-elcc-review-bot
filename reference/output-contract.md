@@ -116,7 +116,7 @@ The operative terms from the by-hand extraction, in exactly **two columns**:
   addressable anchor, so hyperlinks resolve only when the source is hosted with
   anchors — e.g. a PDF page link or an HTML/Docs URL.)
 
-### 5. Draft client escalation email
+### 4. Draft client escalation email
 The ready-to-edit email to the client / deal team: subject, greeting, one-line
 context, **Business decisions we need from you** (the deal terms), **Legal points
 we're handling** (brief, from the legal issues), a clear ask, and a sign-off.
@@ -159,7 +159,7 @@ One JSON object drives all three outputs. Written to the working dir as
     { "term": "Success fee", "provision": "1.75% of enterprise value",
       "ref": "§3(a)", "href": null }
   ],
-  "issues": [
+  "legal_issues": [
     { "id": "L1", "audience": "legal", "clause": "Indemnification (§9)",
       "stance": "push_back",
       "says": "Client indemnifies advisor incl. advisor's own negligence",
@@ -186,7 +186,7 @@ One JSON object drives all three outputs. Written to the working dir as
 }
 ```
 
-- Each legal `issues[]` entry is the **combined** issue + recommendation:
+- Each `legal_issues[]` entry is the **combined** issue + recommendation:
   `clause`, `says` (what it does), `risk`, `stance` ∈ `push_back | negotiate |
   acceptable | walk_away`, `recommendation` (one-sentence fix + why), and
   `fallback` (landing zone, or "—"). `audience` ∈ `legal | business`. There is

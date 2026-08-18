@@ -1,0 +1,166 @@
+{
+  "matter": {
+    "title": "Engagement Letter (sell-side M&A advisory) — Calder & Rowe ↔ Ashton / Pembroke Ridge",
+    "doc_family": "engagement_letter",
+    "sub_type": "m&a advisor",
+    "complexity": "complex",
+    "party_lines": [
+      "Calder & Rowe Securities LLC — exclusive sell-side financial advisor",
+      "Ashton Medical Devices, Inc. & Pembroke Ridge Capital, L.P. — client"
+    ],
+    "doc_type": "Engagement letter · sell-side M&A advisory · Complex"
+  },
+  "source": {
+    "text": "9. INDEMNIFICATION. The Client shall indemnify the Advisor for any and all losses arising from the engagement.",
+    "path": null
+  },
+  "legal_issues": [
+    {
+      "clause": "§6 Indemnity",
+      "audience": "legal",
+      "stance": "push_back",
+      "says": "Client indemnifies the advisor incl. losses partly caused by the advisor; carve-out only for loss found solely from intentional misconduct.",
+      "risk": "Client bears the advisor's own negligence; the standard is far off-market.",
+      "recommendation": "Carve out advisor negligence/GN/WM/bad faith/fraud; delete 'solely'.",
+      "fallback": "At minimum GN/WM/bad faith/fraud, and drop 'solely'."
+    },
+    {
+      "clause": "§2 Fee trigger",
+      "audience": "legal",
+      "stance": "push_back",
+      "says": "1.9% fee (min $3.5m) earned on an IOI/LOI and due even if the deal fails to close.",
+      "risk": "Multimillion-dollar fee with no completed deal and no proceeds.",
+      "recommendation": "Fee earned only on closing; not due if the deal fails.",
+      "fallback": "Tie to a definitive agreement that later closes."
+    },
+    {
+      "clause": "§6 Advisor cap",
+      "audience": "legal",
+      "stance": "push_back",
+      "says": "Advisor's liability capped at retainers paid while the client's indemnity is uncapped.",
+      "risk": "Grossly asymmetric; the cap also swallows advisor fraud/WM.",
+      "recommendation": "Reset the symmetry and carve fraud/WM/GN out of any cap.",
+      "fallback": "A cap at fees paid only if the indemnity is correspondingly limited."
+    },
+    {
+      "clause": "§5 Tail",
+      "audience": "legal",
+      "stance": "negotiate",
+      "says": "30-month tail on any transaction; no covered-party list, no breach exception.",
+      "risk": "Fee survives on deals the advisor never touched.",
+      "recommendation": "Shorten to 12 months, limit to a named covered-party list, disapply on advisor breach.",
+      "fallback": "Up to 18 months if firmly limited to a named list."
+    },
+    {
+      "clause": "§4 Expenses",
+      "audience": "legal",
+      "stance": "negotiate",
+      "says": "All advisor & affiliate expenses reimbursed — uncapped, no approval, no receipts.",
+      "risk": "Open-ended, unverifiable spend on the client's account.",
+      "recommendation": "Require receipts and prior approval over a threshold; exclude internal allocations.",
+      "fallback": "A monthly cap with reconciliation."
+    }
+  ],
+  "business_terms": [
+    {
+      "term": "Success fee — 1.9% of Aggregate Consideration, $3.5m minimum (§2)",
+      "confirm": "Is the rate, minimum and base approved?"
+    },
+    {
+      "term": "Retainers — $100k signing + $40k/month for six months (§2)",
+      "confirm": "Approved?"
+    },
+    {
+      "term": "Exclusivity & 'Client Group' lock-in (§1/§3)",
+      "confirm": "Comfortable being tied to the advisor across the sponsor family?"
+    },
+    {
+      "term": "Term — 18 months, auto-renewing (§5)",
+      "confirm": "Approved?"
+    },
+    {
+      "term": "Sponsor guarantee & public use of names/logos (§6/§7)",
+      "confirm": "Acceptable, or resist?"
+    }
+  ],
+  "key_terms": [
+    {
+      "term": "Success fee",
+      "provision": "1.9% of Aggregate Consideration, $3.5m minimum",
+      "ref": "§2",
+      "href": null
+    },
+    {
+      "term": "Fee trigger",
+      "provision": "Earned on IOI/LOI/definitive/closing; due even if the deal fails",
+      "ref": "§2",
+      "href": null
+    },
+    {
+      "term": "Retainers",
+      "provision": "$100k signing + $40k/month for six months",
+      "ref": "§2",
+      "href": null
+    },
+    {
+      "term": "Exclusivity",
+      "provision": "No Client Group member may pursue a Transaction without the advisor",
+      "ref": "§1/§3",
+      "href": null
+    },
+    {
+      "term": "Expenses",
+      "provision": "All advisor & affiliate expenses, uncapped, no approval",
+      "ref": "§4",
+      "href": null
+    },
+    {
+      "term": "Term",
+      "provision": "18 months, auto-renews unless 90 days' notice",
+      "ref": "§5",
+      "href": null
+    },
+    {
+      "term": "Tail",
+      "provision": "30 months; no covered-party list or breach exception",
+      "ref": "§5",
+      "href": null
+    },
+    {
+      "term": "Indemnity / cap",
+      "provision": "Client indemnifies advisor incl. its own fault; advisor cap at retainers",
+      "ref": "§6",
+      "href": null
+    },
+    {
+      "term": "Sponsor guarantee",
+      "provision": "Sponsor guarantees every Company obligation",
+      "ref": "§7",
+      "href": null
+    },
+    {
+      "term": "Governing law",
+      "provision": "New York; exclusive NY County courts; jury-trial waiver",
+      "ref": "§7",
+      "href": null
+    }
+  ],
+  "redline": {
+    "edits": [
+      {
+        "op": "replace",
+        "section": "§6 Indemnity",
+        "gate_class": "card",
+        "cites": "L1",
+        "anchor": "for any and all losses arising from the engagement",
+        "before": "for any and all losses arising from the engagement",
+        "after": "for any and all losses arising from the engagement, except to the extent arising from the Advisor's gross negligence, willful misconduct or fraud",
+        "rationale": "Carve advisor fault out of the client indemnity."
+      }
+    ]
+  },
+  "client_email": {
+    "subject": "Ashton / Pembroke Ridge — Calder & Rowe engagement letter: decisions needed",
+    "body_markdown": "Hi team,\n\nWe've run a first-pass review and drafted a markup. A few commercial points need your call: success fee (§2), retainers (§2), exclusivity (§1/§3), term (§5), and the sponsor guarantee/publicity (§6/§7). On the legal side we're handling the indemnity and cap (§6), the fee trigger (§2), the tail (§5) and expenses (§4).\n\nBest,\n[Name / title]"
+  }
+}

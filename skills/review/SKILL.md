@@ -46,7 +46,7 @@ heavy lifting, but the default is to run the whole pass here in one go.
    §4–§8, §11). Walk the clause families, run the cross-cutting sweep, classify
    each issue, split business vs legal, and — for each legal issue — set the
    **position** (push back / negotiate / acceptable) and a **fallback**. Fill
-   `issues[]` (each carrying `stance`, `recommendation`, `fallback`) and
+   `legal_issues[]` (each carrying `stance`, `recommendation`, `fallback`) and
    `business_terms[]`. Issue and recommendation are **one combined item**, not two.
 4. **Ground with playbook/precedent if accessible** (brain §9). If a relevant
    client playbook or precedent is reachable through connected systems, fold it
@@ -116,6 +116,28 @@ No separate matter-summary section and no separate recommendations section.
   the filled file to the working dir, then publish it with the **Artifact** tool
   (favicon 📝, a short matter-specific title). Surface the returned link in chat.
 - Send the tracked-changes `.docx` to the lawyer (SendUserFile, `attach`).
+
+## Self-check before delivering
+
+Run this checklist against your output and the `review-state` before you post.
+Fix any miss, then deliver. (The invariants are also machine-checkable — see
+`${CLAUDE_PLUGIN_ROOT}/tools/check_review_state.py`.)
+
+- **Shape:** chat has exactly three sections — Matter block, Legal issues &
+  recommendations, Commercial deal terms. **No separate "Recommendations"
+  section.** No redline box in chat.
+- **Matter block:** two party lines + document type only. No opinion / "overall
+  read" / "advisor-friendly".
+- **Combined issues:** every legal issue carries `stance`, `recommendation`, and
+  `fallback`. No standalone `recommendations[]`.
+- **Caps:** legal issues 3–6; deal terms ≤ 5; console key terms ≤ 12. Trim, don't
+  pad.
+- **Brevity:** each field one clause; no preamble, no process narration, no
+  restating the document.
+- **Grounding:** every party name, number, and clause reference is actually in the
+  document. No invented matter numbers or identifiers.
+- **Artifacts:** the `.docx` redline is attached; the console link is surfaced.
+- **Draft-only:** nothing was sent.
 
 ## Guardrails
 
