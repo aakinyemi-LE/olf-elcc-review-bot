@@ -124,15 +124,26 @@ Draft-only, with a copy affordance. It never sends.
 
 **Console data.** The template reads one JSON block (`<script id="review-data">`)
 that is a display projection of the review-state — keys: `matter{title,
-party_lines[], doc_type}` (the header block; `party_lines` is one string per
-party, rendered on its own line; **no `overall_read`/opinion**), `legal_issues[]`
-(`clause, stance, says, risk, recommendation, fallback` — the **combined**
-issue+recommendation), `business_terms[]` (`term, confirm`), `key_terms[]`
-(`term, provision, ref, href`), and `client_email{subject, body_markdown}`. **No
-separate `recommendations[]`** (folded into `legal_issues[]`) and **no `redline`
-key** (the redline is the `.docx` only). Map straight from the review-state
-fields below; the console never introduces content the chat/redline don't
-already carry.
+party_lines[], doc_type, source_url?}` (the header block; `party_lines` is one
+string per party, rendered on its own line; **no `overall_read`/opinion**;
+`source_url` is the hosted document URL, if any — see refs below), `legal_issues[]`
+(`clause, stance, says, risk, recommendation, fallback`, optional `anchor`/`href`
+— the **combined** issue+recommendation), `business_terms[]` (`term, confirm`,
+optional `ref`/`anchor`/`href`), `key_terms[]` (`term, provision, ref`, optional
+`anchor`/`href`), and `client_email{subject, body_markdown}`. **No separate
+`recommendations[]`** (folded into `legal_issues[]`) and **no `redline` key** (the
+redline is the `.docx` only). Map straight from the review-state fields below; the
+console never introduces content the chat/redline don't already carry.
+
+**Section-reference hyperlinks.** In the console, every `§` reference (an issue's
+clause, a deal term's `ref`, a key term's `ref`) becomes a **link to the document**
+when a location is available: set `matter.source_url` (the hosted document URL) and
+optionally give an item an `anchor` (e.g. `"page=6"` for a PDF) or a full `href`.
+With a plain uploaded `.docx` there is no addressable location, so leave
+`source_url` unset and refs render as plain chips. **Deep, precise in-document
+linking (and the accept/reject workflow) is delivered by the Word plugin — the
+console only provides the hook.** Never invent a `source_url`; only set it to a
+real hosted copy of this document.
 
 ---
 

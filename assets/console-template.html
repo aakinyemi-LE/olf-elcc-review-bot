@@ -1,270 +1,281 @@
-<title>Review Console</title>
+<title>Contract Review Console</title>
 <!--
-  OLF EL & CC Review — console. The header names the two parties (one per line)
-  and the document type — facts only, no opinion; there is no separate matter-
-  summary section. The tracked-changes redline is NOT shown here — it is delivered
-  only as the downloadable .docx.
-  Sections:
-    1 Legal issues & recommendations (combined) · 2 Commercial deal terms
-    3 Key terms · 4 Draft client escalation email
+  OLF EL & CC Review — console (v2 visual). A scan-first triage view.
+  Header: two parties (one per line) + document type — facts only, no opinion.
+  Sections: 1 Legal issues & recommendations (combined) · 2 Commercial deal terms
+            3 Key terms · 4 Draft client escalation email
+  The tracked-changes redline is NOT shown here — it is the downloadable .docx.
 
-  TO POPULATE: replace the JSON inside <script id="review-data"> with the
-  matter's data. Every section renders from it. The sample below is illustrative.
+  Section references (§…) hyperlink to the document when a location is available:
+  set matter.source_url (the hosted document URL); optionally give an item an
+  `anchor` (e.g. "page=3") or a full `href`. With a plain uploaded .docx there is
+  no addressable location, so refs render as plain chips — deep in-document
+  linking is delivered by the Word plugin.
+
+  TO POPULATE: replace the JSON in <script id="review-data">. Sample is illustrative.
 -->
 <script id="review-data" type="application/json">
 {
   "matter": {
-    "title": "Engagement Letter (M&A advisor) — Acme Advisors ↔ PortfolioCo",
+    "title": "Calder & Rowe ↔ Ashton — Engagement Letter Review",
     "party_lines": [
-      "Acme Advisors LLC — sell-side financial advisor",
-      "PortfolioCo — client"
+      "Calder & Rowe Securities LLC — exclusive sell-side financial advisor",
+      "Ashton Medical Devices, Inc. & Pembroke Ridge Capital, L.P. — client"
     ],
-    "doc_type": "Engagement letter · M&A advisor · Complex"
+    "doc_type": "Engagement letter · Sell-side M&A advisory · Complex",
+    "source_url": "https://example.com/ashton-engagement-letter.pdf"
   },
   "legal_issues": [
-    { "clause": "§9 Indemnification", "stance": "push_back",
-      "says": "Client indemnifies the advisor for all losses, including the advisor's own negligence.",
-      "risk": "Open-ended; no carve-out for advisor gross negligence, willful misconduct or fraud.",
-      "recommendation": "Carve out advisor GN / WM / bad faith / fraud — market standard (marked in the .docx).",
-      "fallback": "At minimum carve out fraud and willful misconduct; don't sign without it." },
-    { "clause": "§7 Tail", "stance": "negotiate",
-      "says": "Advisor earns its fee on any transaction for 24 months after termination.",
-      "risk": "Fee triggered by deals the advisor had no hand in; no named-party limit.",
-      "recommendation": "Limit to introduced parties and shorten to 12 months (marked in the .docx).",
-      "fallback": "Up to 18 months if firmly limited to a named covered-party list." },
-    { "clause": "§10 Limitation of liability", "stance": "negotiate",
-      "says": "Advisor's liability capped at fees paid; client exposure uncapped.",
-      "risk": "Asymmetric; the cap also swallows fraud/willful misconduct.",
-      "recommendation": "Add a fraud/WM carve-out and flag the asymmetry to the client.",
-      "fallback": "A fees-paid cap is fine once the carve-outs are in — never one that swallows fraud." },
-    { "clause": "Standard terms (referenced, §12)", "stance": "push_back",
-      "says": "Letter incorporates the advisor's 'standard terms' by reference.",
-      "risk": "Not provided — unreviewed obligations could bind the client.",
-      "recommendation": "Don't sign until the standard terms are produced and reviewed.",
-      "fallback": "If they can't be produced, strike the incorporation-by-reference." }
+    { "clause": "§6 Indemnity", "stance": "push_back", "anchor": "page=6",
+      "says": "Client indemnifies the advisor for every loss, including losses the advisor itself causes; carve-out only for loss found solely from intentional misconduct.",
+      "risk": "Client bears the advisor's own negligence; the standard is far off-market.",
+      "recommendation": "Carve out advisor negligence / gross negligence / willful misconduct / fraud; delete \"solely.\"",
+      "fallback": "At minimum fraud and willful misconduct, and drop \"solely.\"" },
+    { "clause": "§2 Fee trigger", "stance": "push_back", "anchor": "page=2",
+      "says": "1.9% fee (min $3.5m) earned on an IOI or LOI and owed even if the deal never closes.",
+      "risk": "A multimillion-dollar fee with no completed deal and no proceeds to pay it from.",
+      "recommendation": "Fee earned only on closing; not due if the transaction fails.",
+      "fallback": "Tie to a definitive agreement that later closes." },
+    { "clause": "§6 Advisor cap", "stance": "push_back", "anchor": "page=6",
+      "says": "Advisor's own liability capped at retainers paid, while the client's indemnity is uncapped.",
+      "risk": "Grossly asymmetric; the cap also swallows advisor fraud and willful misconduct.",
+      "recommendation": "Reset the symmetry and carve fraud / WM / GN out of any cap.",
+      "fallback": "A fees-paid cap only if the indemnity is limited to match." },
+    { "clause": "§5 Tail", "stance": "negotiate", "anchor": "page=5",
+      "says": "30-month tail on any transaction; no covered-party list and no breach exception.",
+      "risk": "Fee survives on deals the advisor never touched, long after the mandate ends.",
+      "recommendation": "Shorten to 12 months, limit to a named covered-party list, disapply on advisor breach.",
+      "fallback": "Up to 18 months if firmly limited to a named list." },
+    { "clause": "§4 Expenses", "stance": "negotiate", "anchor": "page=4",
+      "says": "All advisor and affiliate expenses reimbursed — uncapped, no approval, no receipts.",
+      "risk": "Open-ended, unverifiable spend on the client's account.",
+      "recommendation": "Require receipts and prior approval over a threshold; exclude internal allocations.",
+      "fallback": "A monthly cap with reconciliation." }
   ],
   "business_terms": [
-    { "term": "Success fee — 1.75% of enterprise value (§3(a))", "confirm": "Is the rate and the enterprise-value base approved?" },
-    { "term": "Retainer — $50,000, non-refundable, credited against success fee (§3(b))", "confirm": "Approved?" },
-    { "term": "Tail length — 24 months (§7)", "confirm": "Comfortable with the length (we propose 12)?" },
-    { "term": "Exclusivity / term — 12 months (§6)", "confirm": "Approved?" }
+    { "term": "Success fee — 1.9% of Aggregate Consideration, $3.5m minimum", "ref": "§2", "confirm": "Rate, minimum and consideration base approved?" },
+    { "term": "Retainers — $100k signing + $40k / month for six months", "ref": "§2", "confirm": "Approved?" },
+    { "term": "Exclusivity & “Client Group” lock-in", "ref": "§1/§3", "confirm": "Comfortable being tied to the advisor across the sponsor family?" },
+    { "term": "Term — 18 months, auto-renewing", "ref": "§5", "confirm": "Approved?" },
+    { "term": "Sponsor guarantee & public use of names / logos", "ref": "§6/§7", "confirm": "Acceptable, or resist?" }
   ],
   "key_terms": [
-    { "term": "Success fee", "provision": "1.75% of enterprise value", "ref": "§3(a)", "href": null },
-    { "term": "Retainer", "provision": "$50,000, non-refundable, credited against the success fee", "ref": "§3(b)", "href": null },
-    { "term": "Tail period", "provision": "Fee on any transaction for 24 months after termination", "ref": "§7", "href": null },
-    { "term": "Client indemnity", "provision": "Client indemnifies the advisor; no carve-out for advisor fault", "ref": "§9", "href": null },
-    { "term": "Advisor liability cap", "provision": "Advisor's liability capped at fees paid; client exposure uncapped", "ref": "§10", "href": null },
-    { "term": "Term / termination", "provision": "12 months; 30 days' notice; fees survive termination", "ref": "§6", "href": null },
-    { "term": "Governing law", "provision": "New York", "ref": "§14", "href": null }
+    { "term": "Success fee", "provision": "1.9% of Aggregate Consideration, $3.5m minimum", "ref": "§2", "anchor": "page=2" },
+    { "term": "Fee trigger", "provision": "Earned on IOI / LOI / definitive / closing; due even if the deal fails", "ref": "§2", "anchor": "page=2" },
+    { "term": "Retainers", "provision": "$100k signing + $40k / month for six months", "ref": "§2", "anchor": "page=2" },
+    { "term": "Exclusivity", "provision": "No Client Group member may pursue a Transaction without the advisor", "ref": "§1/§3", "anchor": "page=1" },
+    { "term": "Expenses", "provision": "All advisor & affiliate expenses, uncapped, no approval", "ref": "§4", "anchor": "page=4" },
+    { "term": "Term", "provision": "18 months, auto-renews unless 90 days' notice", "ref": "§5", "anchor": "page=5" },
+    { "term": "Tail", "provision": "30 months; no covered-party list or breach exception", "ref": "§5", "anchor": "page=5" },
+    { "term": "Indemnity / cap", "provision": "Client indemnifies advisor incl. its own fault; advisor cap at retainers", "ref": "§6", "anchor": "page=6" },
+    { "term": "Sponsor guarantee", "provision": "Sponsor guarantees every Company obligation", "ref": "§7", "anchor": "page=7" },
+    { "term": "Governing law", "provision": "New York; exclusive NY County courts; jury-trial waiver", "ref": "§7", "anchor": "page=7" }
   ],
   "client_email": {
-    "subject": "PortfolioCo — Acme engagement letter: decisions needed",
-    "body_markdown": "Hi team,\n\nWe've done a first-pass review of the Acme Advisors engagement letter and drafted a markup. Before we send anything back, we need your call on a few **commercial** points — these are business decisions, not legal ones:\n\n1. **Success fee — 1.75% of enterprise value (§3(a)).** Is the rate and the enterprise-value base approved?\n2. **Retainer — $50,000, non-refundable, credited against the success fee (§3(b)).** Approved?\n3. **Tail — 24 months post-termination (§7).** Comfortable with the length?\n4. **Exclusivity / term — 12 months (§6).** Approved?\n\nOn the **legal** side, we're handling these in the markup: narrowing the client indemnity to carve out the advisor's own gross negligence, willful misconduct and fraud (§9); flagging the asymmetric liability cap (§10); and tightening the tail trigger to named parties (§7).\n\nOne open item: the letter references standard terms we haven't seen — we've asked for them.\n\nOnce you confirm the four points above, the tracked-changes redline is ready to go to Acme.\n\nBest,\n[Name / title]"
+    "subject": "Ashton / Pembroke Ridge — Calder & Rowe engagement letter: decisions needed",
+    "body_markdown": "Hi team,\n\nWe've run a first-pass review and drafted a markup. A few **commercial** points need your call: the **success fee** (§2), **retainers** (§2), **exclusivity** (§1/§3), **term** (§5), and the **sponsor guarantee / publicity** (§6/§7).\n\nOn the **legal** side we're handling the indemnity and cap (§6), the fee trigger (§2), the tail (§5) and expenses (§4) in the markup.\n\nOnce you confirm the commercial points, the tracked-changes redline is ready to go back.\n\nBest,\n[Name / title]"
   }
 }
 </script>
 
 <style>
   :root {
-    --paper: #f5f6f7; --surface: #ffffff; --surface-2: #f0f1f2;
-    --ink: #0e0f11; --muted: #585d64; --faint: #8a9098;
-    --line: #e6e7ea; --line-strong: #d3d5d9;
-    --accent: #00D9E3; --accent-ink: #0a7b82; --accent-soft: #d8f5f7;
-    --legal: #c2560f;  --legal-soft: #ffe6d4;
-    --business: #0a7b82; --business-soft: #d8f5f7;
-    --hybrid: #8a6200; --hybrid-soft: #fbeeca;
-    --del: #c2560f; --ins: #0a7b82; --ins-bg: #d8f5f7;
-    --radius: 12px; --shadow: 0 1px 2px rgba(16,18,20,.06);
-    --font-ui: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --paper:#f6f8f8; --surface:#ffffff; --surface-2:#eef2f2; --raised:#ffffff;
+    --ink:#12171a; --muted:#586169; --faint:#8a939a; --line:#e4e9e9; --line-2:#d2dadb;
+    --accent:#00d9e3; --accent-ink:#067077; --accent-soft:#d6f3f4;
+    --push:#b0470f;   --push-soft:#f8e4d8;   --push-line:#e7bfa6;
+    --negot:#8a6300;  --negot-soft:#f6edcb;  --negot-line:#e3d199;
+    --accept:#0a7b82; --accept-soft:#d4f0ee; --accept-line:#a7dcda;
+    --shadow:0 1px 2px rgba(16,23,26,.05), 0 8px 24px -18px rgba(16,23,26,.25);
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono","SFMono-Regular",Menlo,Consolas,monospace;
   }
   :root:not([data-theme="light"]) { @media (prefers-color-scheme: dark) {
-    --paper: #0d0e10; --surface: #16181b; --surface-2: #1d2024;
-    --ink: #f3f4f6; --muted: #a6acb4; --faint: #767c85;
-    --line: #2a2d32; --line-strong: #3a3e44;
-    --accent: #00D9E3; --accent-ink: #4fe6ee; --accent-soft: #0c3a3d;
-    --legal: #ff8a4c; --legal-soft: #3a2312;
-    --business: #4fe6ee; --business-soft: #0c3a3d;
-    --hybrid: #e0b23c; --hybrid-soft: #322813;
-    --del: #ff8a4c; --ins: #4fe6ee; --ins-bg: #0c3a3d;
+    --paper:#0d1011; --surface:#151a1c; --surface-2:#1c2325; --raised:#1a2123;
+    --ink:#eef3f2; --muted:#9aa4aa; --faint:#6d777c; --line:#273030; --line-2:#37413f;
+    --accent:#00d9e3; --accent-ink:#54e7ef; --accent-soft:#0b3a3d;
+    --push:#ff9256;   --push-soft:#3a2413;   --push-line:#54331c;
+    --negot:#e4b64a;  --negot-soft:#312712;  --negot-line:#4a3a17;
+    --accept:#43d2c6; --accept-soft:#0c3a3b; --accept-line:#155049;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -20px rgba(0,0,0,.7);
   } }
   :root[data-theme="dark"] {
-    --paper: #0d0e10; --surface: #16181b; --surface-2: #1d2024;
-    --ink: #f3f4f6; --muted: #a6acb4; --faint: #767c85;
-    --line: #2a2d32; --line-strong: #3a3e44;
-    --accent: #00D9E3; --accent-ink: #4fe6ee; --accent-soft: #0c3a3d;
-    --legal: #ff8a4c; --legal-soft: #3a2312;
-    --business: #4fe6ee; --business-soft: #0c3a3d;
-    --hybrid: #e0b23c; --hybrid-soft: #322813;
-    --del: #ff8a4c; --ins: #4fe6ee; --ins-bg: #0c3a3d;
+    --paper:#0d1011; --surface:#151a1c; --surface-2:#1c2325; --raised:#1a2123;
+    --ink:#eef3f2; --muted:#9aa4aa; --faint:#6d777c; --line:#273030; --line-2:#37413f;
+    --accent:#00d9e3; --accent-ink:#54e7ef; --accent-soft:#0b3a3d;
+    --push:#ff9256;   --push-soft:#3a2413;   --push-line:#54331c;
+    --negot:#e4b64a;  --negot-soft:#312712;  --negot-line:#4a3a17;
+    --accept:#43d2c6; --accept-soft:#0c3a3b; --accept-line:#155049;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -20px rgba(0,0,0,.7);
   }
 
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-ui);
-         line-height: 1.5; -webkit-font-smoothing: antialiased; }
-  .layout { max-width: 1240px; margin: 0 auto; padding: 24px 20px 64px;
-            display: grid; grid-template-columns: 190px 1fr; gap: 28px; align-items: start; }
-  @media (max-width: 860px) { .layout { grid-template-columns: 1fr; gap: 18px; } nav.toc { position: static; } }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans);
+         line-height:1.55; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  ::selection { background:var(--accent-soft); }
+  a { color:var(--accent-ink); }
 
-  nav.toc { position: sticky; top: 18px; font-size: 13px; }
-  nav.toc .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
-                     color: var(--accent-ink); margin-bottom: 10px; display: flex; align-items: center; gap: 7px; }
-  nav.toc .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-  nav.toc a { display: flex; gap: 9px; padding: 6px 8px; border-radius: 7px; color: var(--muted);
-              text-decoration: none; margin: 1px 0; }
-  nav.toc a:hover { background: var(--surface-2); color: var(--ink); }
-  nav.toc a .n { color: var(--faint); font-variant-numeric: tabular-nums; min-width: 12px; }
-  @media (max-width: 860px) { nav.toc { display: none; } }
+  .wrap { max-width:1180px; margin:0 auto; padding:34px 22px 72px;
+          display:grid; grid-template-columns:180px 1fr; gap:34px; align-items:start; }
+  @media (max-width:820px){ .wrap{ grid-template-columns:1fr; gap:20px; } }
 
-  header.matter { margin-bottom: 20px; }
-  h1.title { font-size: 21px; margin: 4px 0 5px; font-weight: 650; letter-spacing: -.01em; }
-  .parties { margin: 2px 0 1px; }
-  .parties .pline { color: var(--muted); font-size: 13.5px; line-height: 1.45; }
-  .parties .pline b { color: var(--ink); font-weight: 600; }
-  .doctype { color: var(--faint); font-size: 12.5px; margin-top: 2px; }
-  .redline-note { font-size: 12px; color: var(--faint); margin-top: 5px;
-                  display: inline-flex; align-items: center; gap: 6px; }
-  .redline-note .pill { font-size: 10px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
-                        color: var(--accent-ink); background: var(--accent-soft); border-radius: 999px; padding: 2px 8px; }
-  section.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
-                  box-shadow: var(--shadow); overflow: hidden; margin-bottom: 18px; scroll-margin-top: 18px; }
-  .panel-head { display: flex; align-items: center; gap: 10px; padding: 13px 16px;
-                border-bottom: 1px solid var(--line); background: var(--surface-2); }
-  .panel-head .num { font-size: 11px; font-weight: 700; color: var(--accent-ink); background: var(--accent-soft);
-                     border-radius: 999px; padding: 2px 9px; min-width: 22px; text-align: center; }
-  .panel-head h2 { font-size: 14px; margin: 0; font-weight: 650; letter-spacing: -.005em; }
-  .panel-head .count { margin-left: auto; font-size: 11.5px; color: var(--faint); }
-  .panel-body { padding: 14px 16px; }
-  .panel-body.flush { padding: 0; }
+  /* Rail nav */
+  nav.rail { position:sticky; top:26px; }
+  @media (max-width:820px){ nav.rail{ display:none; } }
+  .rail .brand { font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase;
+                 color:var(--accent-ink); display:flex; align-items:center; gap:7px; margin-bottom:16px; }
+  .rail .brand .dot { width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .rail a { display:flex; gap:10px; align-items:baseline; padding:7px 0; color:var(--muted);
+            text-decoration:none; font-size:13.5px; border-top:1px solid var(--line); }
+  .rail a:first-of-type { border-top:none; }
+  .rail a:hover { color:var(--ink); }
+  .rail a .n { font-family:var(--mono); font-size:11px; color:var(--faint); }
 
-  /* Redline */
-  .edit { padding: 12px 16px; border-bottom: 1px solid var(--line); }
-  .edit:last-child { border-bottom: none; }
-  .edit-top { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; }
-  .edit-sec { font-weight: 600; font-size: 13px; }
-  .tag { font-size: 10px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
-         padding: 2px 7px; border-radius: 999px; }
-  .tag.card { color: var(--legal); background: var(--legal-soft); }
-  .tag.silent { color: var(--muted); background: var(--surface-2); border: 1px solid var(--line); }
-  .diff { font-size: 13px; line-height: 1.6; }
-  .diff del { color: var(--del); text-decoration: line-through; text-decoration-thickness: 1px; }
-  .diff ins { color: var(--ins); background: var(--ins-bg); text-decoration: none;
-              border-radius: 3px; padding: 0 2px; }
-  .why { margin-top: 6px; font-size: 12.5px; color: var(--muted); font-style: italic; }
+  /* Header */
+  header.matter { margin-bottom:6px; }
+  .eyebrow { font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); }
+  h1.title { font-family:var(--serif); font-weight:600; font-size:30px; line-height:1.12; letter-spacing:-.01em;
+             margin:8px 0 14px; text-wrap:balance; max-width:20ch; }
+  .parties { display:flex; flex-direction:column; gap:3px; margin-bottom:12px; }
+  .pline { font-size:14.5px; color:var(--muted); }
+  .pline b { color:var(--ink); font-weight:600; }
+  .pline .role { color:var(--faint); }
+  .metarow { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .chip { font-family:var(--mono); font-size:11px; letter-spacing:.02em; padding:4px 9px; border-radius:6px;
+          border:1px solid var(--line-2); color:var(--muted); background:var(--surface); white-space:nowrap; }
+  .chip.doc { color:var(--ink); }
+  .chip.redline { color:var(--accent-ink); border-color:var(--accent-line); background:var(--accent-soft); }
 
-  /* Issue list */
-  .issue { padding: 12px 16px; border-bottom: 1px solid var(--line); }
-  .issue:last-child { border-bottom: none; }
-  .issue-top { display: flex; align-items: center; gap: 9px; margin-bottom: 5px; }
-  .issue-clause { font-weight: 600; font-size: 13px; }
-  .sev { font-size: 10px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
-         padding: 2px 7px; border-radius: 999px; }
-  .sev.red_flag { color: var(--legal); background: var(--legal-soft); }
-  .sev.watch { color: var(--hybrid); background: var(--hybrid-soft); }
-  .issue .kv { font-size: 12.8px; margin: 2px 0; }
-  .issue .kv b { color: var(--faint); font-weight: 600; }
+  .rule { height:2px; background:linear-gradient(90deg,var(--accent),transparent 62%); margin:22px 0 8px; border-radius:2px; }
 
-  /* Recommendations */
-  .rec { padding: 12px 16px; border-bottom: 1px solid var(--line); }
-  .rec:last-child { border-bottom: none; }
-  .rec-top { display: flex; align-items: center; gap: 9px; margin-bottom: 5px; flex-wrap: wrap; }
-  .rec-point { font-weight: 600; font-size: 13px; }
-  .stance { font-size: 10px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
-            padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
-  .stance.push_back { color: var(--legal); background: var(--legal-soft); }
-  .stance.walk_away { color: #fff; background: var(--legal); }
-  .stance.negotiate { color: var(--hybrid); background: var(--hybrid-soft); }
-  .stance.acceptable { color: var(--business); background: var(--business-soft); }
-  .rec-body { font-size: 13px; }
-  .rec-fallback { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
-  .rec-fallback b { color: var(--faint); font-weight: 600; }
+  /* Summary strip */
+  .summary { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 30px; }
+  .stat { display:flex; align-items:baseline; gap:8px; padding:11px 15px; border-radius:12px;
+          background:var(--surface); border:1px solid var(--line); box-shadow:var(--shadow); }
+  .stat .num { font-family:var(--serif); font-size:22px; font-weight:600; line-height:1; font-variant-numeric:tabular-nums; }
+  .stat .lbl { font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); }
+  .stat.push .num{ color:var(--push); }  .stat.negot .num{ color:var(--negot); }  .stat.accept .num{ color:var(--accept); }
 
-  /* Key terms — provision reference */
-  td.prov { color: var(--ink); }
-  a.ref, span.ref { font-variant-numeric: tabular-nums; color: var(--accent-ink); font-weight: 600; white-space: nowrap; }
-  a.ref { text-decoration: underline; text-underline-offset: 2px; }
+  /* Section */
+  section { margin-bottom:34px; scroll-margin-top:26px; }
+  .shead { display:flex; align-items:baseline; gap:12px; margin:0 0 14px; }
+  .shead .k { font-family:var(--mono); font-size:12px; color:var(--faint); }
+  .shead h2 { font-family:var(--serif); font-weight:600; font-size:20px; letter-spacing:-.01em; margin:0; }
+  .shead .count { margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--faint); }
 
-  /* Business terms */
-  .bt { padding: 11px 16px; border-bottom: 1px solid var(--line); }
-  .bt:last-child { border-bottom: none; }
-  .bt-term { font-weight: 600; font-size: 13px; }
-  .bt-confirm { font-size: 12.8px; color: var(--muted); margin-top: 2px; }
-  .bt-confirm b { color: var(--business); font-weight: 600; }
+  /* Issues */
+  .issue { position:relative; background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--edge);
+           border-radius:12px; padding:15px 18px; margin-bottom:12px; box-shadow:var(--shadow); }
+  .issue.push_back { --edge:var(--push); }  .issue.negotiate { --edge:var(--negot); }
+  .issue.acceptable { --edge:var(--accept); }  .issue.walk_away { --edge:var(--push); }
+  .issue-top { display:flex; align-items:center; gap:12px; margin-bottom:7px; }
+  .clause { font-family:var(--serif); font-size:16.5px; font-weight:600; }
+  .pill { margin-left:auto; font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.08em;
+          text-transform:uppercase; padding:4px 10px; border-radius:999px; white-space:nowrap; }
+  .pill.push_back { color:var(--push); background:var(--push-soft); box-shadow:inset 0 0 0 1px var(--push-line); }
+  .pill.negotiate { color:var(--negot); background:var(--negot-soft); box-shadow:inset 0 0 0 1px var(--negot-line); }
+  .pill.acceptable { color:var(--accept); background:var(--accept-soft); box-shadow:inset 0 0 0 1px var(--accept-line); }
+  .pill.walk_away { color:#fff; background:var(--push); }
+  .says { font-size:14.5px; color:var(--ink); margin:0 0 10px; }
+  .micro { display:grid; grid-template-columns:56px 1fr; gap:4px 12px; }
+  .micro dt { font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); padding-top:2px; }
+  .micro dd { margin:0; font-size:13px; color:var(--muted); }
+  .micro dd.fix { color:var(--ink); }
 
-  /* Next steps */
-  ol.steps { margin: 0; padding: 4px 16px 4px 34px; }
-  ol.steps li { padding: 5px 0; font-size: 13.5px; }
+  /* Ref links */
+  .ref { font-family:var(--mono); font-size:.86em; color:var(--accent-ink); white-space:nowrap;
+         text-decoration:none; border-bottom:1px dashed var(--accent-line); }
+  a.ref:hover { border-bottom-style:solid; }
+  span.ref { color:var(--muted); border-bottom:1px dotted var(--line-2); }
 
-  /* Key terms table */
-  .twrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 12.8px; }
-  th { text-align: left; font-weight: 600; color: var(--muted); font-size: 11px; text-transform: uppercase;
-       letter-spacing: .03em; padding: 10px 14px; border-bottom: 1px solid var(--line); }
-  td { padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  tr:last-child td { border-bottom: none; }
-  td.term { font-weight: 600; white-space: nowrap; }
-  td.where { color: var(--faint); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  td.note { color: var(--muted); }
-  .badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase;
-           padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
-  .badge.legal { color: var(--legal); background: var(--legal-soft); }
-  .badge.business { color: var(--business); background: var(--business-soft); }
-  .badge.hybrid { color: var(--hybrid); background: var(--hybrid-soft); }
-  .legend { display: flex; gap: 14px; flex-wrap: wrap; padding: 12px 14px; font-size: 11.5px; color: var(--muted);
-            border-top: 1px solid var(--line); }
-  .legend span { display: inline-flex; align-items: center; gap: 6px; }
-  .swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+  /* Deal terms */
+  .bt { display:flex; gap:14px; align-items:flex-start; padding:13px 4px; border-top:1px solid var(--line); }
+  .bt:first-child { border-top:none; }
+  .bt .decide { font-family:var(--mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent-ink);
+                background:var(--accent-soft); border-radius:5px; padding:3px 7px; margin-top:2px; white-space:nowrap; }
+  .bt .body .term { font-weight:600; font-size:14.5px; }
+  .bt .body .confirm { font-size:13px; color:var(--muted); margin-top:2px; }
+
+  /* Key terms */
+  .kt { border:1px solid var(--line); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+  .krow { display:grid; grid-template-columns:150px 1fr; gap:16px; padding:11px 16px; border-top:1px solid var(--line); }
+  .krow:first-child { border-top:none; }
+  .krow .term { font-weight:600; font-size:13.5px; }
+  .krow .prov { font-size:13.5px; color:var(--muted); }
+  .krow .prov .ref { margin-left:6px; }
 
   /* Email */
-  .email-sub-label { font-size: 11px; text-transform: uppercase; letter-spacing: .03em; color: var(--faint); }
-  .email-sub { font-weight: 650; font-size: 14px; margin: 1px 0 10px; }
-  .email-body { font-size: 13.5px; white-space: pre-wrap; word-wrap: break-word; }
-  .email-body strong { font-weight: 650; }
-  .btnrow { display: flex; gap: 8px; margin-top: 14px; }
-  button.copy { font-family: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer;
-                border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
-                border-radius: 8px; padding: 8px 14px; }
-  button.copy:hover { background: var(--surface-2); }
-  button.copy.primary { background: var(--accent); color: #06282a; border-color: var(--accent); }
-  .draftflag { font-size: 11.5px; color: var(--faint); margin-top: 12px; }
+  .mail { background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); overflow:hidden; }
+  .mail .head { padding:15px 18px 12px; border-bottom:1px solid var(--line); background:var(--surface-2); }
+  .mail .sub-l { font-family:var(--mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); }
+  .mail .sub { font-family:var(--serif); font-size:16px; font-weight:600; margin-top:3px; }
+  .mail .body { padding:16px 18px; font-size:14px; white-space:pre-wrap; word-wrap:break-word; }
+  .mail .body strong { font-weight:650; }
+  .mail .foot { display:flex; gap:9px; align-items:center; padding:0 18px 16px; }
+  button.copy { font-family:var(--sans); font-size:12.5px; font-weight:600; cursor:pointer; border-radius:9px; padding:9px 15px;
+                border:1px solid var(--line-2); background:var(--surface); color:var(--ink); transition:transform .08s ease; }
+  button.copy:hover { background:var(--surface-2); }
+  button.copy:active { transform:translateY(1px); }
+  button.copy.primary { background:var(--accent); color:#06282a; border-color:var(--accent); }
+  .draftnote { margin-left:auto; font-family:var(--mono); font-size:10.5px; color:var(--faint); }
+
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:4px; }
+  @media (prefers-reduced-motion:reduce){ *{ transition:none !important; } }
 </style>
 
-<div class="layout">
-  <nav class="toc">
-    <div class="eyebrow"><span class="dot"></span> Review Console</div>
-    <a href="#s1"><span class="n">1</span> Issues &amp; recs</a>
-    <a href="#s2"><span class="n">2</span> Deal terms</a>
-    <a href="#s3"><span class="n">3</span> Key terms</a>
-    <a href="#s4"><span class="n">4</span> Client email</a>
+<div class="wrap">
+  <nav class="rail">
+    <div class="brand"><span class="dot"></span> OLF Review</div>
+    <a href="#s1"><span class="n">01</span> Issues &amp; positions</a>
+    <a href="#s2"><span class="n">02</span> Deal terms</a>
+    <a href="#s3"><span class="n">03</span> Key terms</a>
+    <a href="#s4"><span class="n">04</span> Client email</a>
   </nav>
 
   <main>
     <header class="matter">
+      <div class="eyebrow">First-pass review</div>
       <h1 class="title" id="m-title">—</h1>
       <div class="parties" id="m-parties"></div>
-      <div class="doctype" id="m-doctype"></div>
-      <div class="redline-note"><span class="pill">Redline</span> Tracked-changes markup delivered as a separate <strong>.docx</strong> download.</div>
+      <div class="metarow">
+        <span class="chip doc" id="m-doctype"></span>
+        <span class="chip redline">Redline · tracked-changes .docx</span>
+      </div>
+      <div class="rule"></div>
+      <div class="summary" id="summary"></div>
     </header>
 
-    <section class="panel" id="s1"><div class="panel-head"><span class="num">1</span><h2>Legal issues &amp; recommendations</h2><span class="count" id="c-issues"></span></div><div class="panel-body flush" id="issues"></div></section>
+    <section id="s1">
+      <div class="shead"><span class="k">01</span><h2>Legal issues &amp; recommendations</h2><span class="count" id="c-issues"></span></div>
+      <div id="issues"></div>
+    </section>
 
-    <section class="panel" id="s2"><div class="panel-head"><span class="num">2</span><h2>Commercial deal terms — client to confirm</h2><span class="count" id="c-bt"></span></div><div class="panel-body flush" id="bterms"></div></section>
+    <section id="s2">
+      <div class="shead"><span class="k">02</span><h2>Commercial deal terms</h2><span class="count" id="c-bt"></span></div>
+      <div id="bterms"></div>
+    </section>
 
-    <section class="panel" id="s3"><div class="panel-head"><span class="num">3</span><h2>Key terms</h2><span class="count" id="c-kt"></span></div><div class="panel-body flush">
-      <div class="twrap"><table><thead><tr><th style="width:32%">Term</th><th>Provision</th></tr></thead><tbody id="kt-body"></tbody></table></div>
-    </div></section>
+    <section id="s3">
+      <div class="shead"><span class="k">03</span><h2>Key terms</h2><span class="count" id="c-kt"></span></div>
+      <div class="kt" id="kt-body"></div>
+    </section>
 
-    <section class="panel" id="s4"><div class="panel-head"><span class="num">4</span><h2>Draft client escalation email</h2></div><div class="panel-body">
-      <div class="email-sub-label">Subject</div>
-      <p class="email-sub" id="em-subject"></p>
-      <div class="email-body" id="em-body"></div>
-      <div class="btnrow">
-        <button class="copy primary" id="copy-all">Copy email</button>
-        <button class="copy" id="copy-body">Copy body only</button>
+    <section id="s4">
+      <div class="shead"><span class="k">04</span><h2>Draft client escalation email</h2></div>
+      <div class="mail">
+        <div class="head">
+          <div class="sub-l">Subject</div>
+          <div class="sub" id="em-subject"></div>
+        </div>
+        <div class="body" id="em-body"></div>
+        <div class="foot">
+          <button class="copy primary" id="copy-all">Copy email</button>
+          <button class="copy" id="copy-body">Copy body</button>
+          <span class="draftnote">Draft — you send it. Nothing leaves here.</span>
+        </div>
       </div>
-      <div class="draftflag">Draft only — review and send from your own mail client. Nothing is sent from here.</div>
-    </div></section>
+    </section>
   </main>
 </div>
 
@@ -272,82 +283,110 @@
   (function () {
     var data = {};
     try { data = JSON.parse(document.getElementById("review-data").textContent); } catch (e) {}
-    var m = data.matter || {}, li = data.legal_issues || [],
-        bt = data.business_terms || [], kt = data.key_terms || [],
-        em = data.client_email || {};
-    var STANCE = { push_back: "Push back", negotiate: "Negotiate", acceptable: "Acceptable", walk_away: "Walk-away" };
+    var m = data.matter || {}, li = data.legal_issues || [], bt = data.business_terms || [],
+        kt = data.key_terms || [], em = data.client_email || {};
+    var STANCE = { push_back:"Push back", negotiate:"Negotiate", acceptable:"Accept", walk_away:"Walk away" };
 
-    function esc(s) { return String(s == null ? "" : s).replace(/[&<>]/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
-    function mdBold(s) { return esc(s).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>"); }
-    function set(id, txt) { var e = document.getElementById(id); if (e) e.textContent = txt; }
-    function count(id, n, noun) { set(id, n + " " + noun + (n === 1 ? "" : "s")); }
+    function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]; }); }
+    function mdBold(s){ return esc(s).replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>"); }
+    function set(id,t){ var e=document.getElementById(id); if(e) e.textContent=t; }
 
-    set("m-title", m.title || "Matter review");
+    // Resolve a section-ref link. Uses item.href, else matter.source_url (+ optional anchor).
+    function hrefFor(item){
+      if(item && item.href) return item.href;
+      if(m.source_url){
+        var a=item && item.anchor;
+        return m.source_url + (a ? (m.source_url.indexOf("#")>-1 ? "&"+a : "#"+a) : "");
+      }
+      return null;
+    }
+    function refHTML(text, item){
+      if(!text) return "";
+      var h=hrefFor(item);
+      return h ? '<a class="ref" href="'+encodeURI(h)+'" target="_blank" rel="noopener">'+esc(text)+"</a>"
+               : '<span class="ref">'+esc(text)+"</span>";
+    }
+    // Linkify a leading §clause token inside a heading like "§6 Indemnity".
+    function clauseHTML(clause, item){
+      var mm=String(clause||"").match(/^(§[^\s]*)(\s+.*)?$/);
+      if(mm) return refHTML(mm[1], item)+(mm[2]?'<span> '+esc(mm[2].trim())+"</span>":"");
+      return esc(clause||"");
+    }
+
+    document.title = m.title || "Contract Review Console";
+    set("m-title", m.title || "Contract review");
     set("m-doctype", m.doc_type || "");
 
-    // Header block: the two parties, each on its own line. Facts only — no opinion.
-    var pls = (m.party_lines && m.party_lines.length) ? m.party_lines
-              : (m.roles ? String(m.roles).split(/;\s*/) : []);
-    var P = document.getElementById("m-parties");
-    pls.forEach(function (line) {
-      line = String(line).trim(); if (!line) return;
-      var d = document.createElement("div"); d.className = "pline";
-      // Bold the party name before an em/en dash separator, if present.
-      var mm = line.match(/^(.*?)(\s[—–-]\s.*)$/);
-      d.innerHTML = mm ? "<b>" + esc(mm[1]) + "</b>" + esc(mm[2]) : esc(line);
-      P.appendChild(d);
-    });
+    var P=document.getElementById("m-parties");
+    (m.party_lines && m.party_lines.length ? m.party_lines : (m.roles?String(m.roles).split(/;\s*/):[]))
+      .forEach(function(line){
+        line=String(line).trim(); if(!line) return;
+        var mm=line.match(/^(.*?)(\s[—–-]\s.*)$/), d=document.createElement("div"); d.className="pline";
+        d.innerHTML = mm ? "<b>"+esc(mm[1])+'</b><span class="role">'+esc(mm[2])+"</span>" : esc(line);
+        P.appendChild(d);
+      });
 
-    // 1 Legal issues & recommendations (combined): clause + position + says/risk/rec/fallback
-    var I = document.getElementById("issues");
-    li.forEach(function (x) {
-      var st = (x.stance || "negotiate").toLowerCase();
-      var el = document.createElement("div"); el.className = "issue";
+    // Summary strip — counts by position
+    var counts={push_back:0,negotiate:0,acceptable:0,walk_away:0};
+    li.forEach(function(x){ var s=(x.stance||"negotiate").toLowerCase(); if(counts[s]!=null) counts[s]++; });
+    var S=document.getElementById("summary");
+    function stat(cls,n,lbl){ if(!n) return ""; return '<div class="stat '+cls+'"><span class="num">'+n+'</span><span class="lbl">'+lbl+"</span></div>"; }
+    S.innerHTML =
+      '<div class="stat"><span class="num">'+li.length+'</span><span class="lbl">Legal points</span></div>' +
+      stat("push","push_back"in counts?counts.push_back:0,"Push back") +
+      stat("negot",counts.negotiate,"Negotiate") +
+      stat("accept",counts.acceptable,"Accept") +
+      '<div class="stat"><span class="num">'+bt.length+'</span><span class="lbl">Client decisions</span></div>';
+
+    // 1 · Issues & recommendations (combined)
+    var I=document.getElementById("issues");
+    li.forEach(function(x){
+      var st=(x.stance||"negotiate").toLowerCase();
+      var el=document.createElement("div"); el.className="issue "+st;
       el.innerHTML =
-        '<div class="issue-top"><span class="issue-clause">' + esc(x.clause || "") + "</span>" +
-        '<span class="stance ' + st + '">' + esc(STANCE[st] || st) + "</span></div>" +
-        (x.says ? '<div class="kv"><b>Issue:</b> ' + esc(x.says) + "</div>" : "") +
-        (x.risk ? '<div class="kv"><b>Risk:</b> ' + esc(x.risk) + "</div>" : "") +
-        (x.recommendation ? '<div class="kv"><b>Recommendation:</b> ' + esc(x.recommendation) + "</div>" : "") +
-        (x.fallback && x.fallback !== "—" ? '<div class="kv"><b>Fallback:</b> ' + esc(x.fallback) + "</div>" : "");
+        '<div class="issue-top"><span class="clause">'+clauseHTML(x.clause,x)+"</span>"+
+          '<span class="pill '+st+'">'+esc(STANCE[st]||st)+"</span></div>"+
+        (x.says?'<p class="says">'+esc(x.says)+"</p>":"")+
+        '<dl class="micro">'+
+          (x.risk?'<dt>Risk</dt><dd>'+esc(x.risk)+"</dd>":"")+
+          (x.recommendation?'<dt>Fix</dt><dd class="fix">'+esc(x.recommendation)+"</dd>":"")+
+          (x.fallback && x.fallback!=="—"?'<dt>If pushed</dt><dd>'+esc(x.fallback)+"</dd>":"")+
+        "</dl>";
       I.appendChild(el);
     });
-    count("c-issues", li.length, "issue");
+    set("c-issues", li.length+(li.length===1?" point":" points"));
 
-    // 2 Business terms
-    var B = document.getElementById("bterms");
-    bt.forEach(function (x) {
-      var el = document.createElement("div"); el.className = "bt";
-      el.innerHTML = '<div class="bt-term">' + esc(x.term || "") + "</div>" +
-        (x.confirm ? '<div class="bt-confirm"><b>Confirm:</b> ' + esc(x.confirm) + "</div>" : "");
+    // 2 · Deal terms
+    var B=document.getElementById("bterms");
+    bt.forEach(function(x){
+      var el=document.createElement("div"); el.className="bt";
+      el.innerHTML='<span class="decide">Decide</span><div class="body"><div class="term">'+esc(x.term||"")+
+        (x.ref?" "+refHTML(x.ref,x):"")+"</div>"+
+        (x.confirm?'<div class="confirm">'+esc(x.confirm)+"</div>":"")+"</div>";
       B.appendChild(el);
     });
-    count("c-bt", bt.length, "term");
+    set("c-bt", bt.length+(bt.length===1?" decision":" decisions"));
 
-    // 3 Key terms — two columns: Term | Provision (with clause ref, hyperlinked if href)
-    var tb = document.getElementById("kt-body");
-    kt.forEach(function (r2) {
-      var ref = r2.ref ? (r2.href
-        ? ' <a class="ref" href="' + encodeURI(r2.href) + '" target="_blank" rel="noopener">' + esc(r2.ref) + "</a>"
-        : ' <span class="ref">' + esc(r2.ref) + "</span>") : "";
-      var tr = document.createElement("tr");
-      tr.innerHTML =
-        '<td class="term">' + esc(r2.term) + "</td>" +
-        '<td class="prov">' + esc(r2.provision) + ref + "</td>";
-      tb.appendChild(tr);
+    // 3 · Key terms
+    var K=document.getElementById("kt-body");
+    kt.forEach(function(x){
+      var el=document.createElement("div"); el.className="krow";
+      el.innerHTML='<div class="term">'+esc(x.term||"")+'</div><div class="prov">'+esc(x.provision||"")+
+        (x.ref?refHTML(x.ref,x):"")+"</div>";
+      K.appendChild(el);
     });
-    count("c-kt", kt.length, "term");
+    set("c-kt", kt.length+" terms");
 
-    // 4 Email
-    set("em-subject", em.subject || "");
-    document.getElementById("em-body").innerHTML = mdBold(em.body_markdown || "");
-    function plain(s) { return String(s || "").replace(/\*\*/g, ""); }
-    var full = "Subject: " + (em.subject || "") + "\n\n" + plain(em.body_markdown);
-    function copy(t, btn) { navigator.clipboard.writeText(t).then(function () {
-      var o = btn.textContent; btn.textContent = "Copied ✓"; setTimeout(function () { btn.textContent = o; }, 1400);
-    }).catch(function () { btn.textContent = "Copy failed"; }); }
-    document.getElementById("copy-all").addEventListener("click", function () { copy(full, this); });
-    document.getElementById("copy-body").addEventListener("click", function () { copy(plain(em.body_markdown), this); });
+    // 4 · Email
+    set("em-subject", em.subject||"");
+    document.getElementById("em-body").innerHTML=mdBold(em.body_markdown||"");
+    function plain(s){ return String(s||"").replace(/\*\*/g,""); }
+    var full="Subject: "+(em.subject||"")+"\n\n"+plain(em.body_markdown);
+    function copy(t,btn){ navigator.clipboard.writeText(t).then(function(){
+      var o=btn.textContent; btn.textContent="Copied ✓"; setTimeout(function(){btn.textContent=o;},1400);
+    }).catch(function(){ btn.textContent="Copy failed"; }); }
+    document.getElementById("copy-all").addEventListener("click",function(){copy(full,this);});
+    document.getElementById("copy-body").addEventListener("click",function(){copy(plain(em.body_markdown),this);});
   })();
 </script>

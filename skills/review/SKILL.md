@@ -104,17 +104,20 @@ combined legal issues & recommendations → deal terms → key terms → draft e
 No separate matter-summary section and no separate recommendations section.
 - Populate `${CLAUDE_PLUGIN_ROOT}/assets/console-template.html` — replace the JSON
   inside its `<script id="review-data">` block with the matter's data
-  (`matter{title, party_lines[], doc_type}`, `legal_issues[]` — each carrying
-  `clause, stance, says, risk, recommendation, fallback`, `business_terms[]`,
-  `key_terms[]`, `client_email`; **no separate `recommendations[]`, no `redline`
-  key, no `overall_read`**; see the template header and the output contract's
-  "Console data" note). `matter.party_lines` is one string per party
-  (rendered on its own line); `key_terms[]` is two columns — `term` and
-  `provision` with a `ref` (and
-  optional `href` to hyperlink the clause). It is a straight projection of the
-  review-state — introduce nothing the chat/redline don't already carry. Write
-  the filled file to the working dir, then publish it with the **Artifact** tool
-  (favicon 📝, a short matter-specific title). Surface the returned link in chat.
+  (`matter{title, party_lines[], doc_type, source_url?}`, `legal_issues[]` — each
+  carrying `clause, stance, says, risk, recommendation, fallback`,
+  `business_terms[]` (`term, confirm, ref?`), `key_terms[]` (`term, provision,
+  ref`), `client_email`; **no separate `recommendations[]`, no `redline` key, no
+  `overall_read`**; see the template header and the output contract's "Console
+  data" + "Section-reference hyperlinks" notes). Set `matter.title` to the actual
+  matter name — it becomes the console's title. If the document is available at a
+  hosted URL, set `matter.source_url` (and per-item `anchor`, e.g. `"page=6"`) so
+  the `§` references hyperlink to it; for a plain uploaded `.docx` leave it unset
+  (refs render as plain chips — deep in-document linking is the Word plugin's job).
+  It is a straight projection of the review-state — introduce nothing the
+  chat/redline don't already carry. Write the filled file to the working dir, then
+  publish it with the **Artifact** tool (favicon 📝, the matter title). Surface
+  the returned link in chat.
 - Send the tracked-changes `.docx` to the lawyer (SendUserFile, `attach`).
 
 ## Self-check before delivering
