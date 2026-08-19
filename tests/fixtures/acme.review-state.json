@@ -1,12 +1,12 @@
 {
   "matter": {
-    "title": "Engagement Letter (sell-side M&A advisory) — Calder & Rowe ↔ Ashton / Pembroke Ridge",
+    "title": "Engagement Letter (sell-side M&A advisory), Calder & Rowe ↔ Ashton / Pembroke Ridge",
     "doc_family": "engagement_letter",
     "sub_type": "m&a advisor",
     "complexity": "complex",
     "party_lines": [
-      "Calder & Rowe Securities LLC — exclusive sell-side financial advisor",
-      "Ashton Medical Devices, Inc. & Pembroke Ridge Capital, L.P. — client"
+      "Calder & Rowe Securities LLC (exclusive sell-side financial advisor)",
+      "Ashton Medical Devices, Inc. & Pembroke Ridge Capital, L.P. (client)"
     ],
     "doc_type": "Engagement letter · sell-side M&A advisory · Complex"
   },
@@ -55,7 +55,7 @@
       "clause": "§4 Expenses",
       "audience": "legal",
       "stance": "negotiate",
-      "says": "All advisor & affiliate expenses reimbursed — uncapped, no approval, no receipts.",
+      "says": "All advisor & affiliate expenses reimbursed, uncapped, no approval, no receipts.",
       "risk": "Open-ended, unverifiable spend on the client's account.",
       "recommendation": "Require receipts and prior approval over a threshold; exclude internal allocations.",
       "fallback": "A monthly cap with reconciliation."
@@ -63,11 +63,11 @@
   ],
   "business_terms": [
     {
-      "term": "Success fee — 1.9% of Aggregate Consideration, $3.5m minimum (§2)",
+      "term": "Success fee, 1.9% of Aggregate Consideration, $3.5m minimum (§2)",
       "confirm": "Is the rate, minimum and base approved?"
     },
     {
-      "term": "Retainers — $100k signing + $40k/month for six months (§2)",
+      "term": "Retainers, $100k signing + $40k/month for six months (§2)",
       "confirm": "Approved?"
     },
     {
@@ -75,7 +75,7 @@
       "confirm": "Comfortable being tied to the advisor across the sponsor family?"
     },
     {
-      "term": "Term — 18 months, auto-renewing (§5)",
+      "term": "Term, 18 months, auto-renewing (§5)",
       "confirm": "Approved?"
     },
     {
@@ -160,7 +160,7 @@
     ]
   },
   "client_email": {
-    "subject": "Ashton / Pembroke Ridge — Calder & Rowe engagement letter: decisions needed",
+    "subject": "Ashton / Pembroke Ridge, Calder & Rowe engagement letter: decisions needed",
     "body_markdown": "Hi team,\n\nWe've run a first-pass review and drafted a markup. A few commercial points need your call: success fee (§2), retainers (§2), exclusivity (§1/§3), term (§5), and the sponsor guarantee/publicity (§6/§7). On the legal side we're handling the indemnity and cap (§6), the fee trigger (§2), the tail (§5) and expenses (§4).\n\nBest,\n[Name / title]"
   }
 }

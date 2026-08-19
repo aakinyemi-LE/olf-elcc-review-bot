@@ -80,6 +80,23 @@ def check(path):
     if not ce.get("subject") or not ce.get("body_markdown"):
         warns.append("client_email missing subject or body_markdown")
 
+    # house style: no em-dashes in displayed text
+    emd = []
+    def scan(v, where):
+        if isinstance(v, str):
+            if "—" in v:
+                emd.append(where)
+        elif isinstance(v, list):
+            for i, x in enumerate(v):
+                scan(x, where + "[" + str(i) + "]")
+        elif isinstance(v, dict):
+            for k, val in v.items():
+                scan(val, where + "." + k)
+    for key in ("matter", "legal_issues", "business_terms", "key_terms", "client_email"):
+        scan(d.get(key), key)
+    if emd:
+        warns.append("em-dash found in: " + ", ".join(emd[:8]) + (" …" if len(emd) > 8 else "") + " (house style: no em-dashes)")
+
     return errors, warns
 
 

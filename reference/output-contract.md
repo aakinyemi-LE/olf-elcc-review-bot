@@ -31,6 +31,9 @@ reading. Match the Acme reference run: high-level, terse, high-value only.
   "Here is the review…", status lines, methodology, confidence, or precedent
   talk. Open on the parties; close on the pointers.
 - **No opinions in the matter block** — parties and document type only (see §1).
+- **No em-dashes in any output.** Never use `—` in chat, the console, the `.docx`,
+  or the client email. Use a comma, colon, or a new sentence instead. (This is a
+  house style rule; it applies to everything the lawyer or client sees.)
 - **No filler, no invented matter numbers.** Cut every word that is not load-
   bearing.
 
@@ -56,9 +59,10 @@ Open with the matter narration. Render in this order.
 Three lines, then move straight to the issues. **No characterisation of how the
 paper reads, no "advisor-friendly", no assessment — that is what the issues are
 for.**
-- **Party line 1** — counterparty by real name + role (e.g. "Acme Advisors LLC —
-  sell-side financial advisor").
-- **Party line 2** — client by real name + role (e.g. "PortfolioCo — client").
+- **Party line 1** — counterparty by real name, with the role in parentheses
+  (e.g. "Acme Advisors LLC (sell-side financial advisor)").
+- **Party line 2** — client by real name, role in parentheses (e.g.
+  "PortfolioCo (client)"). Use the `Name (role)` form, never a dash separator.
 - **Document type** — family + sub-type + Simple/Complex, in a few words (e.g.
   "Engagement letter · M&A advisor · Complex").
 
@@ -117,10 +121,11 @@ The operative terms from the by-hand extraction, in exactly **two columns**:
   anchors — e.g. a PDF page link or an HTML/Docs URL.)
 
 ### 4. Draft client escalation email
-The ready-to-edit email to the client / deal team: subject, greeting, one-line
-context, **Business decisions we need from you** (the deal terms), **Legal points
-we're handling** (brief, from the legal issues), a clear ask, and a sign-off.
-Draft-only, with a copy affordance. It never sends.
+The ready-to-edit email to the client / deal team, kept short: subject, greeting,
+one-line context, **Business decisions we need from you** (the deal terms), a
+clear ask, and a sign-off. **Do not list the legal issues in the email body** —
+those are handled in the markup; the email is about the client's commercial
+decisions. Draft-only, with a copy affordance. It never sends.
 
 **Console data.** The template reads one JSON block (`<script id="review-data">`)
 that is a display projection of the review-state — keys: `matter{title,
@@ -161,8 +166,8 @@ One JSON object drives all three outputs. Written to the working dir as
     "complexity": "complex",
     "parties": { "client": "PortfolioCo", "counterparty": "Acme Advisors LLC" },
     "party_lines": [
-      "Acme Advisors LLC — sell-side financial advisor",
-      "PortfolioCo — client"
+      "Acme Advisors LLC (sell-side financial advisor)",
+      "PortfolioCo (client)"
     ]
   },
   "source": { "path": "uploads/letter.docx", "href": null },
@@ -191,7 +196,7 @@ One JSON object drives all three outputs. Written to the working dir as
     ]
   },
   "client_email": {
-    "subject": "PortfolioCo — Acme engagement letter: decisions needed",
+    "subject": "PortfolioCo, Acme engagement letter: decisions needed",
     "body_markdown": "..."
   }
 }

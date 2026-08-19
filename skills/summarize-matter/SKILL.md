@@ -21,11 +21,12 @@ method, §5/§6 clause families) and the `review-state` shape in
    Note every incorporated-by-reference document (schedules, SLAs, DPAs, order
    forms, URL "standard terms").
 2. **Classify.** Family (engagement letter / commercial contract), sub-type, and
-   Simple vs Complex. Capture the **matter block — facts only**: the two parties
-   by real name with their roles as `matter.party_lines` (one string per party,
-   rendered on its own line) and the document type. **No `overall_read`, no
-   "advisor-friendly" or any characterisation of the paper — that belongs in the
-   issues, not here.** No invented matter numbers.
+   Simple vs Complex. Capture the **matter block, facts only**: the two parties as
+   `matter.party_lines` in the form **`Name (role)`** (e.g. "Acme Advisors LLC
+   (sell-side financial advisor)"), one string per party, and the document type.
+   Use the parenthetical form, never a dash separator. **No `overall_read` and no
+   characterisation of the paper** (that belongs in the issues). No invented
+   matter numbers, and **no em-dashes** in any field.
 3. **Extract key terms by hand.** Walk the clause families and pull every
    operative term into `key_terms[]`. **Check every number and its measurement
    point separately** — a fee % *and* its base, a cap *and* its multiplier, a

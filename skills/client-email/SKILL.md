@@ -16,20 +16,20 @@ already produced — do not re-analyse or introduce anything new.
 
 ## Structure
 
-- **Subject** — `<Client> — <counterparty> <doc type>: decisions needed`.
+Keep it short. **Do not list the legal issues in the body** — those are handled
+in the markup; this email is about the client's commercial decisions.
+
+- **Subject** — `<Client>, <counterparty> <doc type>: decisions needed`.
 - **Greeting + one-line context** — what the document is and where it stands
   (first-pass done, markup drafted).
 - **Business decisions we need from you** — the `business_terms[]`, each as a
-  crisp question with the proposed number. Present, don't opine — no "this fee
-  looks high." This is the heart of the email.
-- **Legal points we're handling** — a brief, non-alarming summary of the main
-  red flags and how the markup addresses them (from the `legal_issues[]`). Enough
-  for the client to understand, not a legal memo.
-- **Any open questions / watch items** — unseen incorporated docs, ambiguities.
-- **Clear ask + next step** — what you need back and by when (leave the date for
-  the lawyer), and that the tracked-changes redline is ready to go on their
-  confirmation.
+  crisp question with the proposed number. Present, don't opine. This is the body.
+- **Clear ask + next step** — what you need back (leave the date for the lawyer),
+  and that the tracked-changes redline is ready to go on their confirmation.
 - **Sign-off** — leave sender name/title as an easily-edited placeholder.
+
+**House style:** no em-dashes (`—`) anywhere in the email; use commas, colons, or
+new sentences.
 
 ## Output
 

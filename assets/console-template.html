@@ -1,15 +1,15 @@
 <title>Contract Review Console</title>
 <!--
-  OLF EL & CC Review — console (v2 visual). A scan-first triage view.
-  Header: two parties (one per line) + document type — facts only, no opinion.
+  OLF EL & CC Review - console (v2 visual). A scan-first triage view.
+  Header: two parties (one per line) + document type - facts only, no opinion.
   Sections: 1 Legal issues & recommendations (combined) · 2 Commercial deal terms
             3 Key terms · 4 Draft client escalation email
-  The tracked-changes redline is NOT shown here — it is the downloadable .docx.
+  The tracked-changes redline is NOT shown here - it is the downloadable .docx.
 
   Section references (§…) hyperlink to the document when a location is available:
   set matter.source_url (the hosted document URL); optionally give an item an
   `anchor` (e.g. "page=3") or a full `href`. With a plain uploaded .docx there is
-  no addressable location, so refs render as plain chips — deep in-document
+  no addressable location, so refs render as plain chips - deep in-document
   linking is delivered by the Word plugin.
 
   TO POPULATE: replace the JSON in <script id="review-data">. Sample is illustrative.
@@ -17,10 +17,10 @@
 <script id="review-data" type="application/json">
 {
   "matter": {
-    "title": "Calder & Rowe ↔ Ashton — Engagement Letter Review",
+    "title": "Calder & Rowe ↔ Ashton Engagement Letter Review",
     "party_lines": [
-      "Calder & Rowe Securities LLC — exclusive sell-side financial advisor",
-      "Ashton Medical Devices, Inc. & Pembroke Ridge Capital, L.P. — client"
+      "Calder & Rowe Securities LLC (exclusive sell-side financial advisor)",
+      "Ashton Medical Devices, Inc. & Pembroke Ridge Capital, L.P. (client)"
     ],
     "doc_type": "Engagement letter · Sell-side M&A advisory · Complex",
     "source_url": "https://example.com/ashton-engagement-letter.pdf"
@@ -47,16 +47,16 @@
       "recommendation": "Shorten to 12 months, limit to a named covered-party list, disapply on advisor breach.",
       "fallback": "Up to 18 months if firmly limited to a named list." },
     { "clause": "§4 Expenses", "stance": "negotiate", "anchor": "page=4",
-      "says": "All advisor and affiliate expenses reimbursed — uncapped, no approval, no receipts.",
+      "says": "All advisor and affiliate expenses reimbursed, uncapped, with no approval or receipts.",
       "risk": "Open-ended, unverifiable spend on the client's account.",
       "recommendation": "Require receipts and prior approval over a threshold; exclude internal allocations.",
       "fallback": "A monthly cap with reconciliation." }
   ],
   "business_terms": [
-    { "term": "Success fee — 1.9% of Aggregate Consideration, $3.5m minimum", "ref": "§2", "confirm": "Rate, minimum and consideration base approved?" },
-    { "term": "Retainers — $100k signing + $40k / month for six months", "ref": "§2", "confirm": "Approved?" },
+    { "term": "Success fee: 1.9% of Aggregate Consideration, $3.5m minimum", "ref": "§2", "confirm": "Rate, minimum and consideration base approved?" },
+    { "term": "Retainers: $100k signing + $40k / month for six months", "ref": "§2", "confirm": "Approved?" },
     { "term": "Exclusivity & “Client Group” lock-in", "ref": "§1/§3", "confirm": "Comfortable being tied to the advisor across the sponsor family?" },
-    { "term": "Term — 18 months, auto-renewing", "ref": "§5", "confirm": "Approved?" },
+    { "term": "Term: 18 months, auto-renewing", "ref": "§5", "confirm": "Approved?" },
     { "term": "Sponsor guarantee & public use of names / logos", "ref": "§6/§7", "confirm": "Acceptable, or resist?" }
   ],
   "key_terms": [
@@ -72,8 +72,8 @@
     { "term": "Governing law", "provision": "New York; exclusive NY County courts; jury-trial waiver", "ref": "§7", "anchor": "page=7" }
   ],
   "client_email": {
-    "subject": "Ashton / Pembroke Ridge — Calder & Rowe engagement letter: decisions needed",
-    "body_markdown": "Hi team,\n\nWe've run a first-pass review and drafted a markup. A few **commercial** points need your call: the **success fee** (§2), **retainers** (§2), **exclusivity** (§1/§3), **term** (§5), and the **sponsor guarantee / publicity** (§6/§7).\n\nOn the **legal** side we're handling the indemnity and cap (§6), the fee trigger (§2), the tail (§5) and expenses (§4) in the markup.\n\nOnce you confirm the commercial points, the tracked-changes redline is ready to go back.\n\nBest,\n[Name / title]"
+    "subject": "Ashton / Pembroke Ridge, Calder & Rowe engagement letter: decisions needed",
+    "body_markdown": "Hi team,\n\nWe've run a first-pass review and drafted a markup. A few **commercial** points need your call: the **success fee** (§2), **retainers** (§2), **exclusivity** (§1/§3), **term** (§5), and the **sponsor guarantee / publicity** (§6/§7).\n\nOnce you confirm the commercial points, the tracked-changes redline is ready to go back.\n\nBest,\n[Name / title]"
   }
 }
 </script>
@@ -171,6 +171,8 @@
   .issue.acceptable { --edge:var(--accept); }  .issue.walk_away { --edge:var(--push); }
   .issue-top { display:flex; align-items:center; gap:12px; margin-bottom:7px; }
   .clause { font-family:var(--serif); font-size:16.5px; font-weight:600; }
+  .clause .clause-link { color:inherit; text-decoration:none; border-bottom:1px dashed var(--accent-line); }
+  .clause .clause-link:hover { color:var(--accent-ink); border-bottom-style:solid; }
   .pill { margin-left:auto; font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.08em;
           text-transform:uppercase; padding:4px 10px; border-radius:999px; white-space:nowrap; }
   .pill.push_back { color:var(--push); background:var(--push-soft); box-shadow:inset 0 0 0 1px var(--push-line); }
@@ -236,7 +238,7 @@
   <main>
     <header class="matter">
       <div class="eyebrow">First-pass review</div>
-      <h1 class="title" id="m-title">—</h1>
+      <h1 class="title" id="m-title">Contract review</h1>
       <div class="parties" id="m-parties"></div>
       <div class="metarow">
         <span class="chip doc" id="m-doctype"></span>
@@ -272,7 +274,7 @@
         <div class="foot">
           <button class="copy primary" id="copy-all">Copy email</button>
           <button class="copy" id="copy-body">Copy body</button>
-          <span class="draftnote">Draft — you send it. Nothing leaves here.</span>
+          <span class="draftnote">Draft only. You send it; nothing leaves here.</span>
         </div>
       </div>
     </section>
@@ -307,11 +309,11 @@
       return h ? '<a class="ref" href="'+encodeURI(h)+'" target="_blank" rel="noopener">'+esc(text)+"</a>"
                : '<span class="ref">'+esc(text)+"</span>";
     }
-    // Linkify a leading §clause token inside a heading like "§6 Indemnity".
+    // The whole clause header links to the document when a location resolves.
     function clauseHTML(clause, item){
-      var mm=String(clause||"").match(/^(§[^\s]*)(\s+.*)?$/);
-      if(mm) return refHTML(mm[1], item)+(mm[2]?'<span> '+esc(mm[2].trim())+"</span>":"");
-      return esc(clause||"");
+      var h=hrefFor(item);
+      return h ? '<a class="clause-link" href="'+encodeURI(h)+'" target="_blank" rel="noopener">'+esc(clause||"")+"</a>"
+               : esc(clause||"");
     }
 
     document.title = m.title || "Contract Review Console";
@@ -322,22 +324,21 @@
     (m.party_lines && m.party_lines.length ? m.party_lines : (m.roles?String(m.roles).split(/;\s*/):[]))
       .forEach(function(line){
         line=String(line).trim(); if(!line) return;
-        var mm=line.match(/^(.*?)(\s[—–-]\s.*)$/), d=document.createElement("div"); d.className="pline";
-        d.innerHTML = mm ? "<b>"+esc(mm[1])+'</b><span class="role">'+esc(mm[2])+"</span>" : esc(line);
+        var mm=line.match(/^(.*?)\s*\(([^)]*)\)\s*$/), d=document.createElement("div"); d.className="pline";
+        d.innerHTML = mm ? "<b>"+esc(mm[1])+'</b> <span class="role">('+esc(mm[2])+")</span>" : esc(line);
         P.appendChild(d);
       });
 
-    // Summary strip — counts by position
+    // Summary strip - counts by position
     var counts={push_back:0,negotiate:0,acceptable:0,walk_away:0};
     li.forEach(function(x){ var s=(x.stance||"negotiate").toLowerCase(); if(counts[s]!=null) counts[s]++; });
     var S=document.getElementById("summary");
     function stat(cls,n,lbl){ if(!n) return ""; return '<div class="stat '+cls+'"><span class="num">'+n+'</span><span class="lbl">'+lbl+"</span></div>"; }
     S.innerHTML =
+      '<div class="stat"><span class="num">'+bt.length+'</span><span class="lbl">Client decisions</span></div>' +
       '<div class="stat"><span class="num">'+li.length+'</span><span class="lbl">Legal points</span></div>' +
-      stat("push","push_back"in counts?counts.push_back:0,"Push back") +
-      stat("negot",counts.negotiate,"Negotiate") +
-      stat("accept",counts.acceptable,"Accept") +
-      '<div class="stat"><span class="num">'+bt.length+'</span><span class="lbl">Client decisions</span></div>';
+      stat("push",counts.push_back,"Push back") +
+      stat("negot",counts.negotiate,"Negotiate");
 
     // 1 · Issues & recommendations (combined)
     var I=document.getElementById("issues");
@@ -351,7 +352,7 @@
         '<dl class="micro">'+
           (x.risk?'<dt>Risk</dt><dd>'+esc(x.risk)+"</dd>":"")+
           (x.recommendation?'<dt>Fix</dt><dd class="fix">'+esc(x.recommendation)+"</dd>":"")+
-          (x.fallback && x.fallback!=="—"?'<dt>If pushed</dt><dd>'+esc(x.fallback)+"</dd>":"")+
+          (x.fallback && !/^(—|–|-|none|n\/a)$/i.test(String(x.fallback).trim())?'<dt>Fallback</dt><dd>'+esc(x.fallback)+"</dd>":"")+
         "</dl>";
       I.appendChild(el);
     });
@@ -361,7 +362,7 @@
     var B=document.getElementById("bterms");
     bt.forEach(function(x){
       var el=document.createElement("div"); el.className="bt";
-      el.innerHTML='<span class="decide">Decide</span><div class="body"><div class="term">'+esc(x.term||"")+
+      el.innerHTML='<div class="body"><div class="term">'+esc(x.term||"")+
         (x.ref?" "+refHTML(x.ref,x):"")+"</div>"+
         (x.confirm?'<div class="confirm">'+esc(x.confirm)+"</div>":"")+"</div>";
       B.appendChild(el);
