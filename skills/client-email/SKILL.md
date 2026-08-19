@@ -22,8 +22,10 @@ in the markup; this email is about the client's commercial decisions.
 - **Subject** — `<Client>, <counterparty> <doc type>: decisions needed`.
 - **Greeting + one-line context** — what the document is and where it stands
   (first-pass done, markup drafted).
-- **Business decisions we need from you** — the `business_terms[]`, each as a
-  crisp question with the proposed number. Present, don't opine. This is the body.
+- **Business decisions we need from you** — the `business_terms[]` as a
+  **numbered list**, one item per term: the term (with its number, in **bold**)
+  followed by the specific question. Present, don't opine. This list is the body
+  of the email, and it must be a list, not a run-on sentence.
 - **Clear ask + next step** — what you need back (leave the date for the lawyer),
   and that the tracked-changes redline is ready to go on their confirmation.
 - **Sign-off** — leave sender name/title as an easily-edited placeholder.

@@ -121,11 +121,13 @@ The operative terms from the by-hand extraction, in exactly **two columns**:
   anchors — e.g. a PDF page link or an HTML/Docs URL.)
 
 ### 4. Draft client escalation email
-The ready-to-edit email to the client / deal team, kept short: subject, greeting,
-one-line context, **Business decisions we need from you** (the deal terms), a
-clear ask, and a sign-off. **Do not list the legal issues in the email body** —
-those are handled in the markup; the email is about the client's commercial
-decisions. Draft-only, with a copy affordance. It never sends.
+The ready-to-edit email to the client / deal team: subject, greeting, one-line
+context, then **Business decisions we need from you as a numbered list** (one item
+per deal term, the term in bold followed by its confirmation question), a clear
+ask, and a sign-off. **Do not list the legal issues in the email body** — those
+are handled in the markup; the email exists to get the client's commercial
+decisions, presented as a scannable list. Draft-only, with a copy affordance. It
+never sends.
 
 **Console data.** The template reads one JSON block (`<script id="review-data">`)
 that is a display projection of the review-state — keys: `matter{title,
