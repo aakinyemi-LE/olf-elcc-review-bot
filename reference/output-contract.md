@@ -162,7 +162,7 @@ One JSON object drives all three outputs. Written to the working dir as
 ```json
 {
   "matter": {
-    "title": "Engagement Letter (M&A advisor) — Acme Advisors ↔ PortfolioCo",
+    "title": "Acme Advisors ↔ PortfolioCo Engagement Letter (M&A advisor)",
     "doc_family": "engagement_letter",
     "sub_type": "m&a advisor",
     "complexity": "complex",
