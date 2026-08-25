@@ -20,17 +20,21 @@ method, §5/§6 clause families) and the `review-state` shape in
    path** for the redline export; `.pdf` → the pdf skill; else the pasted text.
    Note every incorporated-by-reference document (schedules, SLAs, DPAs, order
    forms, URL "standard terms").
-2. **Classify.** Family (engagement letter / commercial contract), sub-type, and
-   Simple vs Complex. Capture the **matter block, facts only**: the two parties as
-   `matter.party_lines` in the form **`Name (role)`** (e.g. "Acme Advisors LLC
-   (sell-side financial advisor)"), one string per party, and the document type.
-   Use the parenthetical form, never a dash separator. **No `overall_read` and no
-   characterisation of the paper** (that belongs in the issues). No invented
-   matter numbers, and **no em-dashes** in any field.
-3. **Extract key terms by hand.** Walk the clause families and pull every
-   operative term into `key_terms[]`. **Check every number and its measurement
-   point separately** — a fee % *and* its base, a cap *and* its multiplier, a
-   term *and* its renewal/notice mechanics, a tail *and* its trigger. Capture each
+2. **Classify into a sub-type.** Pick one of the **eight sub-types** (brain §2 /
+   `subtype-lenses.md`) plus Simple vs Complex; record it in `matter.sub_type`.
+   If none clearly fits, use **Other** and note the sub-type was uncertain.
+   Capture the **matter block, facts only**: the two parties as `matter.party_lines`
+   in the form **`Name (role)`** (e.g. "Acme Advisors LLC (sell-side financial
+   advisor)"), one string per party, and the document type (include the sub-type,
+   e.g. "Technology / SaaS · Complex"). Use the parenthetical form, never a dash
+   separator. **No `overall_read` and no characterisation of the paper** (that
+   belongs in the issues). No invented matter numbers, and **no em-dashes** in any
+   field.
+3. **Extract key terms by hand, guided by the sub-type lens's checklist.** Walk
+   the clause families and pull every operative term into `key_terms[]`. **Check
+   every number and its measurement point separately** — a fee % *and* its base, a
+   cap *and* its multiplier, a term *and* its renewal/notice mechanics, a tail
+   *and* its trigger. Capture each
    as **two fields**: `term` (the name) and `provision` (what the agreement
    provides), plus `ref` (the section/clause, e.g. "§3(a)") and optional `href`
    (a link to that part of the document when the source is hosted with

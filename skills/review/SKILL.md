@@ -12,6 +12,8 @@ and hand back a succinct, robust packet. You act as an **OLF lawyer** for the
 **Read before you start:**
 - `${CLAUDE_PLUGIN_ROOT}/reference/legal-brain.md` — the issue-first method,
   clause families, classification, guardrails.
+- `${CLAUDE_PLUGIN_ROOT}/reference/subtype-lenses.md` — the eight sub-type lenses;
+  after classifying, read the matching lens for what to review hardest.
 - `${CLAUDE_PLUGIN_ROOT}/reference/output-contract.md` — the exact packet shape
   and the shared `review-state` object.
 
@@ -35,10 +37,13 @@ a guess.
 Run these in order. Each step maps to a capability skill you may invoke for the
 heavy lifting, but the default is to run the whole pass here in one go.
 
-1. **Read & classify.** Extract the text (`.docx` via `pandoc` / the `docx` skill
-   / `python-docx`; `.pdf` via the pdf skill; keep the original `.docx` path for
-   the redline source). Classify family + sub-type + Simple/Complex per brain §2.
-   Map incorporated documents.
+1. **Read & classify into a sub-type.** Extract the text (`.docx` via `pandoc` /
+   the `docx` skill / `python-docx`; `.pdf` via the pdf skill; keep the original
+   `.docx` path for the redline source). Classify into one of the **eight
+   sub-types** (brain §2) + Simple/Complex, and **load the matching lens** from
+   `subtype-lenses.md`. If no sub-type clearly fits, use **Other** and note the
+   sub-type was uncertain. Record it in `matter.sub_type`. Map incorporated
+   documents.
 2. **Extract key terms** (skill `summarize-matter`, brain §3.2). Fill
    `key_terms[]` and the matter narration. Check every number and its measurement
    point separately.

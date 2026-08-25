@@ -63,8 +63,10 @@ for.**
   (e.g. "Acme Advisors LLC (sell-side financial advisor)").
 - **Party line 2** — client by real name, role in parentheses (e.g.
   "PortfolioCo (client)"). Use the `Name (role)` form, never a dash separator.
-- **Document type** — family + sub-type + Simple/Complex, in a few words (e.g.
-  "Engagement letter · M&A advisor · Complex").
+- **Document type** — the sub-type (one of the eight, brain §2 /
+  `subtype-lenses.md`) + Simple/Complex, in a few words (e.g. "Technology / SaaS ·
+  Complex", or "Financial advisory · Complex"). If the sub-type was uncertain, say
+  "Other / uncategorised".
 
 That is the entire matter block. Then go directly to §2.
 

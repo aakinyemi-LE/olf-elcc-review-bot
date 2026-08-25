@@ -15,9 +15,12 @@ split, §9 playbook/precedent. Use the `review-state` shape from
 
 ## Steps
 
-1. **Walk the clause families** (§5 engagement letter / §6 commercial contract).
-   For each: present? what does it say? market/acceptable for a client in our
-   position?
+1. **Walk the clause families through the sub-type lens** (§5 engagement letter /
+   §6 commercial contract, prioritised by `subtype-lenses.md` for this matter's
+   `sub_type`). For each: present? what does it say? market/acceptable for a client
+   in our position? **Give the lens's "review hardest" families and its
+   type-specific red flags priority, and check its expected provisions are
+   present.** (If `sub_type` is Other, run the general §6 walk.)
 2. **Classify each issue** into exactly one class (§4): `red_flag` (legal risk /
    material off-market), `business` (client's commercial call), `watch`
    (ambiguous / unseen incorporated doc / novel / fact-dependent), `acceptable`.

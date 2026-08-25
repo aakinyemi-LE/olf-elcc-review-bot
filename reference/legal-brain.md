@@ -37,26 +37,35 @@ never sent to a web search or any external tool.
 
 ## 2. Classify the document
 
-Two families, each with common sub-types. State the family and sub-type plainly;
-do **not** invent matter numbers or file references.
+Classify into exactly one **sub-type** from the taxonomy below; the sub-type
+drives which lens the review applies (`subtype-lenses.md`). State the sub-type
+plainly; do **not** invent matter numbers or file references.
 
-**Engagement letter** — a service provider sets the terms on which it will act
-for the client. Sub-types:
-- Investment bank / M&A or sell-side advisor (incl. success/transaction fees)
-- Placement agent / capital-raising
-- Audit, tax or accounting
-- Management / strategy / other consulting
-- Legal or other professional services
+1. **Financial advisory & transaction engagement agreements** — investment bank /
+   M&A advisor, placement agent, capital-raising. *(This is the engagement-letter
+   family; use the §5 clause families.)*
+2. **Professional services agreements** — consulting, accounting/tax,
+   marketing/agency, staffing.
+3. **Technology, SaaS & software agreements** — subscriptions, hosted software,
+   licences, order forms.
+4. **Data, privacy & security agreements** — DPA, BAA, data-sharing, SCCs.
+5. **Managed services & outsourcing agreements** — BPO, IT outsourcing, payroll/HR.
+6. **Routine vendor & supplier agreements** — goods, supplies, low-risk one-offs.
+7. **Facilities, events & hospitality agreements** — venues, catering, room blocks.
+8. **Other commercial contracts** — the fallback.
 
-**Commercial contract** — a counterparty contracts to supply goods or services to
-the client (client is on the buy-side of the paper). Sub-types:
-- SaaS / software subscription
-- Master services agreement (MSA) + SOW
-- Consulting / professional services
-- License / IP
-- General vendor / procurement / services
+Sub-type **1** is the engagement-letter family (§5); **2–8** are commercial
+contracts (§6). Then **read the matching lens in `subtype-lenses.md`** — it sets
+what to review hardest, the type-specific red flags, the key-terms checklist, and
+the default depth.
 
-Note **Simple vs Complex** (it sets the depth of review):
+**Low confidence / no clear fit.** Do not force a wrong sub-type. Use **8
+(Other)**, run the general commercial review, and **note that the sub-type was
+uncertain** so the lawyer can redirect. The lawyer can override the sub-type at
+any time; a document that plainly contains a second type (e.g. SaaS with a DPA)
+runs the primary lens and pulls in the secondary lens for that part.
+
+Note **Simple vs Complex** (it sets the depth of review; each lens gives a default):
 - **Simple** — low value, limited scope, no personal-data or IP creation,
   short-term. Light touch.
 - **Complex** — operationally significant, IP creation, personal-data access,
@@ -76,8 +85,11 @@ Note **Simple vs Complex** (it sets the depth of review):
    measurement point separately** — e.g. a fee % *and* the base it applies to; a
    cap amount *and* what it is a multiple of; a term length *and* the
    renewal/notice mechanics. Numbers are where first passes fail.
-3. **Walk the clause families.** For each family in §5/§6, ask: is it present,
-   what does it say, and is it market/acceptable for a client in our position?
+3. **Walk the clause families, through the sub-type lens.** For each family in
+   §5/§6, ask: is it present, what does it say, and is it market/acceptable for a
+   client in our position? **Prioritise the families the sub-type lens flags as
+   "review hardest", run its type-specific red flags, and use its key-terms
+   checklist and missing-provision expectations** (`subtype-lenses.md`).
 4. **Classify each issue** using §4 below.
 5. **Cross-cutting sweep** (§7) — the traps that live between clauses.
 6. **Split business vs legal** (§8) so the packet routes cleanly: the lawyer's
