@@ -1,0 +1,113 @@
+# OLF playbook overlay — 03 Technology, SaaS & software agreements
+# Loads AFTER _core.yaml. Source: brain §6 + SaaS lens. Pull in overlay 04 if a DPA is attached.
+meta:
+  subtype: 3
+  name: "Technology, SaaS & software agreements"
+  depth: Complex
+  perspective: "Client subscribing to / licensing hosted software"
+
+issues:
+
+  - id: auto-renewal
+    family: Term, renewal & termination
+    issue: Auto-renewal + notice window
+    owner: legal
+    preferred: "No auto-renewal, or renewal only on the Client's affirmative election."
+    fallback: "Auto-renewal only with a reasonable, non-trap notice window (≈30–60 days before the renewal date)."
+    default_stance: push_back
+    red_flag_if: "auto-renews with a long/early notice tail the Client is likely to miss"
+
+  - id: sla-credits
+    family: Parties, scope & deliverables
+    issue: Uptime / SLA & service credits
+    owner: legal
+    preferred: "Defined uptime commitment with service credits, and termination for chronic failure."
+    fallback: "Reasonable credits; ensure credits are not the SOLE remedy for a material or persistent breach."
+    default_stance: negotiate
+    red_flag_if: "SLA with no remedy, or service credits as the exclusive remedy"
+    missing_is: watch
+
+  - id: price-uplift
+    family: Fees, payment & increases
+    issue: Price increases / uplift
+    owner: hybrid
+    owner_split: {business: "the price itself", legal: "whether uplift is capped/indexed and requires notice"}
+    preferred: "Price fixed for the term; renewal uplift capped (e.g. ≤ a stated % or CPI) with advance notice."
+    fallback: "Reasonable index-linked uplift with notice."
+    default_stance: negotiate
+    red_flag_if: "uncapped unilateral price uplift"
+
+  - id: data-ownership
+    family: Data protection & security
+    issue: Client data ownership
+    owner: legal
+    preferred: "Client owns all Client data; vendor gets only a limited licence to host/process it to provide the service."
+    fallback: "Aggregated/anonymised usage data for the vendor's own service operation only — not resale."
+    default_stance: push_back
+    red_flag_if: "vendor claims rights in Client data, or reuses it 'to improve services' beyond anonymised aggregates"
+
+  - id: security-standard
+    family: Data protection & security
+    issue: Security standard
+    owner: legal
+    preferred: "Defined security standard (e.g. SOC 2 / ISO 27001-aligned TOMs); breach notification without undue delay."
+    fallback: "Commercially reasonable, industry-standard measures with a defined breach-notice route."
+    default_stance: negotiate
+    missing_is: red_flag
+    note: "If personal data flows, pull in overlay 04 (Data/privacy)."
+
+  - id: acceptable-use-suspension
+    family: Parties, scope & deliverables
+    issue: Acceptable use & suspension
+    owner: legal
+    preferred: "Suspension only for material breach or genuine security risk, with notice and a cure opportunity where feasible."
+    fallback: "Reasonable immediate suspension for genuine security threats, with prompt notice."
+    default_stance: negotiate
+    red_flag_if: "vendor may suspend at will with no notice"
+
+  - id: url-terms-amendment
+    family: Boilerplate that bites
+    issue: Unilateral amendment of URL-linked terms
+    owner: legal
+    preferred: "No unilateral change to incorporated 'standard terms'; material changes require notice and consent."
+    fallback: "Advance notice of changes with a right to terminate if materially adverse."
+    default_stance: push_back
+    red_flag_if: "vendor may change URL-linked terms unilaterally at any time"
+    missing_is: watch
+
+  - id: ip-infringement-indemnity
+    family: Indemnities
+    issue: IP-infringement indemnity + service warranty
+    owner: legal
+    preferred: "Vendor indemnifies for third-party IP infringement by the service and warrants it has the right to license it."
+    fallback: "Standard IP indemnity with reasonable remedies (procure/modify/refund)."
+    default_stance: negotiate
+    red_flag_if: "'AS IS' for a business-critical service, or no IP indemnity"
+
+  - id: exit-data-return
+    family: Term, renewal & termination
+    issue: Exit & data return / portability
+    owner: legal
+    preferred: "On exit, Client can export its data in a usable format; vendor deletes/returns on request; a defined post-termination retrieval window."
+    fallback: "Reasonable retrieval window and standard export format."
+    default_stance: push_back
+    red_flag_if: "no data return/portability on exit (lock-in)"
+    missing_is: red_flag
+
+  - id: licence-scope
+    family: IP & work product
+    issue: Licence / IP scope & restrictions
+    owner: legal
+    preferred: "Licence broad enough for the Client's intended use across its affiliates; restrictions no broader than needed to protect the vendor's IP."
+    fallback: "Reasonable seat/user scoping; affiliate use permitted."
+    default_stance: negotiate
+
+  - id: liability-cap
+    family: Limitation of liability
+    issue: Liability cap & carve-outs (SaaS)
+    owner: hybrid
+    owner_split: {business: "the cap figure/multiple", legal: "symmetry and whether the cap swallows the data-breach carve-out"}
+    preferred: "Mutual cap; data breach, IP indemnity, confidentiality, fraud and willful misconduct carved out of (or super-capped above) the general cap."
+    fallback: "Cap at a multiple of annual fees, with the carve-outs above surviving."
+    default_stance: push_back
+    red_flag_if: "one-way/low cap that swallows the data-breach or IP-indemnity carve-out"

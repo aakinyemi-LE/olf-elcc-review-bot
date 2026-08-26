@@ -1,0 +1,80 @@
+# OLF playbook overlay — 07 Facilities, events & hospitality agreements
+# Loads AFTER _core.yaml. Source: brain §6 + facilities/events lens.
+meta:
+  subtype: 7
+  name: "Facilities, events & hospitality agreements (venues / catering / room blocks)"
+  depth: "Simple to Complex by value and headcount"
+  perspective: "Client booking a venue / event / hospitality"
+
+issues:
+
+  - id: cancellation-attrition
+    family: Term, renewal & termination
+    issue: Cancellation & attrition schedule
+    owner: hybrid
+    owner_split: {business: "accepting the commercial commitment", legal: "how punitive/escalating the schedule is"}
+    preferred: "Graduated, proportionate cancellation and attrition schedule; ability to reduce the room block / F&B within reasonable bands without penalty."
+    fallback: "Reasonable sliding scale tied to how far out the cancellation occurs."
+    default_stance: negotiate
+    red_flag_if: "punitive, steeply escalating cancellation/attrition penalties, or auto-charged minimums"
+
+  - id: force-majeure
+    family: Boilerplate that bites
+    issue: Force majeure (epidemic / government order)
+    owner: legal
+    preferred: "Broad force majeure expressly covering epidemic/pandemic, government orders, and travel restrictions, allowing cancellation without penalty."
+    fallback: "Reasonable force majeure that clearly covers government-order and public-health events."
+    default_stance: push_back
+    red_flag_if: "narrow force majeure with no epidemic / government-order cover"
+    missing_is: red_flag
+
+  - id: deposit-schedule
+    family: Fees, payment & increases
+    issue: Deposit & payment schedule
+    owner: hybrid
+    owner_split: {business: "amounts", legal: "refundability"}
+    preferred: "Deposits refundable (or creditable) on cancellation outside the penalty windows; staged, reasonable payment schedule."
+    fallback: "Partially non-refundable deposit tied to proximity to the event."
+    default_stance: negotiate
+    red_flag_if: "large non-refundable deposits payable far in advance"
+
+  - id: minimum-spend
+    family: Fees, payment & increases
+    issue: Minimum spend / F&B minimum
+    owner: business
+    preferred: "Minimum sized to realistic attendance; overage on actual consumption only."
+    fallback: "Reasonable minimum — a commercial call for the deal team."
+
+  - id: insurance-indemnity
+    family: Insurance
+    issue: Insurance & indemnity (injury / property)
+    owner: legal
+    preferred: "Mutual, fault-based indemnity; venue carries appropriate liability insurance for its premises and staff."
+    fallback: "Reasonable indemnity balanced to each party's control."
+    default_stance: push_back
+    red_flag_if: "one-way injury/property indemnity running against the Client"
+
+  - id: guest-attendee-liability
+    family: Limitation of liability
+    issue: Liability for guests / attendees
+    owner: legal
+    preferred: "Client not liable for the venue's negligence or third-party acts outside the Client's control; venue liable for its premises/staff."
+    fallback: "Reasonable allocation; cap attrition liability."
+    default_stance: negotiate
+    red_flag_if: "uncapped attrition liability, or Client liable for venue-caused harm"
+
+  - id: permits-compliance
+    family: Boilerplate that bites
+    issue: Permits & compliance
+    owner: legal
+    preferred: "Venue holds all licences/permits and complies with health, safety and accessibility law."
+    fallback: "Venue responsible for its own compliance; Client for its content/conduct."
+    default_stance: negotiate
+
+  - id: publicity-photography
+    family: Publicity
+    issue: IP / publicity / photography
+    owner: legal
+    preferred: "No use of the Client's name/logo or event photography without prior written consent."
+    fallback: "Internal use only without consent; no external marketing use."
+    default_stance: push_back

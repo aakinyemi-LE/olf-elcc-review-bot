@@ -1,0 +1,74 @@
+# OLF playbook overlay — 06 Routine vendor & supplier agreements
+# Loads AFTER _core.yaml. LIGHT TOUCH — flag only the outliers. Source: brain §6 (light) + routine lens.
+meta:
+  subtype: 6
+  name: "Routine vendor & supplier agreements (goods / supplies / low-risk services)"
+  depth: "Simple by default (escalate to Complex if data, IP or a critical dependency appears)"
+  perspective: "Client buying goods or low-risk services"
+  review_note: >
+    Do not over-review a routine deal. Run the core sweep at a light touch and
+    surface only genuine outliers. If personal data, IP creation, or a critical
+    dependency appears, STOP treating it as routine and pull in overlay 03/04/05.
+
+issues:
+
+  - id: price-payment
+    family: Fees, payment & increases
+    issue: Price & payment terms
+    owner: hybrid
+    owner_split: {business: "price", legal: "payment mechanics"}
+    preferred: "Clear price; payment within 30 days; no surprise uplift or fees."
+    fallback: "15–60 days; index-linked uplift with notice."
+    default_stance: negotiate
+
+  - id: auto-renewal
+    family: Term, renewal & termination
+    issue: Auto-renewal
+    owner: legal
+    preferred: "None, or a short, clearly-signposted notice window."
+    fallback: "Reasonable notice window to cancel."
+    default_stance: negotiate
+    red_flag_if: "surprise auto-renewal with a long notice period"
+
+  - id: termination-for-convenience
+    family: Term, renewal & termination
+    issue: Termination for convenience
+    owner: legal
+    preferred: "Client may terminate on reasonable notice."
+    fallback: "Up to 60 days' notice."
+    default_stance: negotiate
+    red_flag_if: "unusually long term or no convenience out"
+
+  - id: liability-indemnity
+    family: Limitation of liability
+    issue: Basic liability & indemnity
+    owner: legal
+    preferred: "Balanced, mutual; liability proportionate to the deal value."
+    fallback: "Reasonable cap; standard carve-outs."
+    default_stance: negotiate
+    red_flag_if: "one-sided indemnity, or liability disproportionate to a low-value deal"
+
+  - id: warranty-returns
+    family: Warranties
+    issue: Warranty / returns (goods)
+    owner: legal
+    preferred: "Goods conform to spec; a reasonable return/replacement right for defects."
+    fallback: "Standard supplier warranty and returns policy."
+    default_stance: negotiate
+
+  - id: delivery-title-risk
+    family: Parties, scope & deliverables
+    issue: Delivery, title & risk (goods)
+    owner: legal
+    preferred: "Title and risk pass on delivery/acceptance; clear delivery terms."
+    fallback: "Standard incoterms/delivery terms."
+    default_stance: negotiate
+
+  - id: hidden-data-access
+    family: Data protection & security
+    issue: Hidden personal-data access
+    owner: legal
+    preferred: "If the vendor will touch personal data, escalate out of 'routine' and apply overlay 04."
+    fallback: "n/a — this is an escalation trigger, not a negotiable term."
+    default_stance: push_back
+    red_flag_if: "personal-data access is hiding inside a nominally routine deal"

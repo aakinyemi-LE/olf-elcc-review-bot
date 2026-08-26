@@ -1,0 +1,359 @@
+# OLF commercial-contract playbook — SHARED CORE
+# schema_version: 1
+#
+# This is the cross-cutting spine that applies to EVERY commercial sub-type
+# (2–8) and, except where noted, to engagement letters (1). It is distilled from
+# Ontra's NDA, vendor-agreement, and diligence-EL playbooks — the deal-specific
+# NDA rows (standstill, anti-clubbing, financing "tree", no-contact, etc.) are
+# intentionally dropped because they do not travel to commercial paper.
+#
+# HOW PLAYBOOK MODE USES THIS (see legal-brain.md §9, §11):
+#   1. Load _core.yaml, then load the classified sub-type file (01–08).
+#   2. Sub-type entries with the same `id` OVERRIDE the core entry; new ids ADD.
+#   3. For each issue: measure the draft against `preferred`, then the `fallback`
+#      ladder. Draft outside the furthest fallback -> apply `default_stance`
+#      (push_back|negotiate) and, if `red_flag_if` matches, surface as RED FLAG.
+#   4. `owner: business` items NEVER get a legal stance — route them to the
+#      client escalation email (§8). `owner: legal` items drive the redline.
+#
+# ENTRY SCHEMA:
+#   id             stable key (kebab-case); override target across files
+#   family         clause family label (mirrors brain §5/§6)
+#   issue          short human name
+#   owner          legal | business | hybrid   (hybrid: split per `owner_split`)
+#   preferred      the client-protective opening position
+#   fallback       string or ordered list — furthest acceptable landing zone
+#   default_stance push_back | negotiate | acceptable   (legal items only)
+#   red_flag_if    condition that makes the draft a RED FLAG (optional)
+#   missing_is     red_flag | watch | ok   — how to treat absence (optional)
+#   model          precedent language, when we have approved wording (optional)
+#   note           short guidance (optional)
+
+meta:
+  playbook: core
+  applies_to: [1, 2, 3, 4, 5, 6, 7, 8]
+  perspective: "OLF acting for the Client (buyer of services / recipient of paper)"
+
+# --- Language normalisation: applied globally to the client's obligations ------
+# These are mechanical edits, not issues to escalate. Redline as `silent`.
+normalization_rules:
+  - {from: "immediately",       to: "promptly"}
+  - {from: "best efforts",      to: "commercially reasonable efforts"}
+  - {from: "cause",             to: "direct"}                 # re: binding third parties
+  - {from: "shall ensure that", to: "shall direct"}          # avoid guaranteeing others' acts
+  - rule: "Notices by the Client — add 'email being sufficient'."
+  - rule: "Vendor obligation with no timeframe — add 'promptly' / a defined period."
+
+issues:
+
+  # ---- Confidentiality -------------------------------------------------------
+  - id: confidentiality-present
+    family: Confidentiality
+    issue: Confidentiality obligation exists and binds the vendor
+    owner: legal
+    preferred: >
+      Vendor bound to hold Client information in confidence, use only to perform
+      the agreement, and not disclose to third parties. Mutual is acceptable.
+    fallback: "One-way (vendor-only) is fine; mutual if vendor insists."
+    default_stance: push_back
+    missing_is: red_flag
+    note: "If an NDA/joinder exists, incorporate it and make continued compliance a vendor obligation; the NDA controls on conflict."
+
+  - id: confidentiality-carveouts
+    family: Confidentiality
+    issue: Carve-outs from confidential information
+    owner: legal
+    preferred: >
+      Standard four carve-outs only: (i) public other than by breach;
+      (ii) already in possession; (iii) received from a source not known to be
+      bound by confidentiality; (iv) independently developed.
+    fallback:
+      - "Accept 'as demonstrated by written records' qualifier on (ii)."
+      - "Accept disclosure with the disclosing party's written consent as a fifth carve-out."
+    default_stance: negotiate
+    red_flag_if: "carve-outs are broader than the standard set, or swallow marked/obvious confidential info"
+
+  - id: confidentiality-standard-of-care
+    family: Confidentiality
+    issue: Standard of care for confidential information
+    owner: legal
+    preferred: "Same degree of care vendor uses for its own confidential information, and no less than reasonable care."
+    fallback: "Reasonable standard of care."
+    default_stance: negotiate
+
+  - id: compelled-disclosure
+    family: Confidentiality
+    issue: Compelled disclosure by law / regulator
+    owner: legal
+    preferred: >
+      Permitted if required by law, regulation, order or legal process, with
+      prior notice to the Client where legally permissible (email sufficient).
+    fallback:
+      - "Drop the notice-where-permitted requirement."
+      - "No notice for routine regulatory examinations not targeted at the Client."
+    default_stance: negotiate
+
+  # ---- Publicity -------------------------------------------------------------
+  - id: publicity
+    family: Publicity
+    issue: Use of Client name / logo; deal announcements
+    owner: legal
+    preferred: >
+      No use of Client (or its affiliates') name, logo or trademark, and no
+      announcement of the relationship or any transaction, without the Client's
+      prior written consent.
+    fallback:
+      - "Accept 'consent not to be unreasonably withheld'."
+      - "Accept internal/administrative use of the name without consent."
+    default_stance: push_back
+    missing_is: watch
+    model: >
+      [Vendor] shall not disclose to any third party that [Client] is its customer
+      or use [Client]'s or its affiliates' name or logo in any document without
+      [Client]'s prior written consent.
+
+  # ---- Non-solicitation ------------------------------------------------------
+  - id: non-solicit
+    family: Non-solicitation
+    issue: Non-solicitation of employees
+    owner: legal
+    preferred: "Reject; if included, Client-only or mutual, and narrowly scoped."
+    fallback:
+      - "Mutual (Client and Vendor)."
+      - "Directly or indirectly."
+      - "Employees first introduced in connection with the services."
+    default_stance: negotiate
+    red_flag_if: "binds Client's affiliates/representatives, covers all employees, or runs materially longer than 12 months"
+
+  - id: non-solicit-duration
+    family: Non-solicitation
+    issue: Duration of non-solicit
+    owner: legal
+    preferred: "Term of the agreement, or up to 6 months post-termination."
+    fallback: "Up to 12 months post-termination (18 months only if strongly resisted)."
+    default_stance: negotiate
+
+  - id: non-solicit-carveouts
+    family: Non-solicitation
+    issue: Non-solicit carve-outs
+    owner: legal
+    preferred: >
+      Carve out: general advertisements; placement/recruiting agency responses;
+      terminated employees; contacts on the employee's own initiative.
+    fallback:
+      - "Drop 'own initiative'."
+      - "Accept a waiting period (up to 6 months) for terminated employees."
+    default_stance: negotiate
+    missing_is: watch
+
+  # ---- Indemnification -------------------------------------------------------
+  - id: indemnity-by-vendor
+    family: Indemnities
+    issue: Vendor indemnity
+    owner: legal
+    preferred: "Vendor indemnifies for third-party IP infringement and for damages arising from its breach, negligence or willful misconduct."
+    fallback: "Mutual, with the limitations below; carve out Client's own gross negligence/willful misconduct/fraud."
+    default_stance: negotiate
+    missing_is: watch
+
+  - id: indemnity-by-client
+    family: Indemnities
+    issue: Client indemnity
+    owner: legal
+    preferred: "None."
+    fallback:
+      - "Limited to Client's gross negligence, willful misconduct, and material breach."
+      - "Payable only on a final, non-appealable judgment; direct damages only; not for threatened claims; not covering sub-contractors."
+    default_stance: push_back
+    red_flag_if: "Client indemnifies the vendor broadly, or for the vendor's own negligence, or covers threatened claims / third parties"
+
+  # ---- Limitation of liability ----------------------------------------------
+  - id: liability-cap
+    family: Limitation of liability
+    issue: Cap on liability
+    owner: hybrid
+    owner_split:
+      legal: "Whether a cap exists, its symmetry, and the carve-out set."
+      business: "The dollar figure / multiple of fees."
+    preferred: "Mutual cap; direct damages only. Cap amount is the Client's commercial call."
+    fallback:
+      - "Cap at up to 3x fees / contract price (amount subject to Client approval)."
+      - "Exclude indirect/consequential/special damages."
+    default_stance: negotiate
+    red_flag_if: "cap is one-way in the vendor's favour, or the cap swallows the fraud/willful-misconduct/confidentiality/data-breach carve-outs"
+    note: >
+      MUST carve out from any cap: fraud, willful misconduct, breach of
+      confidentiality, and (where data flows) data breach. Reject term-limits on
+      liability for acts/omissions during the term.
+
+  - id: liability-carveouts
+    family: Limitation of liability
+    issue: Mandatory carve-outs from any limitation
+    owner: legal
+    preferred: "Fraud, willful misconduct, breach of confidentiality; death/personal injury; anything that cannot lawfully be limited."
+    fallback: "Reasonable edits, provided the four above survive."
+    default_stance: push_back
+    model: >
+      Nothing in this Agreement shall exclude or limit liability for death or
+      personal injury resulting from negligence, for fraud, or for any liability
+      that cannot lawfully be excluded or limited.
+
+  # ---- Reps & warranties -----------------------------------------------------
+  - id: warranties-vendor
+    family: Warranties
+    issue: Vendor warranties
+    owner: legal
+    preferred: "Services performed in a professional, workmanlike manner to industry standard; no infringement of third-party IP; authority to contract."
+    fallback: "Accept a reasonable disclaimer of implied warranties, but not full 'AS IS' on a complex/critical service."
+    default_stance: negotiate
+    red_flag_if: "'AS IS' / no service warranty on a business-critical or complex service"
+
+  - id: warranties-client
+    family: Warranties
+    issue: Client warranties
+    owner: legal
+    preferred: "None beyond authority to execute."
+    fallback: "Authority + reasonable accuracy of information the Client provides."
+    default_stance: negotiate
+
+  # ---- Assignment & subcontracting ------------------------------------------
+  - id: assignment
+    family: Assignment
+    issue: Assignment of the agreement
+    owner: legal
+    preferred: "Vendor may assign only with the Client's prior written consent. Client may assign/novate to an affiliate on notice."
+    fallback: "Accept a carve-out letting either party assign to an affiliate under common control or a successor by merger/acquisition."
+    default_stance: negotiate
+    red_flag_if: "vendor may freely assign, or change-of-control is unrestricted for the vendor"
+
+  - id: subcontracting
+    family: Assignment
+    issue: Subcontracting by the vendor
+    owner: legal
+    preferred: "Only with the Client's prior written consent; Vendor remains responsible for subcontractors' acts and omissions."
+    fallback: "Accept subcontracting without consent, provided the Vendor stays fully responsible for subcontractors."
+    default_stance: negotiate
+
+  # ---- Term & termination (baseline; sub-types refine) ----------------------
+  - id: auto-renewal
+    family: Term, renewal & termination
+    issue: Automatic renewal
+    owner: legal
+    preferred: "None — renewal only on the Client's affirmative written election."
+    fallback: "Accept auto-renewal only with a sufficient notice window to cancel before it takes effect (≈30–90 days)."
+    default_stance: push_back
+    red_flag_if: "auto-renews with a long/short-fuse notice tail, or no ability to stop renewal"
+
+  - id: termination-for-convenience
+    family: Term, renewal & termination
+    issue: Termination for convenience by the Client
+    owner: legal
+    preferred: "Client may terminate at will on reasonable written notice (up to 30 days)."
+    fallback: "Up to 60 days' notice."
+    default_stance: negotiate
+    missing_is: red_flag
+
+  - id: termination-payment
+    family: Term, renewal & termination
+    issue: Early-termination fee / payment
+    owner: business
+    preferred: "None."
+    fallback: "A termination fee, or outstanding balances becoming due, is a Client commercial decision — present, do not opine."
+
+  - id: survival
+    family: Term, renewal & termination
+    issue: Survival on termination
+    owner: legal
+    preferred: "Confidentiality, IP, indemnification, accrued fees, and accrued claims survive."
+    fallback: "Reasonable edits, provided the set above survives."
+    default_stance: negotiate
+
+  # ---- Payment (baseline) ----------------------------------------------------
+  - id: payment-timing
+    family: Fees, payment & increases
+    issue: Payment timing
+    owner: legal
+    preferred: "Due within 30 days of receipt of a valid invoice."
+    fallback: "15–60 days depending on sub-type."
+    default_stance: negotiate
+
+  - id: late-payment
+    family: Fees, payment & increases
+    issue: Interest / remedies for late payment
+    owner: legal
+    preferred: "No interest penalty."
+    fallback:
+      - "Accept a reasonable interest rate."
+      - "Accept suspension/termination only after notice and a reasonable cure period (≈30 days) for undisputed amounts."
+    default_stance: negotiate
+
+  # ---- IP & work product (baseline) -----------------------------------------
+  - id: ip-work-product
+    family: IP & work product
+    issue: Ownership of deliverables / work product
+    owner: legal
+    preferred: "Client owns all work product and deliverables produced under the engagement (OK to condition on payment of fees)."
+    fallback: "Vendor owns, subject to a perpetual, worldwide, royalty-free, fully-paid, non-exclusive licence to the Client for the purpose for which it was prepared."
+    default_stance: push_back
+    red_flag_if: "vendor keeps ownership of bespoke deliverables the Client paid to create, with no licence back"
+    missing_is: red_flag
+
+  # ---- Governing law & disputes ---------------------------------------------
+  - id: governing-law
+    family: Boilerplate that bites
+    issue: Governing law & jurisdiction
+    owner: legal
+    preferred: "US: DE or NY (accept jury-trial waiver). EMEA: England & Wales / Western Europe. APAC: Singapore, HK, an Australian state, Japan."
+    fallback: "Other reasonable/commercial jurisdictions; accept arbitration (LCIA/HKIAC/JAMS/AAA) where market for the region."
+    default_stance: negotiate
+    red_flag_if: "surprising, client-unfriendly, or mandatory-arbitration forum out of line with the deal"
+
+  - id: legal-expenses
+    family: Boilerplate that bites
+    issue: Legal expenses on dispute
+    owner: legal
+    preferred: "Silence, or mutual prevailing-party, limited to a final non-appealable order."
+    fallback: "Accept counterparty's reasonable prevailing-party language."
+    default_stance: negotiate
+
+  - id: modification
+    family: Boilerplate that bites
+    issue: Amendment / modification
+    owner: legal
+    preferred: "Only in a writing signed by both parties."
+    fallback: "Reasonable edits."
+    default_stance: push_back
+    red_flag_if: "vendor may amend unilaterally (including URL-linked 'standard terms')"
+    missing_is: watch
+
+  - id: relationship-of-parties
+    family: Boilerplate that bites
+    issue: Relationship of the parties
+    owner: legal
+    preferred: "Independent contractor; no agency, partnership or joint venture."
+    fallback: "Reasonable edits."
+    default_stance: negotiate
+    note: "Watch loose 'partner' language that could imply liability-sharing."
+
+  - id: compliance-with-laws
+    family: Boilerplate that bites
+    issue: Compliance with laws
+    owner: legal
+    preferred: "Vendor complies with applicable laws and industry standards (incl. applicable data-security laws)."
+    fallback: "Client acknowledges the existence of applicable laws; reasonable compliance language re: preparation/use of deliverables."
+    default_stance: negotiate
+
+  - id: force-majeure
+    family: Boilerplate that bites
+    issue: Force majeure
+    owner: legal
+    preferred: "Mutual; requires prompt notice, documentation, and commercially reasonable efforts to resume (incl. workarounds / DR)."
+    fallback: "Reasonable edits, provided it is mutual and time-bounded."
+    default_stance: negotiate
+
+  - id: insurance
+    family: Insurance
+    issue: Insurance
+    owner: business
+    preferred: "Client to confirm required vendor coverage types and amounts."
+    fallback: "Coverage types/amounts are a commercial call — present for the deal team; legal only flags if coverage is plainly mismatched to risk."

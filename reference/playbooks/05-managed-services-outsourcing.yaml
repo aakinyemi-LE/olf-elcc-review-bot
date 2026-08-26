@@ -1,0 +1,100 @@
+# OLF playbook overlay — 05 Managed services & outsourcing agreements
+# Loads AFTER _core.yaml. Source: brain §6 + managed-services lens. Pull in 04 for the data parts.
+meta:
+  subtype: 5
+  name: "Managed services & outsourcing agreements (BPO / IT / payroll)"
+  depth: Complex
+  perspective: "Client outsourcing an operational function"
+
+issues:
+
+  - id: sla-sole-remedy
+    family: Parties, scope & deliverables
+    issue: SLAs, service credits & earn-back
+    owner: legal
+    preferred: "Defined SLA targets with meaningful service credits; credits are NOT the sole remedy; chronic failure is a termination right."
+    fallback: "Reasonable credits + earn-back, provided material/persistent breach remedies survive."
+    default_stance: push_back
+    red_flag_if: "service credits stated as the sole/exclusive remedy"
+    missing_is: watch
+
+  - id: governance
+    family: Parties, scope & deliverables
+    issue: Governance & reporting
+    owner: legal
+    preferred: "Defined governance cadence (steering committee), reporting, and escalation."
+    fallback: "Reasonable governance and periodic reporting."
+    default_stance: negotiate
+
+  - id: change-control
+    family: Parties, scope & deliverables
+    issue: Change control
+    owner: legal
+    preferred: "Changes only by mutual written change order; no unilateral scope or price change by the vendor."
+    fallback: "Defined change-control procedure with pricing transparency."
+    default_stance: push_back
+    red_flag_if: "vendor may vary scope/price unilaterally"
+
+  - id: transition-exit
+    family: Term, renewal & termination
+    issue: Transition-in / exit assistance & disentanglement
+    owner: legal
+    preferred: "Vendor provides transition-in and, on exit, exit/disentanglement assistance for a defined period to migrate to the Client or a successor supplier."
+    fallback: "Reasonable exit-assistance period at pre-agreed rates."
+    default_stance: push_back
+    red_flag_if: "no exit or transition assistance (operational lock-in)"
+    missing_is: red_flag
+
+  - id: benchmarking
+    family: Fees, payment & increases
+    issue: Benchmarking
+    owner: legal
+    preferred: "Right to benchmark pricing/service against market periodically, with adjustment."
+    fallback: "Benchmarking on renewal or at defined intervals."
+    default_stance: negotiate
+    missing_is: watch
+
+  - id: business-continuity
+    family: Parties, scope & deliverables
+    issue: Business continuity / disaster recovery
+    owner: legal
+    preferred: "Vendor maintains a tested BCP/DR with defined recovery objectives (RTO/RPO)."
+    fallback: "Reasonable BCP/DR with periodic testing."
+    default_stance: negotiate
+    red_flag_if: "no BCP/DR for a business-critical outsourced function"
+    missing_is: red_flag
+
+  - id: step-in
+    family: Term, renewal & termination
+    issue: Termination & step-in rights
+    owner: legal
+    preferred: "Client may terminate for material/persistent breach or insolvency, and step in (or appoint a third party) on critical failure."
+    fallback: "Reasonable termination triggers with a cure period."
+    default_stance: negotiate
+
+  - id: personnel-tupe
+    family: Boilerplate that bites
+    issue: Personnel / TUPE
+    owner: legal
+    preferred: "Allocate TUPE/transfer-of-employment risk to the vendor with an indemnity where applicable."
+    fallback: "Reasonable allocation reflecting local law."
+    default_stance: negotiate
+    note: "Jurisdiction-dependent — flag for local-law confirmation."
+
+  - id: subcontracting
+    family: Assignment
+    issue: Subcontracting (outsourcing)
+    owner: legal
+    preferred: "Prior written consent for material subcontracting; vendor fully responsible for subcontractors; flow-down of key obligations."
+    fallback: "Notice + responsibility for subcontractors."
+    default_stance: negotiate
+
+  - id: liability-cap
+    family: Limitation of liability
+    issue: Liability cap (outsourcing)
+    owner: hybrid
+    owner_split: {business: "the cap figure", legal: "symmetry and carve-outs"}
+    preferred: "Cap sized to the risk of the outsourced function (often higher than a simple vendor deal); data breach, confidentiality, IP and willful misconduct carved out."
+    fallback: "Multiple of annual charges, with the carve-outs above surviving."
+    default_stance: push_back
+    red_flag_if: "cap disproportionately low for a critical function, or asymmetric"

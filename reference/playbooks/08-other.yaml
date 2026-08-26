@@ -1,0 +1,43 @@
+# OLF playbook overlay — 08 Other commercial contracts (fallback)
+# Loads AFTER _core.yaml. Source: brain §6 general + §7 cross-cutting.
+# There is no bespoke position set here — the CORE playbook IS the playbook for
+# uncategorised contracts. This overlay only records the behaviour and the
+# cross-cutting sweep the reviewer must still run.
+meta:
+  subtype: 8
+  name: "Other commercial contracts (uncategorised)"
+  depth: "Complex (safer default when the type is unclear)"
+  perspective: "Client on general commercial paper"
+  behaviour: >
+    Run the full _core.yaml position set plus the §7 cross-cutting sweep. Label
+    the matter "Other / uncategorised" and note the sub-type was uncertain so the
+    lawyer can redirect to a specific overlay. Do not force a wrong overlay onto
+    the document. If, on reading, the contract clearly fits 1–7, switch to that
+    overlay.
+
+issues:
+
+  - id: incorporated-terms
+    family: Boilerplate that bites
+    issue: Incorporated-by-reference terms not seen
+    owner: legal
+    preferred: "Review any incorporated schedules, SLAs, DPAs, order forms, or URL 'standard terms' before signing."
+    fallback: "At minimum, WATCH and flag unreviewed incorporated terms as their own issue."
+    default_stance: negotiate
+    missing_is: watch
+
+  - id: defined-term-drift
+    family: Boilerplate that bites
+    issue: Defined-term drift
+    owner: legal
+    preferred: "Check that key defined terms (e.g. 'Services', 'Confidential Information') are no broader than the operative clauses imply."
+    fallback: "Narrow overbroad definitions to match intent."
+    default_stance: negotiate
+
+  - id: asymmetry-sweep
+    family: Boilerplate that bites
+    issue: One-way rights / caps / termination triggers
+    owner: legal
+    preferred: "Identify any right, cap, indemnity, or termination trigger that runs one way and note the direction."
+    fallback: "Make material asymmetries mutual or flag them."
+    default_stance: negotiate

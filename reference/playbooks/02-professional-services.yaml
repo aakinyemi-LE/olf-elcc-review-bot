@@ -1,0 +1,72 @@
+# OLF playbook overlay — 02 Professional services agreements
+# Loads AFTER _core.yaml. Source: Ontra Template Vendor Agreement playbook + brain §6.
+meta:
+  subtype: 2
+  name: "Professional services agreements"
+  depth: "Complex (Simple if one-off / low value)"
+  perspective: "Client engaging a consultant / accountant / agency / staffing provider"
+
+issues:
+
+  - id: scope-sow
+    family: Parties, scope & deliverables
+    issue: Scope, SOW & acceptance
+    owner: legal
+    preferred: "Scope and deliverables defined in an SOW; acceptance criteria and a cure/re-perform right for non-conforming work."
+    fallback: "Reasonable acceptance mechanics; deemed-acceptance only with a fair review window."
+    default_stance: negotiate
+    red_flag_if: "open-ended scope, or deliverables with no acceptance/remedy"
+    missing_is: watch
+
+  - id: ip-work-product
+    family: IP & work product
+    issue: Ownership of deliverables
+    owner: legal
+    preferred: "Client owns all work product/deliverables (OK to condition on payment)."
+    fallback: "Vendor owns, subject to a perpetual, royalty-free, worldwide, non-exclusive licence to the Client for the intended purpose."
+    default_stance: push_back
+    red_flag_if: "vendor keeps IP in bespoke deliverables the Client paid for"
+    missing_is: red_flag
+
+  - id: pre-existing-ip
+    family: IP & work product
+    issue: Vendor pre-existing IP embedded in deliverables
+    owner: legal
+    preferred: "Client gets a perpetual, royalty-free licence to any Vendor pre-existing IP used in the deliverables."
+    fallback: "Non-exclusive licence for the intended purpose."
+    default_stance: negotiate
+
+  - id: rates-expenses
+    family: Fees, payment & increases
+    issue: Rates & expenses
+    owner: hybrid
+    owner_split: {business: "rate levels", legal: "expense controls"}
+    preferred: "Rates fixed for the term; expenses require prior written approval and reasonable/documented qualification."
+    fallback: "Reasonable, out-of-pocket, documented expenses; caps where material."
+    default_stance: negotiate
+    red_flag_if: "open-ended expenses with no approval or cap"
+
+  - id: service-warranty
+    family: Warranties
+    issue: Service warranty (skill & care)
+    owner: legal
+    preferred: "Services performed in a professional, workmanlike manner to industry standard by suitably skilled personnel; no third-party IP infringement."
+    fallback: "Reasonable disclaimer of implied warranties, but not full 'AS IS'."
+    default_stance: negotiate
+    red_flag_if: "'AS IS' / no service warranty"
+
+  - id: liquidated-damages
+    family: Non-solicitation
+    issue: Liquidated damages on non-solicit
+    owner: business
+    preferred: "None."
+    fallback: "Reasonable liquidated damages, if approved by the Client."
+
+  - id: independent-contractor
+    family: Boilerplate that bites
+    issue: Independent-contractor status
+    owner: legal
+    preferred: "Independent contractor; no agency, partnership, employment or joint venture."
+    fallback: "Reasonable edits."
+    default_stance: negotiate
+    missing_is: watch

@@ -1,0 +1,112 @@
+# OLF playbook overlay — 04 Data, privacy & security agreements
+# Loads AFTER _core.yaml. Source: brain §6 + data/privacy lens.
+# Often runs as a SECONDARY overlay pulled in beside 03/05 when a DPA is attached.
+meta:
+  subtype: 4
+  name: "Data, privacy & security agreements (DPA / BAA / data-sharing / SCCs)"
+  depth: Complex
+  perspective: "Client as controller (usually) contracting a processor"
+
+issues:
+
+  - id: roles
+    family: Data protection & security
+    issue: Data-protection roles
+    owner: legal
+    preferred: "Roles expressly stated (controller / processor / joint). Vendor acts only on the Client's documented instructions."
+    fallback: "Reasonable role definition consistent with the actual processing."
+    default_stance: push_back
+    red_flag_if: "roles undefined, or vendor treated as an independent controller of the Client's personal data"
+    missing_is: red_flag
+
+  - id: processing-purpose
+    family: Data protection & security
+    issue: Processing purpose & scope
+    owner: legal
+    preferred: "Processing limited to defined purposes and the duration of the services; no processing for the vendor's own purposes."
+    fallback: "Narrowly scoped, documented processing schedule."
+    default_stance: push_back
+    red_flag_if: "vendor may re-use personal data ('to improve services') beyond the service purpose"
+
+  - id: sub-processors
+    family: Data protection & security
+    issue: Sub-processor authorisation & flow-down
+    owner: legal
+    preferred: "Prior authorisation (or a notice-and-object right for changes); equivalent terms flowed down; vendor stays liable for sub-processors."
+    fallback: "General authorisation with notice of changes and a right to object; full flow-down."
+    default_stance: push_back
+    red_flag_if: "unrestricted sub-processors with no notice/objection and no flow-down"
+
+  - id: transfer-mechanism
+    family: Data protection & security
+    issue: Cross-border transfer mechanism
+    owner: legal
+    preferred: "A valid transfer mechanism for any cross-border flow (SCCs / adequacy / equivalent), with the required schedules completed."
+    fallback: "Commitment to put a valid mechanism in place before any transfer."
+    default_stance: push_back
+    red_flag_if: "cross-border personal data with no transfer mechanism"
+    missing_is: red_flag
+
+  - id: security-measures
+    family: Data protection & security
+    issue: Security measures (TOMs)
+    owner: legal
+    preferred: "Defined technical & organisational measures appropriate to the risk (e.g. encryption, access control, testing); no downgrade during the term."
+    fallback: "Industry-standard measures (SOC 2 / ISO 27001-aligned) with a defined baseline."
+    default_stance: negotiate
+    red_flag_if: "weak or undefined security standard"
+    missing_is: red_flag
+
+  - id: breach-notification
+    family: Data protection & security
+    issue: Breach-notification window
+    owner: legal
+    preferred: "Notify the Client without undue delay and in any event within 24–48 hours of becoming aware, with sufficient detail to meet the Client's own regulatory deadlines."
+    fallback: "72 hours, with a clear escalation contact and follow-up detail."
+    default_stance: push_back
+    red_flag_if: "no breach-notification obligation, or a slow/vague window"
+    missing_is: red_flag
+
+  - id: audit-rights
+    family: Data protection & security
+    issue: Audit / inspection rights
+    owner: legal
+    preferred: "Right to audit compliance (directly or via a third party), plus access to certifications/reports on request."
+    fallback: "Reliance on recognised third-party certifications plus a reasonable audit right on cause."
+    default_stance: negotiate
+    missing_is: watch
+
+  - id: deletion-on-exit
+    family: Data protection & security
+    issue: Data return / deletion on exit
+    owner: legal
+    preferred: "On termination, return or delete all personal data at the Client's choice, and certify deletion; limited retention only where legally required."
+    fallback: "Deletion within a defined period with certification; retention only for legal/backup reasons, still subject to confidentiality."
+    default_stance: push_back
+    red_flag_if: "no deletion/return on exit"
+    missing_is: red_flag
+
+  - id: breach-liability
+    family: Limitation of liability
+    issue: Liability / indemnity for a data breach
+    owner: legal
+    preferred: "Data breach and privacy-law violations carved out of (or super-capped above) the general liability cap; vendor indemnifies for its breach."
+    fallback: "A materially higher sub-cap for data-breach liability, with confidentiality-breach also carved out."
+    default_stance: push_back
+    red_flag_if: "general cap swallows data-breach liability, or breach liability is one-way in the vendor's favour"
+
+  - id: regulator-cooperation
+    family: Data protection & security
+    issue: Regulator cooperation & assistance
+    owner: legal
+    preferred: "Vendor assists with data-subject requests, DPIAs, and regulator inquiries, at its cost for its own compliance."
+    fallback: "Reasonable assistance, with cost sharing for extraordinary requests."
+    default_stance: negotiate
+
+  - id: retention
+    family: Data protection & security
+    issue: Retention period
+    owner: legal
+    preferred: "Retention limited to what the service requires; no open-ended retention."
+    fallback: "Defined retention aligned to legal requirements and the Client's policy."
+    default_stance: negotiate

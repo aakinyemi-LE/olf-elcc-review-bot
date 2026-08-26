@@ -1,0 +1,167 @@
+# OLF playbook overlay — 01 Financial advisory & transaction engagement agreements
+# Loads AFTER _core.yaml. Same-id entries override core; new ids add.
+# Source: Ontra Vendor Diligence EL playbook + engagement-letter clause families (brain §5).
+meta:
+  subtype: 1
+  name: "Financial advisory & transaction engagement agreements"
+  depth: Complex
+  perspective: "Client engaging an advisor / banker / placement agent"
+
+issues:
+
+  # ---- Scope & structure -----------------------------------------------------
+  - id: scope-engagement
+    family: Parties & scope
+    issue: Scope of engagement
+    owner: legal
+    preferred: >
+      Confined, defined scope tailored to the mandate. Not a master agreement.
+      No overbroad "and related services". Deal team confirms the scope language.
+    fallback: "Reasonable scope edits, provided it is not open-ended."
+    default_stance: push_back
+    red_flag_if: "'partner' language implying liability-sharing, or scope drafted as an open master agreement"
+
+  - id: exclusivity
+    family: Exclusivity / engagement scope
+    issue: Exclusivity
+    owner: hybrid
+    owner_split: {legal: "carve-outs and enforceability", business: "whether to grant exclusivity at all"}
+    preferred: "Reject any exclusivity / 'exclusive advisor' limitation on engaging other providers."
+    fallback: "Flag to deal team / legal for approval; if granted, keep it narrow with carve-outs."
+    default_stance: push_back
+    red_flag_if: "advisor named as exclusive provider with no carve-outs"
+
+  - id: future-evergreen
+    family: Exclusivity / engagement scope
+    issue: Future & evergreen commitments
+    owner: legal
+    preferred: "Reject commitments regarding future engagements; reject evergreen/auto-renewing engagements."
+    fallback: "None — affirmative written consent required to renew."
+    default_stance: push_back
+
+  # ---- Fees ------------------------------------------------------------------
+  - id: success-fee
+    family: Fees & expenses
+    issue: Success / transaction fee (% and base)
+    owner: hybrid
+    owner_split:
+      business: "the fee percentage, minimum, and retainer amounts"
+      legal: "how the fee base is defined (enterprise vs equity value, gross vs net) and WHEN the fee is earned (signing vs closing)"
+    preferred: "Fee earned only on closing of a transaction; base clearly defined; deal team sets the %/minimum."
+    fallback: "Reasonable earned-on-signing only if closing is near-certain — flag to deal team."
+    default_stance: negotiate
+    red_flag_if: "fee earned on an IOI/LOI, or payable even if the deal fails"
+
+  - id: tail
+    family: Tail / residual fee
+    issue: Tail (post-termination fee)
+    owner: legal
+    preferred: "No tail; if included, ≤12 months, triggered only by a transaction with a specifically listed introduced party."
+    fallback: "Up to 18 months with a defined covered-party list."
+    default_stance: negotiate
+    red_flag_if: "long tail (>12m) with 'any transaction' trigger and no covered-party list"
+
+  - id: retainer
+    family: Fees & expenses
+    issue: Retainer fee
+    owner: business
+    preferred: "Reject any retainer requirement."
+    fallback: "Consult deal team; if accepted, credit the retainer against the success fee."
+
+  - id: expenses-cap
+    family: Fees & expenses
+    issue: Expense reimbursement
+    owner: legal
+    preferred: "Only reasonable, out-of-pocket, documented expenses; single and aggregate caps; vendor bears anything above the cap unless approved in writing (email OK)."
+    fallback: "If silent, add: '[Vendor] is responsible for all expenses incurred in connection with the Services.'"
+    default_stance: push_back
+    red_flag_if: "uncapped or unapproved expense reimbursement"
+
+  - id: currency
+    family: Fees & expenses
+    issue: Currency
+    owner: business
+    preferred: "Deal team confirms currency; add a conversion mechanic for multi-currency consideration."
+    fallback: "See core model appendix currency clause."
+
+  # ---- Advisor risk allocation ----------------------------------------------
+  - id: indemnity-of-advisor
+    family: Indemnification of the advisor
+    issue: Client indemnity of the advisor
+    owner: legal
+    preferred: >
+      If required, carve out the advisor's own gross negligence, willful
+      misconduct, bad faith and fraud; limit to losses arising directly from the
+      engagement; cap at the advisor's own liability cap; payable only on a final
+      non-appealable judgment; no threatened claims; no sub-contractors/third parties.
+    fallback: "Reasonable edits, provided the fault carve-out and the final-judgment condition survive."
+    default_stance: push_back
+    red_flag_if: "client indemnifies the advisor for the advisor's own negligence, or covers threatened claims"
+
+  - id: advisor-liability-cap
+    family: Limitation of liability / advisor's cap
+    issue: Advisor's own liability cap vs Client exposure
+    owner: legal
+    preferred: "Symmetry — advisor's cap should not sit at retainers/fees while the Client's exposure is open."
+    fallback: "Cap at up to 3x fees; carve out fraud/willful misconduct/confidentiality breach; no term-limit on liability for acts during the term."
+    default_stance: push_back
+    red_flag_if: "advisor caps at fees paid while client indemnity/exposure is uncapped"
+
+  - id: reliance-no-fiduciary
+    family: Reliance, no-fiduciary-duty, use of advice
+    issue: Reliance / no-fiduciary / disclosure of the report
+    owner: legal
+    preferred: "Ensure access & reliance for the Client and appropriate affiliates; Client may share reports with affiliates, directors, officers, employees and advisors."
+    fallback: "Accept that disclosure is subject to non-reliance provisions; reject any consent/notification right on internal sharing."
+    default_stance: negotiate
+    note: "Only signing entities rely/share unless other affiliates also sign the EL."
+
+  - id: conflicts
+    family: Conflicts
+    issue: Conflicts of interest
+    owner: legal
+    preferred: "Ensure a conflicts provision; reject pre-waiver of conflicts."
+    fallback: "Waive only specific, identified conflicts (check deal team); if a general waiver is demanded, condition it on the Client's confidential information not being used or disclosed."
+    default_stance: push_back
+    missing_is: red_flag
+
+  # ---- Term / termination refinements ---------------------------------------
+  - id: termination-for-convenience
+    family: Term, renewal & termination
+    issue: Termination by the Client
+    owner: legal
+    preferred: "Client may suspend/terminate at will on written notice; up to 30 days' notice OK."
+    fallback: "Up to 60 days' notice."
+    default_stance: negotiate
+
+  - id: termination-by-vendor
+    family: Term, renewal & termination
+    issue: Termination by the advisor
+    owner: legal
+    preferred: "Reject advisor's ability to terminate except in limited cases (failure to pay, insolvency, uncured breach subject to cure, change in law making services illegal)."
+    fallback: "Broader advisor termination only with a longer notice period (60–90 days); if advisor terminates, Client may terminate immediately."
+    default_stance: push_back
+
+  - id: fee-survival
+    family: Term, renewal & termination
+    issue: Fee survival on termination
+    owner: legal
+    preferred: "Earned fees, indemnification, accrued claims and confidentiality survive; unearned fees do not."
+    fallback: "Reasonable edits."
+    default_stance: negotiate
+
+  - id: key-man
+    family: Parties & scope
+    issue: Key-man provision
+    owner: hybrid
+    owner_split: {legal: "notice/termination mechanics", business: "fee impact"}
+    preferred: "Accept if included; flag to deal team to confirm the commercial deal on fee impact, notice, and termination rights."
+    fallback: "Negotiable per deal team."
+
+  - id: time-limitation-claims
+    family: Term, renewal & termination
+    issue: Time limitation on claims
+    owner: legal
+    preferred: "Reject contractual shortening."
+    fallback: "Claims must be made in accordance with the relevant statute of limitations."
+    default_stance: push_back
