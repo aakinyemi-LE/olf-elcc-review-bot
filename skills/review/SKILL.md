@@ -80,6 +80,12 @@ all three outputs.
 > back / negotiate / acceptable), Recommendation, and Fallback inline. Issue and
 > recommendation appear **together, once**.
 
+> **ORDER OF YOUR REPLY:** first publish the console (Artifact tool) and attach
+> the redline `.docx` (SendUserFile) — so both cards sit at the **top** of the
+> reply, side by side — **then** write the chat analysis below them. Cards first,
+> analysis second. A single lead line may sit under the cards (e.g. "Redline
+> (.docx) and full console above; summary below."), then the matter block.
+
 **Be brief — this is the contract, not a preference** (see output-contract
 "Brevity"). Match the Acme reference run: high-level, terse, high-value only. No
 preamble, no process narration, no restating the document. Hard caps: legal
@@ -90,7 +96,7 @@ The **redline lives only in the downloadable `.docx`** — no redline box in cha
 no redline panel in the console. Both surfaces open with the matter block (parties
 + doc type) — **no opinion, no "overall read"** — then go straight to the issues.
 
-### Chat (the succinct first glance), in this order
+### Chat analysis (below the two cards), in this order
 1. **Matter block** — three lines only: counterparty (name + role), client (name
    + role), document type/sub-type + Simple/Complex. **No assessment of how the
    paper reads.**
@@ -101,9 +107,8 @@ no redline panel in the console. Both surfaces open with the matter block (parti
 3. **Commercial deal terms for the client's confirmation** (≤ 5) — business terms,
    presented not opined, one line each.
 
-Close with one line pointing to the downloadable `.docx` redline and to the
-console (which holds the full packet including **key terms** and the **draft
-client escalation email**).
+The console and redline are already surfaced as cards at the top (see "ORDER OF
+YOUR REPLY"), so no closing pointer block is needed.
 
 ### Console (the full on-screen packet)
 The chat is the succinct view; the console is the complete reference. Its

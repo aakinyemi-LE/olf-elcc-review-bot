@@ -53,7 +53,10 @@ counterparty.
 
 ## In chat (the succinct first glance)
 
-Open with the matter narration. Render in this order.
+**Cards first.** Emit the two deliverable cards at the very top of the reply, side
+by side — the **console (Artifact)** and the **redline `.docx` (SendUserFile)** —
+*before* any analysis text. A single lead line may sit under them. Then render the
+analysis in this order.
 
 ### 1. Matter block (top of the output) — facts only, no opinion
 Three lines, then move straight to the issues. **No characterisation of how the
@@ -90,9 +93,8 @@ The business calls — **≤ 5**, present don't opine. One line each:
 Fees, success-fee %/base, term length, exclusivity, caps/insurance *amounts*,
 publicity.
 
-Close the chat message with a one-line pointer to the downloadable `.docx`
-redline and to the console (which holds the full packet including **key terms**
-and the **draft client escalation email**).
+No closing pointer block is needed — the console and redline are already the two
+cards at the top of the reply.
 
 ---
 
