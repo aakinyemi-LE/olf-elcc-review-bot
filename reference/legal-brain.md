@@ -42,28 +42,34 @@ drives which lens the review applies (`subtype-lenses.md`). State the sub-type
 plainly; do **not** invent matter numbers or file references.
 
 1. **Financial advisory & transaction engagement agreements** — investment bank /
-   M&A advisor, placement agent, capital-raising. *(This is the engagement-letter
-   family; use the §5 clause families.)*
-2. **Professional services agreements** — consulting, accounting/tax,
-   marketing/agency, staffing.
-3. **Technology, SaaS & software agreements** — subscriptions, hosted software,
+   M&A advisor, placement agent, capital-raising. *(Engagement-letter family; §5.)*
+2. **Legal engagement letters** — a law firm engaging the client.
+3. **Auditing & audit services** — external audit / assurance engagements.
+4. **Financial due diligence** — FDD / quality-of-earnings (e.g. a firm in a
+   diligence capacity for the sponsor).
+5. **Professional & consulting services** — marketing/agency, staffing, general
+   consulting.
+6. **Technology, SaaS & software agreements** — subscriptions, hosted software,
    licences, order forms.
-4. **Data, privacy & security agreements** — DPA, BAA, data-sharing, SCCs.
-5. **Managed services & outsourcing agreements** — BPO, IT outsourcing, payroll/HR.
-6. **Routine vendor & supplier agreements** — goods, supplies, low-risk one-offs.
-7. **Facilities, events & hospitality agreements** — venues, catering, room blocks.
-8. **Other commercial contracts** — the fallback.
+7. **Data, privacy & security agreements** — DPA, BAA, data-sharing, SCCs (distinct
+   from an NDA; often much longer).
+8. **Managed services & outsourcing agreements** — BPO, IT outsourcing, payroll/HR.
+9. **Shared services agreements** — intercompany / related-party services within a
+   PE structure (portfolio companies or the sponsor serving affiliated entities).
+10. **Routine vendor & supplier agreements** — goods, supplies, low-risk one-offs.
+11. **Facilities, events & hospitality agreements** — venues, catering, room blocks.
+12. **Other commercial contracts** — the fallback.
 
-Sub-type **1** is the engagement-letter family (§5); **2–8** are commercial
-contracts (§6). Then **read the matching lens in `subtype-lenses.md`** — it sets
-what to review hardest, the type-specific red flags, the key-terms checklist, and
-the default depth.
+Sub-type **1** is the engagement-letter family (§5); **2–11** are commercial /
+professional contracts (§6). Then **read the matching lens in `subtype-lenses.md`**
+— it sets what to review hardest, the type-specific red flags, the key-terms
+checklist, and the default depth.
 
-**Low confidence / no clear fit.** Do not force a wrong sub-type. Use **8
-(Other)**, run the general commercial review, and **note that the sub-type was
-uncertain** so the lawyer can redirect. The lawyer can override the sub-type at
-any time; a document that plainly contains a second type (e.g. SaaS with a DPA)
-runs the primary lens and pulls in the secondary lens for that part.
+**Low confidence / no clear fit.** Do not force a wrong sub-type. Use **Other**,
+run the general commercial review, and **note that the sub-type was uncertain** so
+the lawyer can redirect. The lawyer can override the sub-type at any time; a
+document that plainly contains a second type (e.g. SaaS with a DPA) runs the
+primary lens and pulls in the secondary lens for that part.
 
 Note **Simple vs Complex** (it sets the depth of review; each lens gives a default):
 - **Simple** — low value, limited scope, no personal-data or IP creation,
@@ -243,23 +249,28 @@ each half.
 
 ---
 
-## 9. Playbook & precedent (optional, when accessible)
+## 9. Playbook & precedent
 
-Issue-first is the default. When a client playbook or comparable precedent is
-accessible through the firm's connected systems and is relevant to *this*
-client/counterparty, use it to sharpen — not to gate — the review:
+There are three guidance levels, in priority order:
 
-- **Playbook** — if the client has approved preferred/fallback positions for a
-  provision, measure the draft against them and note where it falls outside the
-  furthest fallback. Items the playbook marks "check with client" are always
-  business escalations.
-- **Precedent** — if this client has agreed comparable terms with this (or a
-  similar) counterparty before, note "we have accepted / rejected this before"
-  as supporting context for a position.
+1. **A custom playbook supplied with the document (primary — "playbook mode").**
+   If the lawyer or client uploads a playbook alongside the document to review,
+   **it governs.** Measure each provision against its preferred/fallback
+   positions, drive the redline to those positions, and treat items it marks
+   "check with client" as business escalations. Say the review is playbook-based
+   and name the playbook. The sub-type lens still frames *what to look at*, but the
+   playbook sets the *positions*.
+2. **A default sub-type lens (baseline — "first principles").** With no custom
+   playbook, run issue-first on the brain, prioritised by the sub-type lens
+   (`subtype-lenses.md`). These built-in lenses are deliberately lean starting
+   points, not exhaustive playbooks — many clients bring their own.
+3. **Precedent (supporting).** If this client has agreed comparable terms with
+   this (or a similar) counterparty before and it is accessible, note "we have
+   accepted / rejected this before" as context for a position.
 
-Never block or pad the review waiting for these. If none is accessible, say so in
-one line and proceed on the brain. Do not reconstruct the old precedent-first
-machinery.
+Never block or pad the review waiting for a playbook or precedent. If none is
+supplied, say so in one line and proceed on the lens. Do not reconstruct the old
+precedent-first machinery.
 
 ---
 

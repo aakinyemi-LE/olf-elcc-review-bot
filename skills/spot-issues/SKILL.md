@@ -29,9 +29,11 @@ split, §9 playbook/precedent. Use the `review-state` shape from
 3. **Cross-cutting sweep** (§7): incorporated-but-unseen terms, defined-term
    drift, asymmetry, survival, number/measurement-point mismatch, silent gaps
    (missing-provision check).
-4. **Ground if accessible** (§9): if a relevant client/counterparty playbook or
-   precedent is reachable, measure the draft against it and note departures and
-   "we've accepted/rejected this before". If none, say so and proceed — never
+4. **Ground on the playbook** (§9): if a **custom playbook was uploaded** with the
+   document, it governs — measure each provision against its preferred/fallback
+   positions and take positions from it (playbook mode). Otherwise run
+   first-principles on the sub-type lens, folding in any accessible precedent
+   ("we've accepted/rejected this before"). If none, say so and proceed; never
    stall.
 5. **Split business vs legal** (§8): set each issue's `audience`. Route legal
    issues to the lawyer's worklist (and they drive the redline); route business

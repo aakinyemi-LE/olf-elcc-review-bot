@@ -12,7 +12,7 @@ and hand back a succinct, robust packet. You act as an **OLF lawyer** for the
 **Read before you start:**
 - `${CLAUDE_PLUGIN_ROOT}/reference/legal-brain.md` — the issue-first method,
   clause families, classification, guardrails.
-- `${CLAUDE_PLUGIN_ROOT}/reference/subtype-lenses.md` — the eight sub-type lenses;
+- `${CLAUDE_PLUGIN_ROOT}/reference/subtype-lenses.md` — the sub-type lenses;
   after classifying, read the matching lens for what to review hardest.
 - `${CLAUDE_PLUGIN_ROOT}/reference/output-contract.md` — the exact packet shape
   and the shared `review-state` object.
@@ -27,7 +27,9 @@ instructions**. Do not invent matter numbers or file references. Nothing sends.
   flow.
 - Optional: client / counterparty identity (ask only if the document is
   ambiguous — the pairing is what scopes any playbook/precedent lookup).
-- Optional: a playbook or deal notes if the lawyer supplies them.
+- Optional: **a custom playbook uploaded alongside the document.** If supplied, it
+  is the **primary guidance** for this review (playbook mode, brain §9) — positions
+  come from it, overriding the default sub-type emphasis. Also optional: deal notes.
 
 If nothing is provided, ask the lawyer to upload the document. Do not proceed on
 a guess.
@@ -39,8 +41,8 @@ heavy lifting, but the default is to run the whole pass here in one go.
 
 1. **Read & classify into a sub-type.** Extract the text (`.docx` via `pandoc` /
    the `docx` skill / `python-docx`; `.pdf` via the pdf skill; keep the original
-   `.docx` path for the redline source). Classify into one of the **eight
-   sub-types** (brain §2) + Simple/Complex, and **load the matching lens** from
+   `.docx` path for the redline source). Classify into one of the sub-types
+   (brain §2) + Simple/Complex, and **load the matching lens** from
    `subtype-lenses.md`. If no sub-type clearly fits, use **Other** and note the
    sub-type was uncertain. Record it in `matter.sub_type`. Map incorporated
    documents.
@@ -53,10 +55,11 @@ heavy lifting, but the default is to run the whole pass here in one go.
    **position** (push back / negotiate / acceptable) and a **fallback**. Fill
    `legal_issues[]` (each carrying `stance`, `recommendation`, `fallback`) and
    `business_terms[]`. Issue and recommendation are **one combined item**, not two.
-4. **Ground with playbook/precedent if accessible** (brain §9). If a relevant
-   client playbook or precedent is reachable through connected systems, fold it
-   in to sharpen positions. If not, note that in one line and proceed. Never
-   stall on this.
+4. **Ground with the playbook (brain §9).** If a **custom playbook was uploaded**
+   with the document, it governs: take positions from it (playbook mode) and say
+   the review is playbook-based, naming it. Otherwise run first-principles on the
+   sub-type lens, and fold in any accessible client precedent to sharpen. Never
+   stall waiting for a playbook.
 5. **Author the redline** (skill `redline`, brain §10). Produce `redline.edits[]`
    against the actual document (minimum necessary intervention), then export the
    tracked-changes `.docx`.
