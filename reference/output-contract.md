@@ -135,9 +135,10 @@ never sends.
 
 **Console data.** The template reads one JSON block (`<script id="review-data">`)
 that is a display projection of the review-state — keys: `matter{title,
-party_lines[], doc_type, source_url?}` (the header block; `party_lines` is one
-string per party, rendered on its own line; **no `overall_read`/opinion**;
-`source_url` is the hosted document URL, if any — see refs below), `legal_issues[]`
+party_lines[], doc_type, document_sections?, source_url?}` (the header block;
+`party_lines` is one string per party; **no `overall_read`/opinion**;
+`document_sections` embeds the document so refs link to it — see refs below;
+`source_url` is a hosted document URL fallback), `legal_issues[]`
 (`clause, stance, says, risk, recommendation, fallback`, optional `anchor`/`href`
 — the **combined** issue+recommendation), `business_terms[]` (`term, confirm`,
 optional `ref`/`anchor`/`href`), `key_terms[]` (`term, provision, ref`, optional
@@ -147,14 +148,20 @@ redline is the `.docx` only). Map straight from the review-state fields below; t
 console never introduces content the chat/redline don't already carry.
 
 **Section-reference hyperlinks.** In the console, every `§` reference (an issue's
-clause, a deal term's `ref`, a key term's `ref`) becomes a **link to the document**
-when a location is available: set `matter.source_url` (the hosted document URL) and
-optionally give an item an `anchor` (e.g. `"page=6"` for a PDF) or a full `href`.
-With a plain uploaded `.docx` there is no addressable location, so leave
-`source_url` unset and refs render as plain chips. **Deep, precise in-document
-linking (and the accept/reject workflow) is delivered by the Word plugin — the
-console only provides the hook.** Never invent a `source_url`; only set it to a
-real hosted copy of this document.
+clause, a deal term's `ref`, a key term's `ref`) links to the relevant part of the
+document. The **default and best way** is `matter.document_sections` — an array of
+`{ref, text}` for the document's own clauses (`ref` like `"§6"`, `"Part A"`; `text`
+is that clause's text, verbatim or lightly trimmed). The console embeds them under
+a collapsible **Source document** section and links each `§` reference to the
+matching clause **in-page** (it highlights on jump). **Use the same `ref` label on
+an item and on its `document_sections` entry** so they match (a coarser section,
+e.g. `§6`, also catches `§6(a)` and `§6/§7`). Populate `document_sections` on every
+review so the references resolve. Fallbacks when you have not embedded the text: a
+hosted `matter.source_url` (+ per-item `anchor` such as `"page=6"`, or a full
+`href`); otherwise refs render as plain chips. Never invent a `source_url`. (Deep,
+precise in-`.docx` linking and the accept/reject workflow remain the Word plugin's
+job; embedding the text here is the self-contained way to make the console refs
+clickable.)
 
 ---
 

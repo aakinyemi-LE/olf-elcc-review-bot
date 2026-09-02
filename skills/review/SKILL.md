@@ -118,18 +118,19 @@ combined legal issues & recommendations → deal terms → key terms → draft e
 No separate matter-summary section and no separate recommendations section.
 - Populate `${CLAUDE_PLUGIN_ROOT}/assets/console-template.html` — replace the JSON
   inside its `<script id="review-data">` block with the matter's data
-  (`matter{title, party_lines[], doc_type, source_url?}`, `legal_issues[]` — each
-  carrying `clause, stance, says, risk, recommendation, fallback`,
+  (`matter{title, party_lines[], doc_type, document_sections[]}`, `legal_issues[]`
+  — each carrying `clause, stance, says, risk, recommendation, fallback`,
   `business_terms[]` (`term, confirm, ref?`), `key_terms[]` (`term, provision,
   ref`), `client_email`; **no separate `recommendations[]`, no `redline` key, no
   `overall_read`**; see the template header and the output contract's "Console
   data" + "Section-reference hyperlinks" notes). Set `matter.title` to the actual
-  matter name — it becomes the console's title. If the document is available at a
-  hosted URL, set `matter.source_url` (and per-item `anchor`, e.g. `"page=6"`) so
-  the `§` references hyperlink to it; for a plain uploaded `.docx` leave it unset
-  (refs render as plain chips — deep in-document linking is the Word plugin's job).
-  It is a straight projection of the review-state — introduce nothing the
-  chat/redline don't already carry. Write the filled file to the working dir, then
+  matter name — it becomes the console's title. **Always populate
+  `matter.document_sections`** = `[{ref, text}]` for the document's own clauses
+  (same `ref` labels you use on key terms and issues, e.g. "§6", "Part A"; `text`
+  is that clause verbatim or lightly trimmed) — the console embeds it as a
+  collapsible "Source document" and every `§` reference links to the matching
+  clause in-page. It is a straight projection of the review-state — introduce
+  nothing the chat/redline don't already carry. Write the filled file to the working dir, then
   publish it with the **Artifact** tool (favicon 📝, the matter title). Surface
   the returned link in chat.
 - Send the tracked-changes `.docx` to the lawyer (SendUserFile, `attach`).

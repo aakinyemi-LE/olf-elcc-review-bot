@@ -6,11 +6,12 @@
             3 Key terms · 4 Draft client escalation email
   The tracked-changes redline is NOT shown here - it is the downloadable .docx.
 
-  Section references (§…) hyperlink to the document when a location is available:
-  set matter.source_url (the hosted document URL); optionally give an item an
-  `anchor` (e.g. "page=3") or a full `href`. With a plain uploaded .docx there is
-  no addressable location, so refs render as plain chips - deep in-document
-  linking is delivered by the Word plugin.
+  Section references (§…) hyperlink to the relevant part of the document. Best:
+  set matter.document_sections = [{ref, text}, …] (the document's own clauses) —
+  the console embeds them under "Source document" and every § reference links to
+  the matching clause in-page. Falls back to matter.source_url (+ per-item anchor)
+  when the document is hosted, else a plain chip. The ref on an item and the ref
+  on a document_section must use the same label (e.g. "§6", "Part A").
 
   TO POPULATE: replace the JSON in <script id="review-data">. Sample is illustrative.
 -->
@@ -23,7 +24,16 @@
       "Ashton Medical Devices, Inc. & Pembroke Ridge Capital, L.P. (client)"
     ],
     "doc_type": "Engagement letter · Sell-side M&A advisory · Complex",
-    "source_url": "https://example.com/ashton-engagement-letter.pdf"
+    "source_url": null,
+    "document_sections": [
+      { "ref": "§1", "text": "Scope of engagement. Calder & Rowe is engaged as exclusive sell-side financial advisor to the Client Group in connection with a possible sale, merger or similar transaction (a \"Transaction\")." },
+      { "ref": "§2", "text": "Fees. The Client shall pay a transaction fee of 1.9% of Aggregate Consideration, subject to a minimum of $3,500,000, earned upon the earliest of an indication of interest, letter of intent, definitive agreement, announcement or closing, and payable whether or not any Transaction is consummated. Retainers of $100,000 on signing and $40,000 per month for six months are payable and non-refundable." },
+      { "ref": "§3", "text": "Exclusivity. During the term and any tail, the Client Group shall not engage any other advisor or pursue a Transaction other than through the Advisor." },
+      { "ref": "§4", "text": "Expenses. The Client shall reimburse all of the Advisor's and its affiliates' expenses (including internal allocations), without cap, approval or receipts, whether or not a Transaction occurs." },
+      { "ref": "§5", "text": "Term and tail. The engagement continues for 18 months and auto-renews unless terminated on 90 days' notice. A 30-month tail applies to any Transaction with any party, with no covered-party list and no exception for the Advisor's breach." },
+      { "ref": "§6", "text": "Indemnity and liability. The Client shall indemnify the Advisor against all losses, including losses caused in part by the Advisor, except those finally adjudged to result solely from the Advisor's intentional misconduct. The Advisor's own liability is capped at retainers paid." },
+      { "ref": "§7", "text": "General. Sponsor guarantees the Client's obligations. The Advisor may use the Client's name and logo publicly. New York law and the exclusive jurisdiction of New York County courts apply; the parties waive trial by jury." }
+    ]
   },
   "legal_issues": [
     { "clause": "§6 Indemnity", "stance": "push_back", "anchor": "page=6",
@@ -222,6 +232,20 @@
   button.copy.primary { background:var(--accent); color:#06282a; border-color:var(--accent); }
   .draftnote { margin-left:auto; font-family:var(--mono); font-size:10.5px; color:var(--faint); }
 
+  /* Source document */
+  .docwrap { border:1px solid var(--line); border-radius:12px; background:var(--surface); box-shadow:var(--shadow); overflow:hidden; }
+  .docwrap > summary { cursor:pointer; padding:13px 16px; font-family:var(--mono); font-size:11.5px; letter-spacing:.02em;
+                       color:var(--accent-ink); background:var(--surface-2); list-style:none; user-select:none; }
+  .docwrap > summary::-webkit-details-marker { display:none; }
+  .docwrap[open] > summary { border-bottom:1px solid var(--line); }
+  #doc-body { padding:4px 0; }
+  .docclause { padding:12px 16px; border-top:1px solid var(--line); scroll-margin-top:20px; }
+  .docclause:first-child { border-top:none; }
+  .docref { font-family:var(--mono); font-size:11px; letter-spacing:.03em; color:var(--accent-ink); margin-bottom:4px; }
+  .doctext { font-size:13.5px; color:var(--muted); white-space:pre-wrap; word-wrap:break-word; }
+  .docclause:target { background:var(--accent-soft); }
+  .docclause:target .docref { color:var(--accent-ink); font-weight:700; }
+
   :focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:4px; }
   @media (prefers-reduced-motion:reduce){ *{ transition:none !important; } }
 </style>
@@ -233,6 +257,7 @@
     <a href="#s2"><span class="n">02</span> Deal terms</a>
     <a href="#s3"><span class="n">03</span> Key terms</a>
     <a href="#s4"><span class="n">04</span> Client email</a>
+    <a href="#s5" id="nav-doc"><span class="n">05</span> Source document</a>
   </nav>
 
   <main>
@@ -278,6 +303,14 @@
         </div>
       </div>
     </section>
+
+    <section id="s5">
+      <div class="shead"><span class="k">05</span><h2>Source document</h2><span class="count" id="c-doc"></span></div>
+      <details class="docwrap">
+        <summary>Show the document text. The § references above link here.</summary>
+        <div id="doc-body"></div>
+      </details>
+    </section>
   </main>
 </div>
 
@@ -294,27 +327,40 @@
     function mdBold(s){ return esc(s).replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>"); }
     function set(id,t){ var e=document.getElementById(id); if(e) e.textContent=t; }
 
-    // Resolve a section-ref link. Uses item.href, else matter.source_url (+ optional anchor).
-    function hrefFor(item){
-      if(item && item.href) return item.href;
-      if(m.source_url){
-        var a=item && item.anchor;
-        return m.source_url + (a ? (m.source_url.indexOf("#")>-1 ? "&"+a : "#"+a) : "");
-      }
+    // --- Section-reference links --------------------------------------------
+    // Priority: (1) the embedded source document (in-page anchor to the clause),
+    // then (2) item.href, then (3) matter.source_url (+ anchor). Else a plain chip.
+    var docSections = (m.document_sections && m.document_sections.length) ? m.document_sections : null;
+    function slug(s){ return String(s==null?"":s).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,""); }
+    var sectionSlugs = {};
+    if(docSections) docSections.forEach(function(s){ var k=slug(s.ref); if(k) sectionSlugs[k]=1; });
+    function matchDocSlug(refText){
+      var w=slug(refText); if(!w) return null;
+      if(sectionSlugs[w]) return w;
+      var parts=w.split("-");                 // coarsen: "3-a" -> "3"
+      while(parts.length>1){ parts.pop(); var c=parts.join("-"); if(sectionSlugs[c]) return c; }
       return null;
     }
-    function refHTML(text, item){
-      if(!text) return "";
-      var h=hrefFor(item);
-      return h ? '<a class="ref" href="'+encodeURI(h)+'" target="_blank" rel="noopener">'+esc(text)+"</a>"
-               : '<span class="ref">'+esc(text)+"</span>";
+    // The ref used to match a section: explicit item.ref, else the leading token of
+    // a clause like "§6 Indemnity", "Part A", or "3.1 …".
+    function refOf(item, fallback){
+      if(item && item.ref) return item.ref;
+      var mm=String((item && item.clause) || fallback || "").match(/^\s*(§[^\s]+|Part\s+[A-Za-z0-9]+|\d+(?:\.\d+)*)/i);
+      return mm ? mm[1] : fallback;
     }
-    // The whole clause header links to the document when a location resolves.
-    function clauseHTML(clause, item){
-      var h=hrefFor(item);
-      return h ? '<a class="clause-link" href="'+encodeURI(h)+'" target="_blank" rel="noopener">'+esc(clause||"")+"</a>"
-               : esc(clause||"");
+    function linkFor(item, refText){
+      if(docSections){ var s=matchDocSlug(refText); if(s) return "#doc-"+s; }
+      if(item && item.href) return item.href;
+      if(m.source_url){ var a=item && item.anchor; return m.source_url + (a ? (m.source_url.indexOf("#")>-1?"&"+a:"#"+a) : ""); }
+      return null;
     }
+    function anchorTag(href, cls, text){
+      if(!href) return '<span class="'+cls+'">'+esc(text)+"</span>";
+      var inpage = href.charAt(0)==="#";
+      return '<a class="'+cls+'" href="'+(inpage?href:encodeURI(href))+'"'+(inpage?"":' target="_blank" rel="noopener"')+">"+esc(text)+"</a>";
+    }
+    function refHTML(text, item){ if(!text) return ""; return anchorTag(linkFor(item, text), "ref", text); }
+    function clauseHTML(clause, item){ return anchorTag(linkFor(item, refOf(item, clause)), "clause-link", clause||""); }
 
     document.title = m.title || "Contract Review Console";
     set("m-title", m.title || "Contract review");
@@ -389,5 +435,20 @@
     }).catch(function(){ btn.textContent="Copy failed"; }); }
     document.getElementById("copy-all").addEventListener("click",function(){copy(full,this);});
     document.getElementById("copy-body").addEventListener("click",function(){copy(plain(em.body_markdown),this);});
+
+    // 5 · Source document (embedded, anchored by clause). The § references above
+    // link to these ids so a reader jumps to the relevant part of the document.
+    var docWrap=document.getElementById("s5"), docBody=document.getElementById("doc-body"), navDoc=document.getElementById("nav-doc");
+    if(docSections){
+      docSections.forEach(function(s){
+        var el=document.createElement("div"); el.className="docclause"; el.id="doc-"+slug(s.ref);
+        el.innerHTML='<div class="docref">'+esc(s.ref||"")+'</div><div class="doctext">'+esc(s.text||"")+"</div>";
+        docBody.appendChild(el);
+      });
+      set("c-doc", docSections.length+" clauses");
+    } else {
+      if(docWrap) docWrap.style.display="none";
+      if(navDoc) navDoc.style.display="none";
+    }
   })();
 </script>

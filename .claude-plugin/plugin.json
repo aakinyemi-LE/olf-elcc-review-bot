@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "olf-elcc-review-bot",
   "displayName": "OLF Engagement Letter & Commercial Contract Review",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Cowork-facing first-pass review of engagement letters and corporate commercial contracts for an OLF lawyer acting for a client. Lean and issue-first: it classifies the document into a contract sub-type (financial advisory, legal / audit / financial-diligence engagements, professional & consulting services, technology/SaaS, data/privacy, managed services, shared services, routine vendor, facilities/events, or other) and applies a sub-type lens that sets what to review hardest. The sub-type lens is the default; a custom client playbook, only when uploaded with the document, overrides the positions for the provisions it covers. The lawyer gets a succinct packet: chat opens with a two-line party narration, then legal issues with positions, then commercial deal terms; a tracked-changes .docx redline downloads separately; key terms and a draft client escalation email sit in an HTML console. Playbooks and precedent are used when accessible, never required. Draft-only, nothing sends.",
   "author": {
     "name": "Ontra AI \u2014 Legal Engineering"
