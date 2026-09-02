@@ -27,9 +27,10 @@ instructions**. Do not invent matter numbers or file references. Nothing sends.
   flow.
 - Optional: client / counterparty identity (ask only if the document is
   ambiguous — the pairing is what scopes any playbook/precedent lookup).
-- Optional: **a custom playbook uploaded alongside the document.** If supplied, it
-  is the **primary guidance** for this review (playbook mode, brain §9) — positions
-  come from it, overriding the default sub-type emphasis. Also optional: deal notes.
+- Optional: **a custom playbook uploaded alongside the document.** The sub-type
+  lens is the default; a playbook, **only when actually uploaded**, overrides the
+  default positions for the provisions it covers (brain §9). Also optional: deal
+  notes.
 
 If nothing is provided, ask the lawyer to upload the document. Do not proceed on
 a guess.
@@ -55,11 +56,11 @@ heavy lifting, but the default is to run the whole pass here in one go.
    **position** (push back / negotiate / acceptable) and a **fallback**. Fill
    `legal_issues[]` (each carrying `stance`, `recommendation`, `fallback`) and
    `business_terms[]`. Issue and recommendation are **one combined item**, not two.
-4. **Ground with the playbook (brain §9).** If a **custom playbook was uploaded**
-   with the document, it governs: take positions from it (playbook mode) and say
-   the review is playbook-based, naming it. Otherwise run first-principles on the
-   sub-type lens, and fold in any accessible client precedent to sharpen. Never
-   stall waiting for a playbook.
+4. **Ground (brain §9).** The **sub-type lens is the default**. Only if a **custom
+   playbook was actually uploaded** with the document, override the default
+   positions for the provisions it covers (name it); where it is silent, the lens
+   still governs. If none was uploaded, run the lens as-is. Fold in any accessible
+   precedent to sharpen. Never go hunting for a playbook.
 5. **Author the redline** (skill `redline`, brain §10). Produce `redline.edits[]`
    against the actual document (minimum necessary intervention), then export the
    tracked-changes `.docx`.

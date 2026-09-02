@@ -29,12 +29,12 @@ split, §9 playbook/precedent. Use the `review-state` shape from
 3. **Cross-cutting sweep** (§7): incorporated-but-unseen terms, defined-term
    drift, asymmetry, survival, number/measurement-point mismatch, silent gaps
    (missing-provision check).
-4. **Ground on the playbook** (§9): if a **custom playbook was uploaded** with the
-   document, it governs — measure each provision against its preferred/fallback
-   positions and take positions from it (playbook mode). Otherwise run
-   first-principles on the sub-type lens, folding in any accessible precedent
-   ("we've accepted/rejected this before"). If none, say so and proceed; never
-   stall.
+4. **Ground** (§9): the **sub-type lens is the default**. Only if a **custom
+   playbook was actually uploaded** with the document, override the default
+   positions for the provisions it covers (measure them against its
+   preferred/fallback); where it is silent, keep the lens. Otherwise run the lens
+   and fold in any accessible precedent ("we've accepted/rejected this before").
+   Never go hunting for a playbook.
 5. **Split business vs legal** (§8): set each issue's `audience`. Route legal
    issues to the lawyer's worklist (and they drive the redline); route business
    terms to `business_terms[]` (they seed the client email). Split hybrids (e.g.

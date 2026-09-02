@@ -251,26 +251,25 @@ each half.
 
 ## 9. Playbook & precedent
 
-There are three guidance levels, in priority order:
+**The sub-type lens is the default** and always frames the review: it sets what to
+look at and the starting positions (`subtype-lenses.md`). Run it as-is unless a
+playbook is actually supplied. Two things refine it:
 
-1. **A custom playbook supplied with the document (primary — "playbook mode").**
-   If the lawyer or client uploads a playbook alongside the document to review,
-   **it governs.** Measure each provision against its preferred/fallback
-   positions, drive the redline to those positions, and treat items it marks
-   "check with client" as business escalations. Say the review is playbook-based
-   and name the playbook. The sub-type lens still frames *what to look at*, but the
-   playbook sets the *positions*.
-2. **A default sub-type lens (baseline — "first principles").** With no custom
-   playbook, run issue-first on the brain, prioritised by the sub-type lens
-   (`subtype-lenses.md`). These built-in lenses are deliberately lean starting
-   points, not exhaustive playbooks — many clients bring their own.
-3. **Precedent (supporting).** If this client has agreed comparable terms with
+1. **A custom playbook — only if one is actually uploaded alongside the document.**
+   When present, it **overrides the default positions for the provisions it
+   covers**: measure those provisions against its preferred/fallback positions,
+   drive the redline to them, and treat items it marks "check with client" as
+   business escalations. **Where the playbook is silent, the sub-type lens still
+   governs.** Say the review used the playbook and name it. A playbook *refines
+   positions*; it does not replace the lens or change what the review looks at. If
+   no playbook is uploaded, do not go looking for one — run the lens.
+2. **Precedent (supporting).** If this client has agreed comparable terms with
    this (or a similar) counterparty before and it is accessible, note "we have
    accepted / rejected this before" as context for a position.
 
-Never block or pad the review waiting for a playbook or precedent. If none is
-supplied, say so in one line and proceed on the lens. Do not reconstruct the old
-precedent-first machinery.
+Never block or pad the review waiting for a playbook or precedent. With no
+playbook uploaded, run the sub-type lens and say so in one line. Do not
+reconstruct the old precedent-first machinery.
 
 ---
 

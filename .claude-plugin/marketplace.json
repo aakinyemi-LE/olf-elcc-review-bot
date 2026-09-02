@@ -6,13 +6,13 @@
   },
   "metadata": {
     "description": "OLF first-pass review of engagement letters and corporate commercial contracts for Claude Cowork. Issue-first, draft-only.",
-    "version": "0.3.0"
+    "version": "0.3.1"
   },
   "plugins": [
     {
       "name": "olf-elcc-review-bot",
       "source": "./",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "description": "First-pass OLF review of engagement letters & corporate commercial contracts. Chat: two-line party narration, legal issues, deal terms, reasoned recommendations. Downloads: a tracked-changes .docx redline. HTML console: key terms + draft client email. Draft-only \u2014 nothing sends.",
       "category": "legal"
     }
