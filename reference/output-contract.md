@@ -55,8 +55,13 @@ counterparty.
 
 **Cards first.** Emit the two deliverable cards at the very top of the reply, side
 by side — the **console (Artifact)** and the **redline `.docx` (SendUserFile)** —
-*before* any analysis text. A single lead line may sit under them. Then render the
-analysis in this order.
+*before* any analysis text. Then render the analysis in this order.
+
+### 0. Count line (the single lead line)
+Open the analysis with one short line giving the totals: **`N legal issues ·
+M commercial points`** (using the actual counts from `legal_issues[]` and
+`business_terms[]`, e.g. "5 legal issues · 4 commercial points"). Nothing else on
+the line — it is the high-level glance before the matter block.
 
 ### 1. Matter block (top of the output) — facts only, no opinion
 Three lines, then move straight to the issues. **No characterisation of how the
@@ -75,11 +80,12 @@ That is the entire matter block. Then go directly to §2.
 
 ### 2. Legal issues & recommendations
 The **3–6 highest-value** points, most-serious first. Skip minor/market points.
-**In chat, keep each entry to three parts only — Position, Issue, Recommendation.**
-The **Risk and Fallback are NOT shown in chat**; they live in the console (and the
-lawyer can ask for them). Lawyers reviewing commercial contracts already know the
-risks, so chat stays scannable.
-- **Position** — **Push back** / **Negotiate** / **Acceptable** (/ **Walk-away**).
+**In chat, keep each entry to two parts only — Issue, Recommendation.** Do **not**
+prefix a **Push back / Negotiate / Acceptable** position tag — it reads as clutter;
+the stance still drives the redline and the console decisions, it just is not
+displayed as a per-issue label. The **Risk and Fallback are NOT shown in chat**;
+they live in the console (and the lawyer can ask for them). Lawyers reviewing
+commercial contracts already know the risks, so chat stays scannable.
 - **Issue** — clause ref + what it does (one clause).
 - **Recommendation** — one sentence: the fix, in the client's interest (matches
   the change marked in the `.docx`).
@@ -109,8 +115,9 @@ per line, document type, and a note that the tracked-changes redline is a separa
 matter-summary section**. Below the header:
 
 - **1. Legal issues & recommendations** — the combined worklist: clause · what it
-  does · risk · position (push back / negotiate / acceptable) · recommendation ·
-  fallback.
+  does · risk · recommendation · fallback. (No push-back / negotiate / acceptable
+  position tag is displayed — the `stance` is retained in the data and still drives
+  the redline and the decisions layer, but it is not shown as a per-issue label.)
 - **2. Commercial deal terms** — the client's business calls (term · confirm).
 
 …plus the two items the chat does **not** show:

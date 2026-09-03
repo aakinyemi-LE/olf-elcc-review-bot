@@ -73,19 +73,22 @@ all three outputs.
 
 ## Deliver
 
-> **STRUCTURE (do not deviate):** the chat has exactly three sections —
+> **STRUCTURE (do not deviate):** the chat opens with a **count line** (`N legal
+> issues · M commercial points`), then has exactly three sections —
 > **1) Matter block**, **2) Legal issues & recommendations** (ONE combined
 > section), **3) Commercial deal terms**. Do **NOT** output a separate
-> "Recommendations" section. **In chat, each legal point shows only Position +
-> Issue + Recommendation — NOT Risk and NOT Fallback** (those live in the console;
-> the lawyer can ask). Close the section with "Ask if you'd like the risk or
-> fallback on any of these." Issue and recommendation appear **together, once**.
+> "Recommendations" section. **In chat, each legal point shows only Issue +
+> Recommendation — NO Position tag, NOT Risk and NOT Fallback.** Do not prefix a
+> Push back / Negotiate / Acceptable label; the stance still drives the redline and
+> the console decisions, it just is not displayed. (Risk and Fallback live in the
+> console; the lawyer can ask.) Close the section with "Ask if you'd like the risk
+> or fallback on any of these." Issue and recommendation appear **together, once**.
 
 > **ORDER OF YOUR REPLY:** first publish the console (Artifact tool) and attach
 > the redline `.docx` (SendUserFile) — so both cards sit at the **top** of the
 > reply, side by side — **then** write the chat analysis below them. Cards first,
-> analysis second. A single lead line may sit under the cards (e.g. "Redline
-> (.docx) and full console above; summary below."), then the matter block.
+> analysis second. The **count line** (`N legal issues · M commercial points`) is
+> the single lead line under the cards, then the matter block.
 
 **Be brief — this is the contract, not a preference** (see output-contract
 "Brevity"). Match the Acme reference run: high-level, terse, high-value only. No
@@ -98,14 +101,16 @@ no redline panel in the console. Both surfaces open with the matter block (parti
 + doc type) — **no opinion, no "overall read"** — then go straight to the issues.
 
 ### Chat analysis (below the two cards), in this order
+0. **Count line** — one short line: `N legal issues · M commercial points` (the
+   actual counts). Nothing else on it.
 1. **Matter block** — three lines only: counterparty (name + role), client (name
    + role), document type/sub-type + Simple/Complex. **No assessment of how the
    paper reads.**
 2. **Legal issues & recommendations** (combined) — the 3–6 highest-value points,
-   most-serious first. Each entry: **Position** (push back / negotiate / acceptable)
-   + **Issue** (clause + what it does) + **Recommendation** — one clause each. **Do
-   NOT include Risk or Fallback in chat** (they are in the console). End the section
-   with: *"Ask if you'd like the risk or fallback on any of these."*
+   most-serious first. Each entry: **Issue** (clause + what it does) +
+   **Recommendation** — one clause each, no position tag. **Do NOT include Risk or
+   Fallback in chat** (they are in the console). End the section with: *"Ask if
+   you'd like the risk or fallback on any of these."*
 3. **Commercial deal terms for the client's confirmation** (≤ 5) — business terms,
    presented not opined, one line each.
 
@@ -154,9 +159,12 @@ Run this checklist against your output and the `review-state` before you post.
 Fix any miss, then deliver. (The invariants are also machine-checkable — see
 `${CLAUDE_PLUGIN_ROOT}/tools/check_review_state.py`.)
 
-- **Shape:** chat has exactly three sections — Matter block, Legal issues &
+- **Shape:** chat opens with the count line (`N legal issues · M commercial
+  points`), then exactly three sections — Matter block, Legal issues &
   recommendations, Commercial deal terms. **No separate "Recommendations"
   section.** No redline box in chat.
+- **No position tag:** chat issues show Issue + Recommendation only — no Push
+  back / Negotiate / Acceptable label on any issue.
 - **Matter block:** two party lines + document type only. No opinion / "overall
   read" / "advisor-friendly".
 - **Combined issues:** every legal issue carries `stance`, `recommendation`, and

@@ -27,12 +27,13 @@ Deliver in this order:
    (populate `assets/console-template.html` and publish with the Artifact tool)
    and attach the **redline `.docx`** (the actual document marked up inline via
    `tools/redline_to_docx.py`) — both **before** any analysis text.
-2. **Chat analysis (below the cards).** The **matter block** (two parties on two
-   lines, real name + role, plus document type — facts only, no opinion); then one
+2. **Chat analysis (below the cards).** A one-line **count line** (`N legal issues
+   · M commercial points`); then the **matter block** (two parties on two lines,
+   real name + role, plus document type — facts only, no opinion); then one
    combined **Legal issues & recommendations** section (3–6, most-serious first;
-   each entry **Position + Issue + Recommendation only, one clause each — no Risk,
-   no Fallback in chat**; end with "Ask if you'd like the risk or fallback on any of
-   these"); then **Commercial deal terms** (≤ 5, present don't opine). Do **not**
+   each entry **Issue + Recommendation only, one clause each — no position tag, no
+   Risk, no Fallback in chat**; end with "Ask if you'd like the risk or fallback on
+   any of these"); then **Commercial deal terms** (≤ 5, present don't opine). Do **not**
    split issues and recommendations into two sections. **No redline box in chat.**
    (Risk and Fallback stay in the console.)
 
