@@ -391,11 +391,16 @@
         P.appendChild(d);
       });
 
-    // Summary strip - high-level counts only (no position tallies)
+    // Summary strip - counts by position
+    var counts={push_back:0,negotiate:0,acceptable:0,walk_away:0};
+    li.forEach(function(x){ var s=(x.stance||"negotiate").toLowerCase(); if(counts[s]!=null) counts[s]++; });
     var S=document.getElementById("summary");
+    function stat(cls,n,lbl){ if(!n) return ""; return '<div class="stat '+cls+'"><span class="num">'+n+'</span><span class="lbl">'+lbl+"</span></div>"; }
     S.innerHTML =
-      '<div class="stat"><span class="num">'+li.length+'</span><span class="lbl">Legal issues</span></div>' +
-      '<div class="stat"><span class="num">'+bt.length+'</span><span class="lbl">Commercial points</span></div>';
+      '<div class="stat"><span class="num">'+bt.length+'</span><span class="lbl">Client decisions</span></div>' +
+      '<div class="stat"><span class="num">'+li.length+'</span><span class="lbl">Legal points</span></div>' +
+      stat("push",counts.push_back,"Push back") +
+      stat("negot",counts.negotiate,"Negotiate");
 
     // 1 · Issues & recommendations (combined)
     var I=document.getElementById("issues");
