@@ -138,6 +138,16 @@ No separate matter-summary section and no separate recommendations section.
   the returned link in chat.
 - Send the tracked-changes `.docx` to the lawyer (SendUserFile, `attach`).
 
+## Acting on the lawyer's decisions
+
+The console lets the lawyer mark a call on each issue and deal term (Agree/Adjust,
+Confirm/Change) and **copy a "Decisions for …" summary** to paste back into chat.
+If the lawyer pastes such a summary (or otherwise gives their confirmations and
+changes), **update the review-state and re-emit the redline `.docx` and the client
+email to reflect them** — e.g. a "Change: cap $300k" becomes a redline edit and
+drops out of the client email; an "Agree" needs no change. Do not re-run the whole
+review; apply the deltas.
+
 ## Self-check before delivering
 
 Run this checklist against your output and the `review-state` before you post.

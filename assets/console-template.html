@@ -6,6 +6,12 @@
             3 Key terms · 4 Draft client escalation email
   The tracked-changes redline is NOT shown here - it is the downloadable .docx.
 
+  Decisions layer: each legal issue and deal term carries a "Your call" control
+  (Agree/Adjust, Confirm/Change) with an optional note. "Copy decisions to chat"
+  emits a plain-text "Decisions for <matter>" summary the lawyer pastes back so
+  the review updates the redline and client email. Marks persist per-viewer in
+  localStorage (keyed by matter title).
+
   Section references (§…) hyperlink to the relevant part of the document. Best:
   set matter.document_sections = [{ref, text}, …] (the document's own clauses) —
   the console embeds them under "Source document" and every § reference links to
@@ -232,6 +238,20 @@
   button.copy.primary { background:var(--accent); color:#06282a; border-color:var(--accent); }
   .draftnote { margin-left:auto; font-family:var(--mono); font-size:10.5px; color:var(--faint); }
 
+  /* Decisions */
+  .decisions-bar { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:2px 0 6px; }
+  .dec-status { font-family:var(--mono); font-size:11px; color:var(--faint); }
+  .decide-row { display:flex; align-items:center; gap:8px; margin-top:10px; padding-top:10px; border-top:1px dashed var(--line); flex-wrap:wrap; }
+  .decide-row .dlabel { font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); }
+  .dbtn { font-family:var(--sans); font-size:12px; font-weight:600; cursor:pointer; border:1px solid var(--line-2);
+          background:var(--surface); color:var(--muted); border-radius:7px; padding:5px 12px; transition:all .1s; }
+  .dbtn:hover { color:var(--ink); }
+  .dbtn.on { color:#06282a; background:var(--accent); border-color:var(--accent); }
+  .dbtn.on.warn { color:#fff; background:var(--negot); border-color:var(--negot); }
+  .dnote { font-family:var(--sans); font-size:12.5px; color:var(--ink); background:var(--surface); border:1px solid var(--line-2);
+           border-radius:7px; padding:6px 10px; min-width:220px; flex:1; }
+  .dnote::placeholder { color:var(--faint); }
+
   /* Source document */
   .docwrap { border:1px solid var(--line); border-radius:12px; background:var(--surface); box-shadow:var(--shadow); overflow:hidden; }
   .docwrap > summary { cursor:pointer; padding:13px 16px; font-family:var(--mono); font-size:11.5px; letter-spacing:.02em;
@@ -271,6 +291,11 @@
       </div>
       <div class="rule"></div>
       <div class="summary" id="summary"></div>
+      <div class="decisions-bar">
+        <button class="copy primary" id="copy-decisions">Copy decisions to chat</button>
+        <button class="copy" id="reset-decisions">Reset</button>
+        <span class="dec-status" id="dec-status"></span>
+      </div>
     </header>
 
     <section id="s1">
@@ -388,7 +413,7 @@
 
     // 1 · Issues & recommendations (combined)
     var I=document.getElementById("issues");
-    li.forEach(function(x){
+    li.forEach(function(x,idx){
       var st=(x.stance||"negotiate").toLowerCase();
       var el=document.createElement("div"); el.className="issue "+st;
       el.innerHTML =
@@ -399,18 +424,30 @@
           (x.risk?'<dt>Risk</dt><dd>'+esc(x.risk)+"</dd>":"")+
           (x.recommendation?'<dt>Fix</dt><dd class="fix">'+esc(x.recommendation)+"</dd>":"")+
           (x.fallback && !/^(—|–|-|none|n\/a)$/i.test(String(x.fallback).trim())?'<dt>Fallback</dt><dd>'+esc(x.fallback)+"</dd>":"")+
-        "</dl>";
+        "</dl>"+
+        '<div class="decide-row" data-kind="issue" data-i="'+idx+'">'+
+          '<span class="dlabel">Your call</span>'+
+          '<button class="dbtn" data-choice="agree">Agree</button>'+
+          '<button class="dbtn" data-choice="adjust">Adjust</button>'+
+          '<input class="dnote" type="text" placeholder="note (optional)" hidden>'+
+        "</div>";
       I.appendChild(el);
     });
     set("c-issues", li.length+(li.length===1?" point":" points"));
 
     // 2 · Deal terms
     var B=document.getElementById("bterms");
-    bt.forEach(function(x){
+    bt.forEach(function(x,idx){
       var el=document.createElement("div"); el.className="bt";
       el.innerHTML='<div class="body"><div class="term">'+esc(x.term||"")+
         (x.ref?" "+refHTML(x.ref,x):"")+"</div>"+
-        (x.confirm?'<div class="confirm">'+esc(x.confirm)+"</div>":"")+"</div>";
+        (x.confirm?'<div class="confirm">'+esc(x.confirm)+"</div>":"")+
+        '<div class="decide-row" data-kind="term" data-i="'+idx+'">'+
+          '<span class="dlabel">Client</span>'+
+          '<button class="dbtn" data-choice="confirm">Confirm</button>'+
+          '<button class="dbtn" data-choice="change">Change</button>'+
+          '<input class="dnote" type="text" placeholder="what to change (e.g. cap $300k)" hidden>'+
+        "</div></div>";
       B.appendChild(el);
     });
     set("c-bt", bt.length+(bt.length===1?" decision":" decisions"));
@@ -430,11 +467,61 @@
     document.getElementById("em-body").innerHTML=mdBold(em.body_markdown||"");
     function plain(s){ return String(s||"").replace(/\*\*/g,""); }
     var full="Subject: "+(em.subject||"")+"\n\n"+plain(em.body_markdown);
-    function copy(t,btn){ navigator.clipboard.writeText(t).then(function(){
-      var o=btn.textContent; btn.textContent="Copied ✓"; setTimeout(function(){btn.textContent=o;},1400);
-    }).catch(function(){ btn.textContent="Copy failed"; }); }
+    function flash(btn,msg){ var o=btn.getAttribute("data-label")||btn.textContent; btn.setAttribute("data-label",o); btn.textContent=msg; setTimeout(function(){btn.textContent=o;},1400); }
+    function copy(t,btn){
+      function fb(){ try{ var ta=document.createElement("textarea"); ta.value=t; ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); var ok=document.execCommand("copy"); document.body.removeChild(ta); flash(btn, ok?"Copied ✓":"Copy failed"); }catch(e){ flash(btn,"Copy failed"); } }
+      if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(function(){flash(btn,"Copied ✓");}).catch(fb); }
+      else { fb(); }
+    }
     document.getElementById("copy-all").addEventListener("click",function(){copy(full,this);});
     document.getElementById("copy-body").addEventListener("click",function(){copy(plain(em.body_markdown),this);});
+
+    // Decisions layer: mark a call per issue/term, then copy a summary to paste into chat.
+    var DEC={issue:{},term:{}};
+    var storeKey="olf-dec:"+slug(m.title||"matter");
+    try{ var saved=JSON.parse(localStorage.getItem(storeKey)||"null"); if(saved&&saved.issue&&saved.term) DEC=saved; }catch(e){}
+    function saveDec(){ try{ localStorage.setItem(storeKey, JSON.stringify(DEC)); }catch(e){} }
+    function decCount(){ var n=0,i; ["issue","term"].forEach(function(k){ for(i in DEC[k]){ if(DEC[k][i]&&DEC[k][i].choice) n++; } }); return n; }
+    function updStatus(){ var n=decCount(), t=li.length+bt.length; set("dec-status", n?(n+" of "+t+" marked"):"Mark your call below, then copy to chat."); }
+    function applyRow(row){
+      var kind=row.getAttribute("data-kind"), i=row.getAttribute("data-i"), rec=DEC[kind][i]||{};
+      Array.prototype.forEach.call(row.querySelectorAll(".dbtn"),function(b){
+        var on=b.getAttribute("data-choice")===rec.choice;
+        b.classList.toggle("on",on);
+        b.classList.toggle("warn",on&&(rec.choice==="adjust"||rec.choice==="change"));
+      });
+      var note=row.querySelector(".dnote"), needNote=(rec.choice==="adjust"||rec.choice==="change");
+      note.hidden=!needNote; if(needNote&&rec.note!=null) note.value=rec.note;
+    }
+    Array.prototype.forEach.call(document.querySelectorAll(".decide-row"),function(row){
+      applyRow(row);
+      Array.prototype.forEach.call(row.querySelectorAll(".dbtn"),function(b){
+        b.addEventListener("click",function(){
+          var kind=row.getAttribute("data-kind"), i=row.getAttribute("data-i"), ch=b.getAttribute("data-choice"), cur=DEC[kind][i]||{};
+          if(cur.choice===ch){ delete DEC[kind][i]; } else { DEC[kind][i]={choice:ch, note:cur.note||""}; }
+          applyRow(row); saveDec(); updStatus();
+        });
+      });
+      row.querySelector(".dnote").addEventListener("input",function(){
+        var kind=row.getAttribute("data-kind"), i=row.getAttribute("data-i"); if(DEC[kind][i]){ DEC[kind][i].note=this.value; saveDec(); }
+      });
+    });
+    function decLabel(kind,ch){ return kind==="issue"?(ch==="agree"?"Agree":"Adjust"):(ch==="confirm"?"Confirm":"Change"); }
+    function buildDecisions(){
+      var out=["Decisions for "+(m.title||"this matter"),"","Legal issues:"];
+      li.forEach(function(x,i){ var d=DEC.issue[i], s=(d&&d.choice)?decLabel("issue",d.choice)+(d.note?": "+d.note:""):"(no decision)"; out.push((i+1)+". "+(x.clause||"issue")+": "+s); });
+      out.push("","Commercial deal terms:");
+      bt.forEach(function(x,i){ var d=DEC.term[i], s=(d&&d.choice)?decLabel("term",d.choice)+(d.note?": "+d.note:""):"(no decision)"; out.push((i+1)+". "+(x.term||"term")+": "+s); });
+      out.push("","Please update the redline and client email to reflect the above.");
+      return out.join("\n");
+    }
+    document.getElementById("copy-decisions").addEventListener("click",function(){ copy(buildDecisions(), this); });
+    document.getElementById("reset-decisions").addEventListener("click",function(){
+      DEC={issue:{},term:{}}; saveDec();
+      Array.prototype.forEach.call(document.querySelectorAll(".decide-row"),function(r){ r.querySelector(".dnote").value=""; applyRow(r); });
+      updStatus();
+    });
+    updStatus();
 
     // 5 · Source document (embedded, anchored by clause). The § references above
     // link to these ids so a reader jumps to the relevant part of the document.

@@ -165,6 +165,17 @@ precise in-`.docx` linking and the accept/reject workflow remain the Word plugin
 job; embedding the text here is the self-contained way to make the console refs
 clickable.)
 
+**Decisions layer.** The console gives each legal issue and each deal term a "Your
+call" control (Agree/Adjust on issues, Confirm/Change on terms) with an optional
+note, and a **Copy decisions to chat** button that emits a plain-text
+`Decisions for <matter>` summary. The lawyer marks their calls, copies the summary,
+and pastes it back into chat. When you receive such a summary, **apply the deltas**:
+update the review-state, re-emit the tracked-changes `.docx`, and revise the client
+email (an accepted term drops out of the email; a changed one becomes a redline
+edit). Do not re-run the whole review. Marks persist per-viewer in localStorage,
+keyed by matter title; this is authored automatically by the template, so the
+review-state needs no extra field for it.
+
 ---
 
 ## The shared `review-state` object
