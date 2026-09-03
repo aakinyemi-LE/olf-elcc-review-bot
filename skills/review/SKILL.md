@@ -76,9 +76,10 @@ all three outputs.
 > **STRUCTURE (do not deviate):** the chat has exactly three sections —
 > **1) Matter block**, **2) Legal issues & recommendations** (ONE combined
 > section), **3) Commercial deal terms**. Do **NOT** output a separate
-> "Recommendations" section. Each legal point carries its own Position (push
-> back / negotiate / acceptable), Recommendation, and Fallback inline. Issue and
-> recommendation appear **together, once**.
+> "Recommendations" section. **In chat, each legal point shows only Position +
+> Issue + Recommendation — NOT Risk and NOT Fallback** (those live in the console;
+> the lawyer can ask). Close the section with "Ask if you'd like the risk or
+> fallback on any of these." Issue and recommendation appear **together, once**.
 
 > **ORDER OF YOUR REPLY:** first publish the console (Artifact tool) and attach
 > the redline `.docx` (SendUserFile) — so both cards sit at the **top** of the
@@ -101,14 +102,16 @@ no redline panel in the console. Both surfaces open with the matter block (parti
    + role), document type/sub-type + Simple/Complex. **No assessment of how the
    paper reads.**
 2. **Legal issues & recommendations** (combined) — the 3–6 highest-value points,
-   most-serious first. Each: Issue, Risk, **Position** (push back / negotiate /
-   acceptable), Recommendation, Fallback — each field a single clause. This is
-   **one section**, not a separate issues list and recommendations list.
+   most-serious first. Each entry: **Position** (push back / negotiate / acceptable)
+   + **Issue** (clause + what it does) + **Recommendation** — one clause each. **Do
+   NOT include Risk or Fallback in chat** (they are in the console). End the section
+   with: *"Ask if you'd like the risk or fallback on any of these."*
 3. **Commercial deal terms for the client's confirmation** (≤ 5) — business terms,
    presented not opined, one line each.
 
 The console and redline are already surfaced as cards at the top (see "ORDER OF
-YOUR REPLY"), so no closing pointer block is needed.
+YOUR REPLY"), so no closing pointer block is needed. (The console still carries the
+full record — Risk, Fallback, and clause hyperlinks.)
 
 ### Console (the full on-screen packet)
 The chat is the succinct view; the console is the complete reference. Its

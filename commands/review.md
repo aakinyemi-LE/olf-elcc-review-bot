@@ -30,9 +30,10 @@ Deliver in this order:
 2. **Chat analysis (below the cards).** The **matter block** (two parties on two
    lines, real name + role, plus document type — facts only, no opinion); then one
    combined **Legal issues & recommendations** section (3–6, most-serious first;
-   each: Issue, Risk, **Position** = push back / negotiate / acceptable,
-   Recommendation, Fallback — one clause each); then **Commercial deal terms**
-   (≤ 5, present don't opine). Do **not** split issues and recommendations into two
-   sections. **No redline box in chat.**
+   each entry **Position + Issue + Recommendation only, one clause each — no Risk,
+   no Fallback in chat**; end with "Ask if you'd like the risk or fallback on any of
+   these"); then **Commercial deal terms** (≤ 5, present don't opine). Do **not**
+   split issues and recommendations into two sections. **No redline box in chat.**
+   (Risk and Fallback stay in the console.)
 
 No closing pointer needed — the console and redline are the two cards at the top.

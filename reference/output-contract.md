@@ -74,17 +74,19 @@ for.**
 That is the entire matter block. Then go directly to §2.
 
 ### 2. Legal issues & recommendations
-The legal worklist and the call on each, **combined into one section** (they
-covered the same ground twice — now once). One entry per point, the **3–6
-highest-value only**, most-serious / highest-leverage first. Skip minor/market
-points. Each field a single clause, not a paragraph:
-- **Issue** — clause ref + what it does (terse).
-- **Risk** — why it bites the client (one clause).
+The **3–6 highest-value** points, most-serious first. Skip minor/market points.
+**In chat, keep each entry to three parts only — Position, Issue, Recommendation.**
+The **Risk and Fallback are NOT shown in chat**; they live in the console (and the
+lawyer can ask for them). Lawyers reviewing commercial contracts already know the
+risks, so chat stays scannable.
 - **Position** — **Push back** / **Negotiate** / **Acceptable** (/ **Walk-away**).
-- **Recommendation** — one sentence: the fix and why, in the client's interest
-  (matches the change marked in the `.docx`).
-- **Fallback** — one clause: what we could live with if resisted (or "—").
-Draft-only — never auto-send.
+- **Issue** — clause ref + what it does (one clause).
+- **Recommendation** — one sentence: the fix, in the client's interest (matches
+  the change marked in the `.docx`).
+
+Close the section with a single line: *"Ask if you'd like the risk or fallback on
+any of these."* Draft-only — never auto-send. (The full record — Risk, Fallback,
+and clause hyperlinks — is in the console, which carries all five fields.)
 
 ### 3. Commercial deal terms for the client's confirmation
 The business calls — **≤ 5**, present don't opine. One line each:
